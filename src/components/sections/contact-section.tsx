@@ -29,19 +29,19 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
-  const handleSubmit = async (formData: {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
-  }) => {
+  const handleSubmit = async (data: { [key: string]: string }) => {
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
     try {
       // TODO: Implement form submission
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulated API call
-      console.log('Form submitted:', formData)
+      console.log('Form submitted:', {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
+      })
       setSubmitStatus('success')
     } catch (err) {
       console.error('Form submission error:', err)

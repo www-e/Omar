@@ -52,7 +52,7 @@ export function AboutSection() {
           >
             <Card variant="glass" className="h-full">
               <CardHeader>
-                <div className="relative w-32 h-32 mx-auto mb-4">
+                <div className="relative w-32 h-32 mx-auto mb-4 relative">
                   <Image
                     src="/profile.jpg"
                     alt="Omar"

@@ -6,18 +6,20 @@ import { generateProjectMetadata } from '@/config/metadata'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { FaGithub } from 'react-icons/fa'
+import { Metadata } from 'next'
 
 type Props = {
-  params: { id: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ id: string }>
 }
 
-export async function generateMetadata({ params }: Props) {
-  return generateProjectMetadata(params.id)
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
+  return generateProjectMetadata(id)
 }
 
-export default async function ProjectPage({ params }: Props) {
-  const project = projects.find(p => p.id === params.id)
+export default async function Page({ params }: Props) {
+  const { id } = await params
+  const project = projects.find(p => p.id === id)
   
   if (!project) {
     notFound()

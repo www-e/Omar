@@ -20,7 +20,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       transition={{ duration: 0.2 }}
     >
       <Card className="h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:shadow-lg hover:border-primary/50">
-        <div className="relative aspect-video h-48 overflow-hidden group">
+        <div className="relative aspect-video h-48 overflow-hidden group relative">
           <Image
             src={project.image}
             alt={`${project.title} project screenshot`}
