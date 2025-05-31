@@ -3,8 +3,14 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
-  onSubmit: (data: any) => void
+interface FormData {
+  [key: string]: string
+}
+
+interface FormProps {
+  className?: string
+  onSubmit: (data: FormData) => void
+  children?: React.ReactNode
 }
 
 interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -18,11 +24,11 @@ interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaEle
 }
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
-  ({ className, onSubmit, ...props }, ref) => {
+  ({ className, onSubmit, children, ...props }, ref) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const formData = new FormData(e.currentTarget)
-      const data = Object.fromEntries(formData.entries())
+      const data: FormData = Object.fromEntries(formData.entries()) as FormData
       onSubmit(data)
     }
 
@@ -32,7 +38,9 @@ const Form = React.forwardRef<HTMLFormElement, FormProps>(
         className={cn('space-y-6', className)}
         onSubmit={handleSubmit}
         {...props}
-      />
+      >
+        {children}
+      </form>
     )
   }
 )

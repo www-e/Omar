@@ -8,26 +8,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = defaultMetadata
 
-// JSON-LD structured data
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Your Name',
-  url: 'https://yourdomain.com',
-  image: 'https://yourdomain.com/profile.jpg',
-  sameAs: [
-    'https://github.com/yourusername',
-    'https://linkedin.com/in/yourusername',
-    'https://twitter.com/yourusername',
-  ],
-  jobTitle: 'Full Stack Developer',
-  worksFor: {
-    '@type': 'Organization',
-    name: 'Your Company',
-  },
-  description: 'Full Stack Developer specializing in modern web technologies.',
-};
-
 export default function RootLayout({
   children,
 }: {

@@ -4,13 +4,9 @@ import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   FaReact,
-  FaNodeJs,
-  FaDatabase,
   FaTools,
   FaServer,
-  FaMobile,
 } from 'react-icons/fa'
-import { SiTypescript, SiTailwindcss, SiNextdotjs } from 'react-icons/si'
 
 const skillCategories = [
   {

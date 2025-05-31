@@ -29,15 +29,22 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (formData: {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  }) => {
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
     try {
       // TODO: Implement form submission
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulated API call
+      console.log('Form submitted:', formData)
       setSubmitStatus('success')
-    } catch (error) {
+    } catch (err) {
+      console.error('Form submission error:', err)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -58,7 +65,7 @@ export function ContactSection() {
             Get in <span className="text-primary">Touch</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Let's talk!
+            Have a project in mind or want to collaborate? Let&apos;s talk!
           </p>
         </motion.div>
 

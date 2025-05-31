@@ -1,6 +1,16 @@
 import { Metadata } from 'next'
 import { projects } from '@/data/projects'
 
+interface Project {
+  id: string
+  title: string
+  fullDescription: string
+  image: string
+  liveUrl: string
+  githubUrl: string
+  keywords: string[]
+}
+
 const siteConfig = {
   name: 'Omar Ashraf',
   title: 'Omar Ashraf | Full Stack Developer & AI Specialist',
@@ -221,15 +231,9 @@ export const defaultMetadata: Metadata = {
   }
 }
 
-// Generate project-specific metadata
-export function generateProjectMetadata(projectId: string): Metadata {
-  const project = projects.find(p => p.id === projectId)
-  if (!project) return defaultMetadata
-
-  const projectUrl = `${siteConfig.url}/projects/${project.id}`
-
-  // Project-specific schema
-  const projectSchema = {
+// Project Schema Generator
+function generateProjectSchema(project: Project) {
+  return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: project.title,
@@ -248,25 +252,30 @@ export function generateProjectMetadata(projectId: string): Metadata {
     },
     keywords: project.keywords.join(', '),
     image: `${siteConfig.url}${project.image}`,
-    url: projectUrl,
-    sameAs: [project.githubUrl],
-    datePublished: new Date().toISOString().split('T')[0],
-    programmingLanguage: project.techStack.join(', '),
-    featureList: project.features.join(', ')
+    url: project.liveUrl,
+    sameAs: [project.githubUrl]
   }
+}
+
+// Generate project-specific metadata
+export function generateProjectMetadata(projectId: string): Metadata {
+  const project = projects.find(p => p.id === projectId)
+  if (!project) return defaultMetadata
+
+  const projectUrl = `${siteConfig.url}/projects/${project.id}`
 
   return {
-    title: `${project.title} | ${siteConfig.name}`,
-    description: project.shortDescription,
-    keywords: project.keywords,
+    ...defaultMetadata,
+    title: project.title,
+    description: project.fullDescription,
     openGraph: {
+      ...defaultMetadata.openGraph,
       title: project.title,
-      description: project.shortDescription,
+      description: project.fullDescription,
       url: projectUrl,
-      type: 'article',
       images: [
         {
-          url: project.image,
+          url: `${siteConfig.url}${project.image}`,
           width: 1200,
           height: 630,
           alt: project.title,
@@ -274,13 +283,10 @@ export function generateProjectMetadata(projectId: string): Metadata {
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      ...defaultMetadata.twitter,
       title: project.title,
-      description: project.shortDescription,
-      images: [project.image],
-    },
-    alternates: {
-      canonical: projectUrl,
+      description: project.fullDescription,
+      images: [`${siteConfig.url}${project.image}`],
     },
   }
 }
@@ -288,7 +294,8 @@ export function generateProjectMetadata(projectId: string): Metadata {
 // Export schemas for use in layout
 export const schemas = {
   website: websiteSchema,
-  person: personSchema
+  person: personSchema,
+  generateProjectSchema,
 }
 
 export const viewport = {

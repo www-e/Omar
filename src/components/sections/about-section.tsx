@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FaCode, FaRocket, FaDatabase, FaTools } from 'react-icons/fa'
+import { FaCode, FaRocket, FaTools } from 'react-icons/fa'
 
 const stats = [
   { label: 'Years Experience', value: '3+' },
