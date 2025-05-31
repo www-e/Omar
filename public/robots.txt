@@ -1,0 +1,22 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Prevent crawling of error pages
+Disallow: /404
+Disallow: /500
+Disallow: /api/*
+
+# Prevent crawling of search pages
+Disallow: /search
+
+# Allow crawling of static assets
+Allow: /static/
+Allow: /images/
+Allow: /projects/
+Allow: /*.js$
+Allow: /*.css$
+
+# Sitemap
+Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://yourdomain.com/server-sitemap.xml 
