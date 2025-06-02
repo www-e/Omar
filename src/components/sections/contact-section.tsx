@@ -1,28 +1,49 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '@/components/motion-wrapper'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormTextArea } from '@/components/ui/form'
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaWhatsapp, FaFacebook, FaTwitter } from 'react-icons/fa'
+import { SiUpwork } from 'react-icons/si'
 
 const socialLinks = [
   {
-    icon: <FaGithub className="w-6 h-6" />,
-    label: 'GitHub',
-    url: 'https://github.com/yourusername',
+    icon: <FaLinkedin className="w-6 h-6 text-[#0077B5]" />,
+    label: 'Connect on LinkedIn',
+    url: 'https://www.linkedin.com/in/omar-ashraf-176790262/'
   },
   {
-    icon: <FaLinkedin className="w-6 h-6" />,
-    label: 'LinkedIn',
-    url: 'https://linkedin.com/in/yourusername',
+    icon: <SiUpwork className="w-6 h-6 text-[#6fda44]" />,
+    label: 'Find me on Upwork',
+    url: 'https://www.upwork.com/freelancers/~016247fec408960a4d'
   },
   {
-    icon: <FaEnvelope className="w-6 h-6" />,
-    label: 'Email',
-    url: 'mailto:your.email@example.com',
+    icon: <FaGithub className="w-6 h-6 text-foreground" />,
+    label: 'Follow on GitHub',
+    url: 'https://github.com/www-e'
   },
+  {
+    icon: <FaWhatsapp className="w-6 h-6 text-[#25D366]" />,
+    label: 'Chat on WhatsApp',
+    url: 'https://wa.me/+201154688628'
+  },
+  {
+    icon: <FaFacebook className="w-6 h-6 text-[#1877F2]" />,
+    label: 'Follow on Facebook',
+    url: 'https://facebook.com/your-profile'
+  },
+  {
+    icon: <FaTwitter className="w-6 h-6 text-[#1DA1F2]" />,
+    label: 'Follow on Twitter',
+    url: 'https://twitter.com/your-profile'
+  },
+  {
+    icon: <FaEnvelope className="w-6 h-6 text-red-500" />,
+    label: 'Send an Email',
+    url: 'mailto:omarasj445@gmail.com'
+  }
 ]
 
 export function ContactSection() {
@@ -52,7 +73,12 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-20 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />
+      <div className="absolute inset-0 flex items-center justify-center -z-10">
+        <div className="w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-3xl animate-pulse" />
+      </div>
+      
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -62,109 +88,40 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Get in <span className="text-primary">Touch</span>
+            Let&apos;s <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/70 to-primary">Connect</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or want to collaborate? Let&apos;s talk!
+            Feel free to reach out for collaborations, opportunities, or just a friendly chat
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <Card variant="glass">
-              <CardContent className="pt-6">
-                <Form onSubmit={handleSubmit}>
-                  <FormField
-                    name="name"
-                    label="Name"
-                    placeholder="Your name"
-                    required
-                  />
-                  <FormField
-                    name="email"
-                    type="email"
-                    label="Email"
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                  <FormField
-                    name="subject"
-                    label="Subject"
-                    placeholder="What's this about?"
-                    required
-                  />
-                  <FormTextArea
-                    name="message"
-                    label="Message"
-                    placeholder="Your message here..."
-                    required
-                  />
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-gradient-to-br from-background/30 to-background/10 backdrop-blur-xl border-primary/20 hover:border-primary/40 transition-all duration-500">
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group flex items-center gap-4 p-4 rounded-xl bg-background/50 hover:bg-background/80 border border-primary/10 hover:border-primary/20 transition-all duration-300"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </Button>
-                  {submitStatus === 'success' && (
-                    <p className="text-sm text-green-500 text-center">
-                      Message sent successfully!
-                    </p>
-                  )}
-                  {submitStatus === 'error' && (
-                    <p className="text-sm text-red-500 text-center">
-                      Failed to send message. Please try again.
-                    </p>
-                  )}
-                </Form>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-8"
-          >
-            <Card variant="gradient">
-              <CardContent className="pt-6">
-                <h3 className="text-xl font-semibold mb-4">Connect with me</h3>
-                <div className="space-y-4">
-                  {socialLinks.map((link, index) => (
-                    <a
-                      key={index}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/10 transition-colors"
-                    >
+                    <div className="p-3 rounded-lg bg-background/50 group-hover:bg-background transition-colors duration-300">
                       {link.icon}
-                      <span>{link.label}</span>
-                    </a>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card variant="glass">
-              <CardContent className="pt-6">
-                <h3 className="text-xl font-semibold mb-4">Location</h3>
-                <p className="text-muted-foreground">
-                  Based in Your City, Country
-                </p>
-                <p className="text-muted-foreground">
-                  Available for remote work and local opportunities
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
+                    </div>
+                    <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                      {link.label}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

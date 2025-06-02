@@ -1,8 +1,10 @@
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { Navbar } from '@/components/layout/navbar'
+import { Footer } from '@/components/layout/footer'
 import { schemas, defaultMetadata } from '@/config/metadata'
-import './globals.css'
+import '@/styles/globals.css'
+import '@/styles/animations.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,9 +38,13 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          storageKey="theme-preference"
         >
-          <Navbar />
-          {children}
+          <div className="min-h-screen bg-background font-sans antialiased">
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

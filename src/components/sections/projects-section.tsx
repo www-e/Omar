@@ -1,13 +1,42 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from '@/components/motion-wrapper'
 import { ProjectCard } from '@/components/ui/project-card'
 import { Button } from '@/components/ui/button'
 import { projects } from '@/data/projects'
 
-// Get unique categories from projects
-const categories = Array.from(new Set(projects.map(project => project.category)))
+// Get unique categories from projects and sort them alphabetically
+const categories = Array.from(new Set(projects.map(project => project.category))).sort()
+
+// Category-specific styling
+const categoryStyles: { [key: string]: { bg: string; text: string; border: string } } = {
+  'AI/ML': {
+    bg: 'bg-purple-500/10',
+    text: 'text-purple-500',
+    border: 'border-purple-500/20'
+  },
+  'Web Development': {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-500',
+    border: 'border-blue-500/20'
+  },
+  'Computer Vision': {
+    bg: 'bg-green-500/10',
+    text: 'text-green-500',
+    border: 'border-green-500/20'
+  },
+  'Development Tools': {
+    bg: 'bg-orange-500/10',
+    text: 'text-orange-500',
+    border: 'border-orange-500/20'
+  },
+  'Education': {
+    bg: 'bg-pink-500/10',
+    text: 'text-pink-500',
+    border: 'border-pink-500/20'
+  }
+}
 
 export function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -18,7 +47,8 @@ export function ProjectsSection() {
     const matchesCategory = selectedCategory === 'all' || project.category === selectedCategory
     const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.shortDescription.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.techStack.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()))
+      project.techStack.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      project.keywords.some(keyword => keyword.toLowerCase().includes(searchQuery.toLowerCase()))
     return matchesCategory && matchesSearch
   })
 
@@ -39,37 +69,54 @@ export function ProjectsSection() {
           <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Explore my portfolio of innovative projects, showcasing expertise in web development,
-            AI integration, and user experience design.
+            AI integration, computer vision, and performance optimization.
           </p>
         </motion.div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           <Button
             variant={selectedCategory === 'all' ? 'default' : 'outline'}
             onClick={() => setSelectedCategory('all')}
             aria-pressed={selectedCategory === 'all'}
+            className={`transition-all duration-300 hover:scale-105 ${
+              selectedCategory === 'all' 
+                ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                : 'hover:bg-primary/10 hover:text-primary hover:border-primary/20'
+            }`}
           >
             All Projects
           </Button>
-          {categories.map(category => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory(category)}
-              aria-pressed={selectedCategory === category}
-            >
-              {category}
-            </Button>
-          ))}
+          {categories.map(category => {
+            const style = categoryStyles[category] || {
+              bg: 'bg-primary/10',
+              text: 'text-primary',
+              border: 'border-primary/20'
+            }
+            return (
+              <Button
+                key={category}
+                variant="outline"
+                onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
+                className={`transition-all duration-300 hover:scale-105 ${
+                  selectedCategory === category
+                    ? `${style.bg} ${style.text} ${style.border}`
+                    : 'hover:bg-primary/10 hover:text-primary hover:border-primary/20'
+                }`}
+              >
+                {category}
+              </Button>
+            )
+          })}
         </div>
 
         {/* Search Input */}
-        <div className="max-w-md mx-auto mb-8">
+        <div className="max-w-2xl mx-auto mb-12">
           <input
             type="search"
-            placeholder="Search projects..."
-            className="w-full px-4 py-2 rounded-lg border border-input bg-background"
+            placeholder="Search by title, tech stack, or keywords..."
+            className="w-full px-4 py-2 rounded-lg border border-input bg-background transition-colors duration-300 focus:border-primary focus:ring-1 focus:ring-primary"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search projects"
@@ -93,11 +140,16 @@ export function ProjectsSection() {
 
         {/* No Results Message */}
         {filteredProjects.length === 0 && (
-          <div className="text-center py-12">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center py-12"
+          >
             <p className="text-muted-foreground">
-              No projects found matching your criteria.
+              No projects found matching your criteria. Try adjusting your search or category filter.
             </p>
-          </div>
+          </motion.div>
         )}
       </div>
     </section>

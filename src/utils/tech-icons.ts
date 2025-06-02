@@ -16,6 +16,14 @@ import {
   SiPostgresql,
   SiDocker,
   SiOpenai,
+  SiTailwindcss,
+  SiExpress,
+  SiFirebase,
+  SiThreedotjs,
+  SiFramer,
+  SiWebpack,
+  SiOpencv,
+  SiNumpy
 } from 'react-icons/si'
 import { IconType } from 'react-icons'
 
@@ -39,4 +47,14 @@ export const techIcons: Record<string, IconType> = {
   'FastAPI': SiFastapi,
   'PostgreSQL': SiPostgresql,
   'Docker': SiDocker,
+  'TailwindCSS': SiTailwindcss,
+  'Express': SiExpress,
+  'Firebase': SiFirebase,
+  'Three.js': SiThreedotjs,
+  'Framer Motion': SiFramer,
+  'Webpack': SiWebpack,
+  'OpenCV': SiOpencv,
+  'NumPy': SiNumpy,
+  'OpenAI': SiOpenai,
+  'Performance APIs': SiJavascript
 } 

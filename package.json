@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.27.10",
     "@radix-ui/react-slot": "^1.2.3",
     "@sentry/nextjs": "^9.24.0",
     "autoprefixer": "^10.4.17",
