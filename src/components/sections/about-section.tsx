@@ -1,53 +1,54 @@
 'use client'
 
 import { motion } from '@/components/motion-wrapper'
-import Image from 'next/image'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FaCode, FaRocket, FaTools, FaDatabase, FaCloud, FaMobile } from 'react-icons/fa'
+import { Card, CardContent } from '@/components/ui/card'
+import { FaCode, FaRocket, FaTools, FaDatabase, FaCloud, FaMobile, FaLanguage, FaLightbulb, FaUsers, FaChartLine } from 'react-icons/fa'
 
-const stats = [
-  { 
-    label: 'Years Experience', 
-    value: '3+',
-    icon: <FaCode className="w-6 h-6 text-blue-500" />
+const capabilities = [
+  {
+    icon: <FaDatabase className="w-6 h-6 text-blue-500" />,
+    title: 'Architecture and scalability',
+    description: 'Design predictable systems with sensible boundaries, good naming, and clean handoffs so codebases stay easy to change.'
   },
-  { 
-    label: 'Projects Completed', 
-    value: '20+',
-    icon: <FaRocket className="w-6 h-6 text-green-500" />
+  {
+    icon: <FaCode className="w-6 h-6 text-green-500" />,
+    title: 'Full‑stack delivery',
+    description: 'Ship end‑to-end features across React/Next.js, Node, and Flutter with a product‑first mindset and strong attention to UX.'
+  },
+  {
+    icon: <FaLightbulb className="w-6 h-6 text-yellow-500" />,
+    title: 'AI enablement',
+    description: 'Integrate ML features where they add real value—classification, analytics, and smart automation with maintainable APIs.'
+  },
+  {
+    icon: <FaChartLine className="w-6 h-6 text-purple-500" />,
+    title: 'Cost‑aware decisions',
+    description: 'Favor efficient hosting and tooling like Vercel/Supabase, caching, and lightweight services to keep ops simple and lean.'
+  },
+  {
+    icon: <FaTools className="w-6 h-6 text-red-500" />,
+    title: 'Developer experience',
+    description: 'Consistent conventions, purposeful docs, and tidy PRs that help teams move faster with less friction.'
+  },
+  {
+    icon: <FaLanguage className="w-6 h-6 text-indigo-500" />,
+    title: 'Multilingual products',
+    description: 'Build for Arabic and English with RTL support and thoughtful typography for inclusive experiences.'
   }
 ]
 
-const skills = [
+const workApproach = [
   {
-    icon: <FaCode className="w-6 h-6 text-blue-500" />,
-    title: 'Core Skills',
-    items: [
-      'Full-Stack Development (MERN Stack)',
-      'Next.js & React Advanced Patterns',
-      'System Architecture & Design',
-      'Advanced Git & Version Control'
-    ],
+    title: 'Transparent updates',
+    description: 'Short, friendly check‑ins and async‑ready notes so everyone stays aligned without meetings overload.'
   },
   {
-    icon: <FaDatabase className="w-6 h-6 text-purple-500" />,
-    title: 'Backend Expertise',
-    items: [
-      'RESTful & GraphQL API Design',
-      'MongoDB & PostgreSQL Optimization',
-      'Microservices Architecture',
-      'OAuth & JWT Authentication'
-    ],
+    title: 'Iterative delivery',
+    description: 'Break work into shippable slices, gather feedback early, and keep momentum steady and predictable.'
   },
   {
-    icon: <FaMobile className="w-6 h-6 text-green-500" />,
-    title: 'Frontend Mastery',
-    items: [
-      'Responsive & Mobile-First Design',
-      'Advanced React Patterns & Hooks',
-      'State Management (Redux, Context)',
-      'Web Performance Optimization'
-    ],
+    title: 'Quality without drama',
+    description: 'Tests where they matter, performance budgets, and a bias for clarity over cleverness.'
   }
 ]
 
@@ -63,118 +64,117 @@ export function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Tech Profile <span className="text-primary">v3.0</span>
+            About <span className="text-primary">Me</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A passionate software developer with expertise in building modern web applications
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* Profile Card */}
+        <div className="max-w-4xl mx-auto mb-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-1"
+            className="mb-12"
           >
-            <Card className="h-full bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10">
-              <CardHeader>
-                <div className="relative w-40 h-40 mx-auto mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full animate-pulse" />
-                  <Image
-                    src="/profile.jpg"
-                    alt="Omar Ashraf"
-                    fill
-                    className="rounded-full object-cover p-1"
-                  />
-                </div>
-                <CardTitle className="text-2xl text-center mb-2">Omar</CardTitle>
-                <p className="text-center text-muted-foreground">
-                  Experienced Software Developer
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="flex items-center gap-2 bg-green-500/10 text-green-500 px-3 py-1.5 rounded-full text-sm">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span>Available for Work</span>
+            <Card className="bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10">
+              <CardContent className="pt-8">
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-lg leading-relaxed mb-6 text-center">
+                    <strong>Hi, I&apos;m Omar</strong> — a full‑stack developer who loves building{' '}
+                    <strong>clean, scalable solutions</strong> with modern technologies. I focus on{' '}
+                    <strong>user experience</strong> and <strong>performance</strong> to create impactful digital products.
+                  </p>
+
+                  <div className="bg-primary/10 p-6 rounded-lg border border-primary/20 mb-6 text-center">
+                    <h3 className="text-xl font-bold mb-2">Availability</h3>
+                    <p>
+                      Based in Benha, Egypt. Open to full‑time or contract roles where thoughtful engineering matters.
+                    </p>
                   </div>
-                </div>
-                <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                  <FaTools className="w-4 h-4" />
-                  <span>Full Stack Developer</span>
                 </div>
               </CardContent>
             </Card>
           </motion.div>
 
-          {/* Skills Grid */}
+          {/* Capabilities Grid */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="mb-12"
           >
-            {skills.map((skill, index) => (
-              <Card 
-                key={index}
-                className="bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10 hover:border-primary/20 transition-all duration-300"
-              >
-                <CardHeader className="flex flex-row items-center gap-2">
-                  {skill.icon}
-                  <CardTitle className="text-lg">{skill.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {skill.items.map((item, itemIndex) => (
-                      <li 
-                        key={itemIndex} 
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 group"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors duration-300" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+            <h3 className="text-2xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+              <FaTools className="text-primary" />
+              <span>Technical Capabilities</span>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {capabilities.map((capability, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <Card className="bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 h-full group hover:-translate-y-1">
+                    <CardContent className="pt-6">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="mb-4 p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-300">
+                          {capability.icon}
+                        </div>
+                        <h4 className="text-lg font-bold mb-2">
+                          {capability.title}
+                        </h4>
+                        <p className="text-muted-foreground text-sm">
+                          {capability.description}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Work Approach */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-2xl font-bold mb-6 text-center flex items-center justify-center gap-2">
+              <FaUsers className="text-primary" />
+              <span>How I Work</span>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {workApproach.map((approach, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <Card 
+                    className="bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 h-full group hover:-translate-y-1"
+                  >
+                    <CardContent className="pt-6">
+                      <h4 className="font-bold mb-3 text-lg">{approach.title}</h4>
+                      <p className="text-muted-foreground text-sm">
+                        {approach.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {stats.map((stat, index) => (
-            <Card 
-              key={index} 
-              className="bg-gradient-to-br from-background to-background/50 backdrop-blur-sm border-primary/10 hover:border-primary/20 transition-all duration-300"
-            >
-              <CardContent className="pt-6">
-                <div className="text-center space-y-4">
-                  <div className="flex justify-center">
-                    {stat.icon}
-                  </div>
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-                    {stat.value}
-                  </div>
-                  <div className="text-muted-foreground font-medium">
-                    {stat.label}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </motion.div>
       </div>
     </section>
   )
-} 
+}

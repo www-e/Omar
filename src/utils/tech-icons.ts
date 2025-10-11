@@ -23,7 +23,7 @@ import {
   SiFramer,
   SiWebpack,
   SiOpencv,
-  SiNumpy
+  SiNumpy,
 } from 'react-icons/si'
 import { IconType } from 'react-icons'
 
@@ -56,5 +56,6 @@ export const techIcons: Record<string, IconType> = {
   'OpenCV': SiOpencv,
   'NumPy': SiNumpy,
   'OpenAI': SiOpenai,
-  'Performance APIs': SiJavascript
-} 
+  'Performance APIs': SiJavascript,
+  'shadcn/ui': SiReact, // Using React icon as placeholder for shadcn/ui
+}

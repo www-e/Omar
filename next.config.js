@@ -1,3 +1,7 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
@@ -22,8 +26,19 @@ const nextConfig = {
   },
   
   experimental: {
-    optimizePackageImports: ['@mui/icons-material', 'lucide-react', 'react-icons']
-  }
+    optimizePackageImports: ['@mui/icons-material', 'lucide-react', 'react-icons'],
+    serverComponentsExternalPackages: ['sharp'],
+  },
+  
+  // Additional performance optimizations
+  swcMinify: true,
+  optimizeFonts: true,
+  modularizeImports: {
+    'react-icons': {
+      transform: 'react-icons/{{member}}',
+      skipDefaultConversion: true,
+    },
+  },
 };
 
-module.exports = nextConfig; 
+module.exports = withBundleAnalyzer(nextConfig); 

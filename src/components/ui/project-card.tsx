@@ -4,7 +4,6 @@ import { motion } from '@/components/motion-wrapper'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Project } from '@/types/project'
-import { Button } from './button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './card'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 import { techIcons } from '@/utils/tech-icons'
@@ -49,31 +48,55 @@ export function ProjectCard({ project }: ProjectCardProps) {
     border: 'border-primary/20'
   }
 
+  const handleCardClick = () => {
+    window.location.href = `/projects/${project.id}`
+  }
+
+  // Check if this project should show "NEW" tag
+  const showNewTag = ['gorilla-sweet', 'Sportology-academy'].includes(project.id)
+
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.2, type: "tween", ease: "easeOut" }}
+      className="relative"
     >
-      <Card className="h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:shadow-lg hover:border-primary/50 bg-card/50 backdrop-blur-sm">
-        <div className="relative aspect-video overflow-hidden group">
-          <Image
-            src={project.image}
-            alt={`${project.title} project screenshot`}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={false}
-          />
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <p className="text-white text-center px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-              {project.shortDescription}
-            </p>
+      <Card
+        className="h-full flex flex-col overflow-hidden transform transition-all duration-300 hover:shadow-lg hover:border-primary/50 bg-card/50 backdrop-blur-sm cursor-pointer"
+        onClick={handleCardClick}
+      >
+        <div className="relative">
+          <div className="relative aspect-video overflow-hidden group">
+            <Image
+              src={project.image}
+              alt={`${project.title} project screenshot`}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={false}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+            />
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p className="text-white text-center px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                {project.shortDescription}
+              </p>
+            </div>
           </div>
+
+          {/* NEW Tag */}
+          {showNewTag && (
+            <div className="absolute -top-2 -right-2 z-10">
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
+                NEW
+              </div>
+            </div>
+          )}
         </div>
         <CardHeader>
           <div className="flex items-center justify-between gap-4">
             <CardTitle className="text-xl line-clamp-1">{project.title}</CardTitle>
-            <span 
+            <span
               className={`text-xs px-3 py-1.5 rounded-full border ${categoryStyle.bg} ${categoryStyle.text} ${categoryStyle.border} font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-sm`}
             >
               {project.category}
@@ -115,38 +138,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </CardContent>
         <CardFooter className="grid grid-cols-2 gap-4 p-6">
-          <Button 
-            asChild 
-            variant="default"
-            className="flex-1 transition-transform duration-300 hover:scale-105"
+          <div className="flex-1">
+            {/* Spacer for visual balance */}
+          </div>
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 flex-1 transition-transform duration-300 hover:scale-105"
+            onClick={(e) => e.stopPropagation()}
           >
-            <Link 
-              href={project.liveUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2"
-            >
-              <FaExternalLinkAlt className="w-4 h-4" />
-              <span>Live Demo</span>
-            </Link>
-          </Button>
-          <Button 
-            asChild 
-            variant="outline"
-            className="flex-1 transition-transform duration-300 hover:scale-105"
-          >
-            <Link 
-              href={project.githubUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2"
-            >
-              <FaGithub className="w-4 h-4" />
-              <span>View Code</span>
-            </Link>
-          </Button>
+            <FaExternalLinkAlt className="w-4 h-4 mr-2" />
+            <span>Live Demo</span>
+          </a>
         </CardFooter>
       </Card>
     </motion.div>
   )
-} 
+}
