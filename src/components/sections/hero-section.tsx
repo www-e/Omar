@@ -94,7 +94,7 @@ export function HeroSection() {
                 </Button>
               </Link>
               <a
-                href="/cv.pdf"
+                href="/omar.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto"

@@ -137,15 +137,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="grid grid-cols-2 gap-4 p-6">
-          <div className="flex-1">
-            {/* Spacer for visual balance */}
-          </div>
+        <CardFooter className="p-6">
           <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 flex-1 transition-transform duration-300 hover:scale-105"
+            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 transition-transform duration-300 hover:scale-105"
             onClick={(e) => e.stopPropagation()}
           >
             <FaExternalLinkAlt className="w-4 h-4 mr-2" />

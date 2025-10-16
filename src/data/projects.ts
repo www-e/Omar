@@ -31,7 +31,7 @@ export const projects: Project[] = [
     ],
     image: '/projects/gorilla-sweet.jpg',
     githubUrl: 'https://github.com/www-e/gorilla-sweet',
-    liveUrl: 'https://gorilla-sweet.vercel.app',
+    liveUrl: 'https://www-e.github.io/gorillas_sweet/',
     category: 'E-commerce',
     keywords: [
       'E-commerce',
@@ -139,7 +139,7 @@ export const projects: Project[] = [
       'Mobile-responsive design'
     ],
     image: '/projects/sportolofy-academy.jpg',
-    githubUrl: 'https://sportologyacademy.vercel.app/',
+    githubUrl: 'https://github.com/www-e/edrak',
     liveUrl: 'https://sportologyacademy.vercel.app/',
     category: 'Education',
     keywords: [
@@ -895,8 +895,8 @@ export const projects: Project[] = [
       'API documentation'
     ],
     image: '/projects/tawaqlna.jpg',
-    githubUrl: 'https://github.com/www-e/Tawaqlna',
-    liveUrl: 'https://qaportal1.vercel.app/dashboard',
+    githubUrl: 'https://github.com/www-e/tawaqlnaqa',
+    liveUrl: 'https://qaportal1.vercel.app/',
     category: 'Web Development',
     keywords: [
       'Quality Assurance',
