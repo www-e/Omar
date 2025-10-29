@@ -980,5 +980,111 @@ export const projects: Project[] = [
       'Database design for high-traffic e-commerce',
       'Customer relationship management systems'
     ]
+  },
+  {
+    id: 'ipi',
+    title: 'IPI - Invest Pillars International',
+    shortDescription: 'A comprehensive investment and luxury real estate platform showcasing premium properties and investment opportunities with modern web technologies.',
+    fullDescription: `IPI (Invest Pillars International) is a sophisticated platform specializing in luxury real estate investments and premium property showcase.
+    The platform serves as a bridge between high-net-worth individuals and exclusive investment opportunities in luxury real estate markets.
+    Currently under active development, the project will feature property portfolios, investment analysis tools, and premium client management systems.`,
+    techStack: ['Next.js', 'React', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Node.js', 'MongoDB'],
+    role: 'Full Stack Developer & Real Estate Technology Specialist',
+    skills: [
+      'Investment Platform Development',
+      'Real Estate Technology',
+      'Property Management Systems',
+      'Financial Data Analysis',
+      'Luxury Market Understanding',
+      'Client Portal Development',
+      'Investment Analytics'
+    ],
+    features: [
+      'Luxury property showcase',
+      'Investment opportunity analysis',
+      'Client portfolio management',
+      'Market trend analysis',
+      'Premium client dashboard',
+      'Property search and filtering',
+      'Investment calculator tools',
+      'Market insights and reports'
+    ],
+    image: '/projects/ipi.jpg',
+    githubUrl: 'https://ipillarsi.com/',
+    liveUrl: 'https://ipillarsi.com/', // Under construction
+    category: 'Investment/Real Estate',
+    keywords: [
+      'Investment Platform',
+      'Luxury Real Estate',
+      'Property Management',
+      'Financial Technology',
+      'Investment Analysis',
+      'Real Estate Portal'
+    ],
+    totalHours: 0, // Ongoing project
+    status: 'in-progress',
+    timeline: [
+      {
+        phase: 'Requirements & Market Analysis',
+        duration: '2 weeks',
+        description: 'Analyzed luxury real estate market requirements and defined platform specifications',
+        deliverables: ['Market research report', 'Platform requirements', 'User personas', 'Feature specifications']
+      },
+      {
+        phase: 'Platform Architecture Design',
+        duration: '3 weeks',
+        description: 'Designed scalable architecture for investment platform with focus on security and performance',
+        deliverables: ['System architecture', 'Database design', 'API specifications', 'Security framework']
+      },
+      {
+        phase: 'Core Development',
+        duration: '8 weeks',
+        description: 'Building core platform features including property showcase, client management, and investment tools',
+        deliverables: ['Property management system', 'Client portal', 'Investment calculator', 'Market analytics']
+      },
+      {
+        phase: 'Advanced Features & Launch',
+        duration: '4 weeks',
+        description: 'Implementation of advanced analytics, reporting tools, and platform launch preparation',
+        deliverables: ['Advanced analytics', 'Reporting system', 'Security testing', 'Production deployment']
+      }
+    ],
+    technicalSteps: [
+      {
+        title: 'Luxury Real Estate Platform Architecture',
+        description: 'Designed scalable platform architecture tailored for high-end real estate investments and premium client management',
+        technologies: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB', 'Cloud Services'],
+        challenges: ['Complex property data modeling', 'High-security requirements', 'Performance with large datasets'],
+        solutions: ['Optimized database schema with proper indexing, implemented enterprise-grade security protocols']
+      },
+      {
+        title: 'Investment Analysis Engine',
+        description: 'Built comprehensive investment analysis tools with real-time market data integration and predictive analytics',
+        technologies: ['JavaScript', 'Financial APIs', 'Data Analytics', 'Chart.js', 'Real-time Updates'],
+        challenges: ['Complex financial calculations', 'Real-time data integration', 'Market prediction accuracy'],
+        solutions: ['Integrated financial data APIs and implemented advanced calculation algorithms with confidence intervals']
+      },
+      {
+        title: 'Premium Client Portal',
+        description: 'Developed exclusive client portal with personalized dashboards, portfolio tracking, and investment recommendations',
+        technologies: ['React', 'Real-time Updates', 'Data Visualization', 'Authentication', 'Role Management'],
+        challenges: ['Personalized user experiences', 'Real-time portfolio updates', 'High security standards'],
+        solutions: ['Implemented personalized dashboard system with role-based access control and real-time data synchronization']
+      }
+    ],
+    challenges: [
+      'Building secure platform for high-net-worth clients',
+      'Implementing complex investment calculation algorithms',
+      'Creating intuitive luxury real estate showcase',
+      'Ensuring real-time market data integration',
+      'Managing high-performance requirements for luxury market'
+    ],
+    learnings: [
+      'Financial technology platform development',
+      'Luxury real estate market understanding',
+      'High-security client portal architecture',
+      'Investment analytics and prediction modeling',
+      'Premium user experience design for financial services'
+    ]
   }
 ]

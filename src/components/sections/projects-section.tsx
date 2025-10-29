@@ -35,6 +35,11 @@ const categoryStyles: { [key: string]: { bg: string; text: string; border: strin
     bg: 'bg-pink-500/10',
     text: 'text-pink-500',
     border: 'border-pink-500/20'
+  },
+  'Investment/Real Estate': {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-500',
+    border: 'border-amber-500/20'
   }
 }
 
