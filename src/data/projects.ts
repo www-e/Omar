@@ -2,6 +2,218 @@ import { Project } from '@/types/project'
 
 export const projects: Project[] = [
   {
+    id: 'navaia-agentic',
+    title: 'Navaia Agentic - AI-Powered Market Platform',
+    shortDescription: 'Advanced AI platform with intelligent dashboards, campaign management, TTS, and speech-to-text capabilities for KSA market insights.',
+    fullDescription: `Navaia Agentic is a sophisticated AI-powered market research and campaign management platform developed for Navaia, a leading KSA company.
+    The platform features intelligent dashboards with real-time market analytics, advanced campaign management tools, text-to-speech synthesis,
+    and speech-to-text processing capabilities. Built with cutting-edge AI technologies, it provides actionable market insights and automated
+    campaign optimization for businesses in the Saudi Arabian market.`,
+    techStack: ['Next.js', 'React', 'Python', 'FastAPI', 'OpenAI', 'Azure Speech Services', 'TensorFlow', 'TypeScript'],
+    role: 'AI Platform Developer & Full Stack Engineer',
+    skills: [
+      'AI Integration',
+      'Natural Language Processing',
+      'Speech-to-Text Processing',
+      'Text-to-Speech Synthesis',
+      'Market Analytics',
+      'Campaign Management',
+      'Real-time Dashboards',
+      'Arabic Language Processing'
+    ],
+    features: [
+      'AI-powered market analytics dashboard',
+      'Real-time campaign performance tracking',
+      'Speech-to-text processing',
+      'Text-to-speech synthesis',
+      'Arabic and English language support',
+      'Intelligent campaign optimization',
+      'Market insights and recommendations',
+      'Automated reporting system'
+    ],
+    image: '/projects/navaia-agentic.jpg',
+    githubUrl: 'https://agentic.navaia.sa/dashboard',
+    liveUrl: 'https://agentic.navaia.sa/dashboard',
+    category: 'AI/ML',
+    keywords: [
+      'AI Platform',
+      'Market Analytics',
+      'Campaign Management',
+      'Speech Processing',
+      'Saudi Arabia',
+      'Market Research',
+      'TTS/STT'
+    ],
+    totalHours: 300,
+    status: 'completed',
+    timeline: [
+      {
+        phase: 'AI Architecture Design',
+        duration: '4 weeks',
+        description: 'Designed AI-powered platform architecture with focus on speech processing and market analytics',
+        deliverables: ['AI system architecture', 'Speech processing pipeline', 'Market analytics framework', 'Database design']
+      },
+      {
+        phase: 'AI Integration & Development',
+        duration: '8 weeks',
+        description: 'Integrated OpenAI GPT models, Azure Speech Services, and TensorFlow for market insights',
+        deliverables: ['OpenAI integration', 'Speech-to-text pipeline', 'Text-to-speech system', 'Market analytics engine']
+      },
+      {
+        phase: 'Platform Development',
+        duration: '6 weeks',
+        description: 'Built comprehensive dashboard and campaign management interfaces with real-time updates',
+        deliverables: ['React dashboard', 'Campaign management UI', 'Real-time analytics', 'Arabic language support']
+      },
+      {
+        phase: 'Testing & Optimization',
+        duration: '3 weeks',
+        description: 'Comprehensive testing, AI model optimization, and production deployment',
+        deliverables: ['AI model testing', 'Performance optimization', 'Production deployment', 'Documentation']
+      }
+    ],
+    technicalSteps: [
+      {
+        title: 'AI Model Integration & Training',
+        description: 'Integrated OpenAI GPT models with custom fine-tuning for market research and campaign optimization',
+        technologies: ['OpenAI GPT', 'Python', 'FastAPI', 'Prompt Engineering'],
+        challenges: ['Market-specific AI responses', 'Arabic language processing', 'Real-time AI processing'],
+        solutions: ['Custom prompt engineering for KSA market context and multi-language model optimization']
+      },
+      {
+        title: 'Advanced Speech Processing System',
+        description: 'Implemented speech-to-text and text-to-speech capabilities using Azure Speech Services',
+        technologies: ['Azure Speech Services', 'React', 'Web Audio API', 'Python'],
+        challenges: ['Arabic speech recognition accuracy', 'Real-time processing performance', 'Multi-language support'],
+        solutions: ['Custom speech models and optimized audio processing pipelines']
+      },
+      {
+        title: 'Market Analytics Dashboard',
+        description: 'Built real-time market analytics dashboard with AI-powered insights and campaign tracking',
+        technologies: ['React', 'D3.js', 'WebSocket', 'Real-time Updates'],
+        challenges: ['Real-time data visualization', 'AI insight generation', 'Performance with large datasets'],
+        solutions: ['Optimized real-time data streaming and AI-powered insight algorithms']
+      }
+    ],
+    challenges: [
+      'Integrating complex AI models with real-time speech processing',
+      'Optimizing performance for Arabic and English speech recognition',
+      'Building accurate market prediction algorithms',
+      'Ensuring data privacy and security for business intelligence'
+    ],
+    learnings: [
+      'Advanced AI integration patterns for business applications',
+      'Real-time speech processing and synthesis technologies',
+      'Market analytics and prediction modeling',
+      'Multi-language AI model optimization for Arabic markets'
+    ]
+  },
+  {
+    id: 'graphictablet-store',
+    title: 'Graphic Tablet Store - E-commerce Platform',
+    shortDescription: 'Professional e-commerce platform for graphic tablets and digital art equipment with modern payment integration and inventory management.',
+    fullDescription: `Graphic Tablet Store is a specialized e-commerce platform dedicated to graphic tablets, digital art equipment, and creative tools.
+    The platform features an intuitive product catalog, secure payment processing, comprehensive product comparisons, and advanced filtering
+    for artists and designers. Built with modern web technologies, it provides a seamless shopping experience for creative professionals
+    and hobbyists looking for high-quality digital art equipment.`,
+    techStack: ['Next.js', 'React', 'Stripe', 'Supabase', 'TailwindCSS', 'Framer Motion', 'TypeScript'],
+    role: 'Full Stack Developer & E-commerce Specialist',
+    skills: [
+      'E-commerce Development',
+      'Product Catalog Management',
+      'Payment Integration',
+      'Inventory Tracking',
+      'SEO Optimization',
+      'Product Comparison Tools',
+      'User Experience Design'
+    ],
+    features: [
+      'Comprehensive product catalog',
+      'Advanced product filtering and search',
+      'Product comparison tools',
+      'Secure payment processing',
+      'Inventory management system',
+      'Customer reviews and ratings',
+      'Technical specifications comparison',
+      'Creative tool recommendations'
+    ],
+    image: '/projects/graphictablet-store.jpg',
+    githubUrl: 'https://www.graphictablet.store/',
+    liveUrl: 'https://www.graphictablet.store/',
+    category: 'E-commerce',
+    keywords: [
+      'E-commerce',
+      'Graphic Tablets',
+      'Digital Art',
+      'Creative Tools',
+      'Payment Integration',
+      'Product Catalog'
+    ],
+    totalHours: 200,
+    status: 'completed',
+    timeline: [
+      {
+        phase: 'E-commerce Architecture Planning',
+        duration: '3 weeks',
+        description: 'Designed e-commerce architecture for graphic tablet marketplace with focus on product discovery',
+        deliverables: ['E-commerce architecture', 'Product schema design', 'Payment integration plan', 'Search optimization strategy']
+      },
+      {
+        phase: 'Product Catalog Development',
+        duration: '6 weeks',
+        description: 'Built comprehensive product catalog with advanced filtering, search, and comparison features',
+        deliverables: ['Product catalog interface', 'Advanced filtering system', 'Product comparison tools', 'Search functionality']
+      },
+      {
+        phase: 'Payment & Checkout System',
+        duration: '4 weeks',
+        description: 'Implemented secure payment processing and streamlined checkout experience',
+        deliverables: ['Stripe payment integration', 'Checkout flow', 'Order management', 'Payment security']
+      },
+      {
+        phase: 'Optimization & Launch',
+        duration: '3 weeks',
+        description: 'Performance optimization, SEO implementation, and platform launch',
+        deliverables: ['SEO optimization', 'Performance tuning', 'Testing suite', 'Production deployment']
+      }
+    ],
+    technicalSteps: [
+      {
+        title: 'Advanced Product Search & Filtering',
+        description: 'Implemented sophisticated product search with filtering by specifications, brand, price, and compatibility',
+        technologies: ['PostgreSQL', 'Elasticsearch', 'React', 'TypeScript'],
+        challenges: ['Complex product specifications search', 'Real-time filtering performance', 'Multi-attribute filtering'],
+        solutions: ['Optimized database queries with proper indexing and implemented efficient filtering algorithms']
+      },
+      {
+        title: 'Product Comparison System',
+        description: 'Built comprehensive product comparison tools allowing side-by-side specification analysis',
+        technologies: ['React', 'Dynamic Components', 'Responsive Design', 'Data Visualization'],
+        challenges: ['Dynamic comparison layouts', 'Specification data organization', 'Mobile optimization'],
+        solutions: ['Flexible component architecture with responsive comparison tables and specification mapping']
+      },
+      {
+        title: 'Stripe Payment Integration',
+        description: 'Integrated Stripe payment processing with support for multiple payment methods and secure transactions',
+        technologies: ['Stripe API', 'Webhook', 'Next.js', 'Security'],
+        challenges: ['Payment security compliance', 'Multiple payment methods', 'Transaction reliability'],
+        solutions: ['Implemented secure payment flow with proper error handling and payment method flexibility']
+      }
+    ],
+    challenges: [
+      'Building complex product filtering and search systems',
+      'Implementing comprehensive product comparison tools',
+      'Optimizing e-commerce performance with large product catalogs',
+      'Creating intuitive product discovery experience for creative professionals'
+    ],
+    learnings: [
+      'Advanced e-commerce search and filtering techniques',
+      'Product comparison system architecture design',
+      'Payment integration best practices for specialized markets',
+      'User experience design for creative professional audiences'
+    ]
+  },
+  {
     id: 'gorilla-sweet',
     title: 'Gorilla Sweet - E-commerce Dessert Store',
     shortDescription: 'A full-featured e-commerce platform for premium handcrafted desserts with Supabase integration, admin dashboard, and seamless checkout experience.',
@@ -114,10 +326,10 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: 'sportolofy-academy',
-    title: 'Sportolofy Academy - Course Selling Platform',
+    id: 'sportology-academy',
+    title: 'Sportology Plus Academy - Course Selling Platform',
     shortDescription: 'A comprehensive course selling platform for sports education with modern web technologies.',
-    fullDescription: `Sportolofy Academy is a cutting-edge course selling platform designed specifically for sports education.
+    fullDescription: `sportology Plus Academy is a cutting-edge course selling platform designed specifically for sports education.
     Built with Next.js, Node.js, React, and shadcn/ui, it provides an intuitive interface for both instructors and students.
     The platform features course management, payment processing, user authentication, and interactive learning tools.`,
     techStack: ['Next.js', 'Node.js', 'React', 'shadcn/ui', 'MongoDB', 'TailwindCSS'],
@@ -138,7 +350,7 @@ export const projects: Project[] = [
       'Instructor dashboard',
       'Mobile-responsive design'
     ],
-    image: '/projects/sportolofy-academy.jpg',
+    image: '/projects/sportology-academy.jpg',
     githubUrl: 'https://github.com/www-e/edrak',
     liveUrl: 'https://sportologyacademy.vercel.app/',
     category: 'Education',
