@@ -26,11 +26,9 @@ import {
   SiRedux,
   SiGraphql,
   SiKubernetes,
-  SiJenkins,
   SiLinux,
   SiPostman,
-  SiJira,
-  SiConfluence
+  SiJira
 } from 'react-icons/si'
 
 const skillCategories = [
@@ -67,7 +65,6 @@ const skillCategories = [
       { name: 'GitHub', icon: SiGithub },
       { name: 'Docker', icon: SiDocker },
       { name: 'Kubernetes', icon: SiKubernetes },
-      { name: 'Jenkins', icon: SiJenkins },
       { name: 'AWS', icon: SiAmazon },
       { name: 'Linux', icon: SiLinux },
     ]
@@ -78,7 +75,6 @@ const skillCategories = [
       { name: 'Postman', icon: SiPostman },
       { name: 'Firebase', icon: SiFirebase },
       { name: 'Jira', icon: SiJira },
-      { name: 'Confluence', icon: SiConfluence },
     ]
   }
 ]

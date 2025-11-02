@@ -52,7 +52,7 @@ const personSchema = {
   '@type': 'Person',
   name: siteConfig.name,
   url: siteConfig.url,
-  image: `${siteConfig.url}/profile.jpg`,
+  image: `${siteConfig.url}/profile.png`,
   description: siteConfig.description,
   sameAs: [
     siteConfig.links.github,

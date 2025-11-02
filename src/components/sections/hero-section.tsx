@@ -21,25 +21,22 @@ export function HeroSection() {
       
       <div className="container mx-auto px-4 py-8 sm:py-16 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-          {/* Image Column - Simplified placeholder */}
+          {/* Image Column - Natural image display */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 flex-shrink-0"
           >
-            {/* Simplified image placeholder - you can add your image here */}
-            <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-background shadow-2xl">
-              <Image
-                src="/profile.jpg"
-                alt="Omar Ashraf"
-                fill
-                className="object-cover"
-                priority
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
-              />
-            </div>
+            <Image
+              src="/profile.png"
+              alt="Omar Ashraf"
+              fill
+              className="object-cover"
+              priority
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+            />
           </motion.div>
           
           {/* Text Content Column */}
@@ -116,8 +113,7 @@ export function HeroSection() {
               >
                 <Button
                   size="sm"
-                  variant="ghost"
-                  className="w-full sm:w-auto min-w-[140px] h-10 text-sm hover:bg-accent/30 transition-all duration-200 relative"
+                  className="w-full sm:w-auto min-w-[140px] h-10 text-sm bg-[#14B866] hover:bg-[#14B866]/90 text-white transition-all duration-200 relative border border-[#14B866] hover:border-[#14B866]/90"
                 >
                   <SiUpwork className="w-4 h-4 mr-2" />
                   Available for Work

@@ -3,7 +3,7 @@ const path = require('path');
 
 async function generateIcons() {
   const sizes = [192, 512];
-  const inputImage = path.join(process.cwd(), 'public', 'profile.jpg');
+  const inputImage = path.join(process.cwd(), 'public', 'profile.png');
 
   for (const size of sizes) {
     await sharp(inputImage)
