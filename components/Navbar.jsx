@@ -25,12 +25,14 @@ function initWiggle(element, intensity) {
 export default function Navbar() {
     useEffect(() => {
         const navbar = document.querySelector('.navbar');
-        const header = document.querySelector('.header-content');
         const contentSection = document.querySelector('.content-section');
         const footerEl = document.querySelector('.main-footer');
 
+        // ② Start white (on-dark) — video is dark background
+        if (navbar) { navbar.classList.add('on-dark'); navbar.classList.remove('on-light'); }
+
         const updateNavbarColor = () => {
-            if (!navbar || !header || !contentSection || !footerEl) return;
+            if (!navbar || !contentSection || !footerEl) return;
             const scrollPos = window.scrollY + navbar.offsetHeight / 2;
             const contentTop = contentSection.getBoundingClientRect().top + window.scrollY;
             const doubleMarquee = document.querySelector('.Double-marquee');

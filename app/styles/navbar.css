@@ -74,18 +74,9 @@
     color: inherit;
 }
 
-/* ─── Hero Header ─────────────────────────────────────────────────────────── */
-.header-content {
-    background-color: #1a1a1a;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #f0ebe6;
-}
 
-.header-content h1 {
-    color: inherit;
-    font-size: 3rem;
-    font-family: 'DM Sans', sans-serif;
+/* VimeoHero sits directly inside main-header — no extra wrapper needed */
+.main-header {
+    width: 100%;
+    position: relative;
 }

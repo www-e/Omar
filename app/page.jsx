@@ -2,6 +2,7 @@
 
 import SvgSymbols from '@/components/SvgSymbols';
 import Navbar from '@/components/Navbar';
+import VimeoHero from '@/components/VimeoHero';
 import HeroSection from '@/components/HeroSection';
 import ServiceCards from '@/components/ServiceCards';
 import DoubleMarquee from '@/components/DoubleMarquee';
@@ -18,9 +19,7 @@ export default function Home() {
             <CursorBubble />
             <header className="main-header">
                 <Navbar />
-                <div className="header-content">
-                    <h1>Header Section</h1>
-                </div>
+                <VimeoHero />
             </header>
             <main className="content-section">
                 <HeroSection />
