@@ -15,6 +15,8 @@
 /* Double marquee section + animations      */
 @import './styles/footer.css';
 /* Footer layout, credits, stickers         */
+@import './styles/vimeo-hero.css';
+/* Vimeo hero video player + headline       */
 @import './styles/cursor.css';
 /* Custom cursor bubble + scribble overlay  */
 @import './styles/responsive.css';
