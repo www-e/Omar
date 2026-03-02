@@ -1,6 +1,6 @@
 # Truus.co — Awwward-Winning Web Design Clone
 
-A highly interactive, visually stunning recreation of the **Truus.co** website, built with modern frontend technologies and focused on premium user experience and animations. This project was developed using **Antigravity AI** to demonstrate elite-level web development practices.
+A highly interactive, visually stunning recreation of the **Truus.co** website, rebuilt as a **Next.js + React** application. This project was originally built with vanilla HTML/CSS/JS and has been fully transformed into a modern, component-based architecture — while preserving every pixel of the original design and every frame of animation.
 
 <table>
   <tr>
@@ -12,67 +12,133 @@ A highly interactive, visually stunning recreation of the **Truus.co** website, 
   </tr>
 </table>
 
-
-
+---
 
 ## 🚀 Overview
 
-This project is a high-fidelity clone of the Truus advertising agency website. It captures the bold aesthetics, playful interactivity, and smooth motion design that are characteristic of Awwward-winning websites. The codebase is built with vanilla technologies to ensure maximum performance and control over every frame of animation.
+This project is a high-fidelity clone of the Truus advertising agency website. It captures the bold aesthetics, playful interactivity, and smooth motion design that are characteristic of Awwward-winning websites.
+
+The codebase was originally built in vanilla HTML/CSS/JS and has been **fully transformed to Next.js 15 + React 19**, with all animations, interactions, and assets ported 1:1.
+
+---
 
 ## ✨ Key Features
 
--   **Page Transition Mask Effect**: A custom GSAP-powered scribble animation that dynamically masks the entire screen to create a seamless page transition wipe. It includes smart logo contrast inversion (black/white) depending on the random scribble color, and an instantaneous "wipe" vanish effect that perfectly syncs with the scribble's trailing edge.
--   **Dynamic Navigation System**: Context-aware navbar that automatically adapts its colour theme (light/dark) based on the current scroll section.
--   **JS-Driven DOM**: Service cards, social icons, and marquee logos are all injected at runtime from clean JS data arrays — keeping `index.html` lean and maintainable.
--   **Elastic Card Interactions**: Custom GSAP-powered hover effects on service cards, featuring horizontal repulsion, elastic scaling, and smooth clustering.
--   **Smart Randomized Marquee**: Infinite scrolling logo section with advanced randomisation logic:
-    -   No two identical logos appear consecutively (matched by image `src`).
-    -   No two identical background colours appear consecutively.
-    -   Both constraints also hold at the seamless scroll seam (loop wrap-around).
--   **Scroll-Triggered SVG Animations**: Hand-drawn style underlines and path animations that reveal as the user explores the page.
--   **Centralized Wiggle Config**: All hover-wiggle intensities (socials, heading, map link, email, WhatsApp) are controlled from a single `WIGGLE_CONFIG` object in `data.js` — change one number to tune the whole site.
--   **Footer Sticker — Velocity Push Effect**: Footer stickers react to fast cursor swipes nearby. The sticker is pushed in the direction of the cursor movement, with strength proportional to swipe speed. Has no effect when the cursor is directly on the sticker; auto-springs back when the cursor slows or leaves.
--   **High-End Typography**: Premium variable fonts (*Epilogue* and *DM Sans*) for a brutalist yet polished look.
--   **Interactive Micro-details**:
-    -   Visibility-triggered tab titles ("Hey, over here! 👋") to re-engage users.
-    -   Configurable per-element wiggle animations on hover via `data-wiggle` attributes.
-    -   Custom SVG cursor with context-aware states.
--   **Self-Hosted SVG Logos**: All 8 brand logos are downloaded locally into `assets/Brand Logos SVG/` — no CDN dependency at runtime.
--   **Responsive & Semantic**: Built with clean HTML5 and modern CSS3 (Flexbox / Grid / Variables) for a solid foundation.
+- **Page Transition Mask Effect**: A custom GSAP-powered scribble animation that dynamically masks the entire screen. Includes smart logo contrast inversion and a perfectly synced "wipe" vanish effect.
+- **Dynamic Navigation System**: Context-aware navbar that automatically adapts its colour theme (light/dark) based on the current scroll section.
+- **React Component Architecture**: Every section (Navbar, Hero, Cards, Marquee, Footer) is its own clean, isolated React component.
+- **Elastic Card Interactions**: Custom GSAP-powered hover effects on service cards — horizontal repulsion, elastic scaling, and smooth clustering.
+- **Smart Randomized Marquee**: Infinite scrolling logo section with advanced randomisation logic:
+  - No two identical logos appear consecutively (matched by image `src`).
+  - No two identical background colours appear consecutively.
+  - Both constraints also hold at the seamless scroll seam (loop wrap-around).
+- **Scroll-Triggered SVG Animations**: Hand-drawn style underlines and path animations that reveal as the user explores the page.
+- **Footer Sticker — Velocity Push Effect**: Footer stickers react to fast cursor swipes nearby. Strength is proportional to swipe speed; auto-springs back when the cursor slows.
+- **Centralized Wiggle Config**: All hover-wiggle intensities are controlled from a single `WIGGLE_CONFIG` object in `lib/data.js`.
+- **High-End Typography**: Premium variable fonts (*Epilogue* and *DM Sans*), self-hosted locally.
+- **Interactive Micro-details**:
+  - Visibility-triggered tab title change (`"Hey, over here! 👋"`) to re-engage users.
+  - Custom SVG cursor with context-aware states.
+  - Configurable per-element wiggle animations on hover.
+- **Self-Hosted SVG Logos**: All 8 brand logos are stored locally in `public/assets/` — no CDN dependency at runtime.
+- **Responsive & Semantic**: Fully responsive design with mobile-first media queries and a GSAP-powered card stack on mobile.
 
-## 🛠️ Built With
+---
 
--   **HTML5 & CSS3**: Native styling using CSS Variables for an easy-to-manage design system.
--   **JavaScript (ES6+)**: Custom logic for DOM manipulation, dynamic rendering, and state management.
--   **GSAP (GreenSock Animation Platform)**: The core engine for all sophisticated timing and motion.
--   **ScrollTrigger**: For orchestration of animations linked to the user's scroll progress.
--   **Lenis**: Ultra-smooth inertia scrolling.
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **Next.js 15** | React framework, App Router, file-based routing |
+| **React 19** | Component-based UI architecture |
+| **Vanilla CSS** | Full design system via CSS Variables — zero Tailwind |
+| **GSAP + ScrollTrigger** | All animations, scroll-driven effects, elastic physics |
+| **Lenis** | Ultra-smooth inertia scrolling |
+
+---
 
 ## 📦 Project Structure
 
 ```text
-├── assets/
-│   ├── Brand Logos SVG/           # Self-hosted marquee brand logos (8 SVGs)
-│   │   ├── oxxio_logo.svg
-│   │   ├── hema_logo.svg
-│   │   ├── kfc_logo.svg
-│   │   ├── swapfiets_logo.svg
-│   │   ├── anwb_logo.svg
-│   │   ├── netflix_logo.svg
-│   │   ├── ace_tate_logo.svg
-│   │   └── getir_logo.svg
-│   ├── Card-Sticker SVG/          # Stickers on service cards
-│   ├── Cursor SVG/                # Custom cursor states
-│   ├── Footer-Sticker SVG/        # Decorative footer stickers (6 SVGs)
-│   ├── Marquee-blob SVG/          # Blob background + hand in marquee section
-│   └── Navbar SVG/                # Navbar icons and blobs
-├── fonts/                         # Custom web fonts (Epilogue, DM Sans)
-├── index.html                     # Lean page shell — structure only
-├── data.js                        # All static data: brands, colors, cards, icons, WIGGLE_CONFIG
-├── script.js                      # GSAP animations + all dynamic DOM injection
-├── styles.css                     # Core styles and design system tokens
-└── README.md                      # Project documentation
+truus/
+├── app/
+│   ├── globals.css          # Full design system — CSS Variables, typography, layout
+│   ├── layout.jsx           # Root layout — <html>, metadata, favicon
+│   └── page.jsx             # Main page — assembles all section components
+│
+├── components/
+│   ├── CursorBubble.jsx     # Custom "click" cursor bubble with GSAP tracking
+│   ├── DoubleMarquee.jsx    # Randomised logo marquee + scroll-triggered animations
+│   ├── Footer.jsx           # Full footer — credits, stickers, social icons, wiggles
+│   ├── HeroSection.jsx      # "call us if you need:" title + underline draw animation
+│   ├── Navbar.jsx           # Fixed navbar + scroll color logic + logo wiggle
+│   ├── ServiceCards.jsx     # 5 service cards — desktop hover spread + mobile scroll stack
+│   ├── SmoothScroll.jsx     # Lenis init + GSAP ticker sync (renders null)
+│   ├── SvgSymbols.jsx       # Hidden SVG <symbol> defs (bullet, card divider)
+│   └── TransitionScribble.jsx # Full-screen scribble mask animation on logo click
+│
+├── lib/
+│   └── data.js              # All static data as ES module exports
+│
+├── public/
+│   ├── assets/
+│   │   ├── Brand Logos SVG/     # 8 self-hosted marquee brand logos
+│   │   ├── Card-Sticker SVG/    # Stickers on service cards
+│   │   ├── Cursor SVG/          # Custom cursor SVG states
+│   │   ├── Footer-Sticker SVG/  # 6 decorative footer stickers
+│   │   ├── Marquee-blob SVG/    # Blob + hand in marquee section
+│   │   └── Navbar SVG/          # Navbar blob + work icon
+│   └── fonts/
+│       ├── DMSans-VariableFont_opsz,wght.ttf
+│       └── Epilogue-VariableFont_wght.ttf
+│
+├── .gitignore
+├── jsconfig.json            # @/ import alias configuration
+├── next.config.mjs          # Next.js config with webpack @/ alias
+├── package.json
+└── README.md
 ```
+
+---
+
+## 📊 `lib/data.js` — Centralized Data
+
+All static data lives in `lib/data.js` as named ES module exports:
+
+| Export | Purpose |
+|---|---|
+| `brands[]` | 8 brand objects `{ name, src }` pointing to `/public/assets/` |
+| `colors[]` | Background colour pool for the marquee |
+| `SOCIAL_ICONS[]` | LinkedIn, Instagram, TikTok — href + SVG markup |
+| `CARDS_DATA[]` | 5 service card definitions with color, sticker, title, services |
+| `WIGGLE_CONFIG` | Single source of truth for all hover-wiggle intensities |
+| `ANIMATION_CONFIG` | Scribble transition timing and stroke width settings |
+
+### `WIGGLE_CONFIG` — Tune all wiggles from one place
+
+```js
+export const WIGGLE_CONFIG = {
+    logoTruus:  4,  // The navbar Truus logo
+    socials:    5,  // LinkedIn / Instagram / TikTok icons
+    jobHeading: 1,  // "not hiring right now" heading
+    googleMap:  1,  // Google Maps link text
+    email:      1,  // hello@truus.co
+    whatsapp:   1,  // send us a whatsapp
+};
+```
+
+Higher number = more rotation (degrees). Set to `0` to disable for any element.
+
+---
+
+## 🎲 Marquee Randomisation Logic
+
+The marquee uses two constraint-aware helpers in `components/DoubleMarquee.jsx`:
+
+- **`shuffleNoAdjacentSrc(brands)`** — Fisher-Yates shuffle + post-processing to ensure no two cards with the same logo appear next to each other, **including at the loop seam**.
+- **`assignColorsNoAdjacent(count, colors)`** — Assigns background colours one-by-one, always excluding the previous colour (and the first colour on the last item, to fix the seam).
+
+---
 
 ## 🎨 SVG Architecture
 
@@ -81,60 +147,41 @@ All SVGs are handled using one of three strategies:
 | Strategy | Used For | Why |
 |---|---|---|
 | External `.svg` + `<img>` | Brand logos, stickers, blobs | No CSS dependency; best for large, non-reused shapes |
-| Inline `<symbol>` + `<use>` | Repeated icons (`bullet-icon`, `card-divider`) | Defined once, rendered many times; supports `currentColor` |
-| Inline `<svg>` | Animated paths (title underline, map link) | Requires `stroke-dasharray` draw animations |
+| Inline `<symbol>` + `<use>` | Repeated icons (`bullet-icon`, `card-divider`) | Defined once in `SvgSymbols.jsx`, rendered many times; supports `currentColor` |
+| Inline `<svg>` | Animated paths (title underline, map link, scribble) | Required for `stroke-dasharray` draw animations |
 
-## ⚡ Architecture: `data.js` Separation
-
-All static data lives in `data.js` (loaded before `script.js`) so configuration is clean and separated from logic:
-
-| Export | Purpose |
-|---|---|
-| `brands[]` | 8 brand objects `{ name, src }` pointing to local SVG files |
-| `colors[]` | Background colour pool for the marquee |
-| `SOCIAL_ICONS[]` | LinkedIn, Instagram, TikTok link + SVG definitions |
-| `CARDS_DATA[]` | 5 service card definitions with sticker, tags, services |
-| `WIGGLE_CONFIG` | Single source of truth for all hover-wiggle intensities |
-
-### `WIGGLE_CONFIG` — Tune all wiggle from one place
-
-```js
-const WIGGLE_CONFIG = {
-    socials:    10,  // LinkedIn / Instagram / TikTok icons
-    jobHeading:  1,  // "not hiring right now" heading
-    googleMap:   1,  // Google Maps link text
-    email:       2,  // hello@truus.co
-    whatsapp:    2,  // send us a whatsapp
-};
-```
-Higher number = more rotation (degrees). Set to `0` to disable for any element.
-
-## 🎲 Marquee Randomisation Logic
-
-The marquee uses two constraint-aware helpers in `script.js`:
-
-- **`shuffleNoAdjacentSrc(brands)`** — Fisher-Yates shuffle + post-processing to ensure no two cards with the same logo image appear next to each other, including at the loop seam.
-- **`assignColorsNoAdjacent(count, colors)`** — Assigns background colours one-by-one, always excluding the previous colour (and the first colour on the last item, to fix the seam).
+---
 
 ## ⚙️ Setup & Installation
 
-Since this project uses vanilla technologies and CDNs for libraries, no build process is required.
+This project uses Next.js, so you need Node.js installed.
 
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/yourusername/Truus.co-Awwward-Website.git
-    ```
-2.  **Navigate to the project directory**:
-    ```bash
-    cd Truus.co-Awwward-Website
-    ```
-3.  **Open the website**:
-    -   Simply open `index.html` in your browser.
-    -   *Recommended*: Use a local server (like VS Code "Live Server") to ensure all assets and scripts load correctly.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/truus.git
+   cd truus
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in your browser**:
+   ```
+   http://localhost:3000
+   ```
+
+---
 
 ## 👨‍💻 Developed By
 
-Made with ❤️ by Arkyadeep Pal, Soumyakanta Mitra and Anshu Ram, powered by **Antigravity AI**.
+Made with ❤️ by **Arkyadeep Pal**, **Soumyakanta Mitra** and **Anshu Ram**, powered by **Antigravity AI**.
 
 ## 📄 License
 
