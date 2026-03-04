@@ -73,7 +73,7 @@
 .vimeo-hero__title {
     font-family: 'Epilogue', sans-serif;
     font-weight: 900;
-    font-size: clamp(3rem, 7.2vw, 7.2rem);
+    font-size: clamp(2.5rem, 6.5vw, 6.5rem);
     line-height: 1.0;
     letter-spacing: -3px;
     color: #fff;
@@ -112,12 +112,13 @@
 /* ─── ⑤ Smiley — NO animation ─────────────────── */
 .home-header__smiley {
     position: absolute;
-    top: -0.3em;
-    left: -0.3em;
-    width: 0.65em;
-    height: 0.65em;
+    top: -0.35em;
+    left: 0.4em;
+    width: 1em;
+    height: 1em;
     pointer-events: none;
     z-index: 10;
+    rotate: calc(-30deg);
 }
 
 .home-header__smiley-svg {
@@ -128,12 +129,13 @@
 /* ─── ⑤ Pink star — NO spin animation ─────────── */
 .home-header__star {
     position: absolute;
-    top: 50%;
-    right: -0.5em;
+    top: 10%;
+    right: -0.6em;
     transform: translateY(-50%);
-    width: 0.55em;
-    height: 0.55em;
+    width: 0.8em;
+    height: 0.8em;
     pointer-events: none;
+    rotate: calc(10deg);
 }
 
 .home-header__star-inner {
@@ -156,8 +158,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 110%;
-    height: 150%;
+    width: 120%;
+    height: 104%;
     color: #fff;
     overflow: visible;
     pointer-events: none;
@@ -236,8 +238,8 @@
 /* The blob shape behind the mute icons */
 .vimeo-mute-bubble__blob {
     position: relative;
-    width: 90px;
-    height: 90px;
+    width: 150px;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -254,8 +256,8 @@
 .vimeo-mute-bubble__icon {
     position: relative;
     z-index: 1;
-    width: 36px;
-    height: 36px;
+    width: 56px;
+    height: 56px;
     color: #1a1a1a;
     display: flex;
     align-items: center;
