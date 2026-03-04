@@ -4,7 +4,7 @@ A highly interactive, visually stunning recreation of the **Truus.co** website, 
 
 <table>
   <tr>
-    <td align="center"><b>Header Section</b><br/><img width="100%" alt="Header Section" src="" /></td>
+    <td align="center"><b>Header Section</b><br/><img width="100%" alt="Header Section" src="https://github.com/user-attachments/assets/195d1543-3e28-4678-8545-567ca9b08767" /></td>
     <td align="center"><b>Service Card Section</b><br/><img width="100%" alt="Service Card Section" src="https://github.com/user-attachments/assets/cb80f406-998e-4853-9ea5-7dec87952117" /></td>
   </tr>
   <tr>
