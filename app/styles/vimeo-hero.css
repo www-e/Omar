@@ -1,6 +1,6 @@
 /* ─── Vimeo Hero ────────────────────────────────────────────────────────────── */
 
-/* The outer wrapper — hidden until transition completes */
+/* The outer wrapper */
 .vimeo-hero {
     position: relative;
     width: calc(100% - 24px);
@@ -9,13 +9,7 @@
     overflow: hidden;
     background-color: #111;
     border-radius: 24px;
-    opacity: 0;
-    /* ⑥ starts hidden, revealed after scribble */
-    transition: opacity 0s;
-}
-
-.vimeo-hero.is-revealed {
-    opacity: 1;
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
 }
 
 /* ── Iframe fills the container in "cover" mode ── */
@@ -85,9 +79,16 @@
     color: #fff;
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.16em;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.16em;
     user-select: none;
+    pointer-events: auto;
+    cursor: url("/assets/Cursor SVG/cursor-text.svg") 2 0, text;
+}
+
+.vimeo-hero__title * {
+    cursor: url("/assets/Cursor SVG/cursor-text.svg") 2 0, text;
 }
 
 /* Each word span */
@@ -111,13 +112,12 @@
 /* ─── ⑤ Smiley — NO animation ─────────────────── */
 .home-header__smiley {
     position: absolute;
-    top: -0.6em;
-    left: 50%;
-    transform: translateX(-50%);
+    top: -0.3em;
+    left: -0.3em;
     width: 0.65em;
     height: 0.65em;
     pointer-events: none;
-
+    z-index: 10;
 }
 
 .home-header__smiley-svg {
@@ -128,12 +128,12 @@
 /* ─── ⑤ Pink star — NO spin animation ─────────── */
 .home-header__star {
     position: absolute;
-    top: -0.55em;
-    right: -0.6em;
+    top: 50%;
+    right: -0.5em;
+    transform: translateY(-50%);
     width: 0.55em;
     height: 0.55em;
     pointer-events: none;
-
 }
 
 .home-header__star-inner {
@@ -153,10 +153,11 @@
 /* ─── Oval underline under "mainstream" ────────── */
 .home-header__title-line-svg {
     position: absolute;
-    bottom: -0.18em;
-    left: 0;
-    width: 100%;
-    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 110%;
+    height: 150%;
     color: #fff;
     overflow: visible;
     pointer-events: none;
@@ -197,7 +198,7 @@
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
-    cursor: pointer;
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     transition:
