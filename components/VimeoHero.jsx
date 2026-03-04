@@ -7,6 +7,8 @@ export default function VimeoHero() {
     const iframeRef = useRef(null);
     const playerRef = useRef(null);
     const bubbleRef = useRef(null);
+    const titleRef = useRef(null);
+    const controlsRef = useRef(null);
 
     const [isPlaying, setIsPlaying] = useState(true);
     const [isMuted, setIsMuted] = useState(true);
@@ -17,28 +19,13 @@ export default function VimeoHero() {
     // We already handle `setIsLoaded(true)` directly on the <video onLoadedData={...}> element.
 
     /* ────────────────────────────────────────────────────
-       ⑥ Reveal hero AFTER the TransitionScribble finishes.
-       The scribble total duration ≈ durIn (0.8) + durOut (1.5) = 2.3s
-       We wait 2.4s then fade the hero in.
-    ──────────────────────────────────────────────────── */
-    useEffect(() => {
-        const hero = playerRef.current;
-        if (!hero) return;
-        const timer = setTimeout(() => {
-            gsap.to(hero, {
-                opacity: 1, duration: 0.6, ease: 'power2.out',
-                onStart: () => hero.classList.add('is-revealed')
-            });
-        }, 2400);
-        return () => clearTimeout(timer);
-    }, []);
-
-    /* ────────────────────────────────────────────────────
        ④ Hover mute bubble — same GSAP elastic spring as CursorBubble
     ──────────────────────────────────────────────────── */
     useEffect(() => {
         const bubble = bubbleRef.current;
         const hero = playerRef.current;
+        const title = titleRef.current;
+        const controls = controlsRef.current;
         if (!bubble || !hero) return;
 
         const xTo = gsap.quickTo(bubble, 'x', { duration: 0.5, ease: 'power3' });
@@ -59,19 +46,58 @@ export default function VimeoHero() {
             gsap.to(bubble, { opacity: 0, scale: 0, rotation: -30, duration: 0.3, ease: 'sine.inOut' });
         };
 
+        const hideBubbleForElement = () => {
+            gsap.killTweensOf(bubble, 'opacity,scale,rotation');
+            gsap.to(bubble, { opacity: 0, scale: 0, rotation: -30, duration: 0.3, ease: 'sine.inOut' });
+        };
+
+        const showBubbleForElement = () => {
+            gsap.killTweensOf(bubble, 'opacity,scale,rotation');
+            gsap.to(bubble, { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: 'sine.inOut' });
+        };
+
+        const onTitleEnter = () => {
+            hideBubbleForElement();
+            if (controls) gsap.to(controls, { opacity: 0, duration: 0.3, pointerEvents: 'none' });
+        };
+
+        const onTitleLeave = () => {
+            showBubbleForElement();
+            if (controls) gsap.to(controls, { opacity: 1, duration: 0.3, pointerEvents: 'auto' });
+        };
+
         window.addEventListener('mousemove', onMove);
         hero.addEventListener('mouseenter', onEnter);
         hero.addEventListener('mouseleave', onLeave);
+
+        if (title) {
+            title.addEventListener('mouseenter', onTitleEnter);
+            title.addEventListener('mouseleave', onTitleLeave);
+        }
+        if (controls) {
+            controls.addEventListener('mouseenter', hideBubbleForElement);
+            controls.addEventListener('mouseleave', showBubbleForElement);
+        }
 
         return () => {
             window.removeEventListener('mousemove', onMove);
             hero.removeEventListener('mouseenter', onEnter);
             hero.removeEventListener('mouseleave', onLeave);
+
+            if (title) {
+                title.removeEventListener('mouseenter', onTitleEnter);
+                title.removeEventListener('mouseleave', onTitleLeave);
+            }
+            if (controls) {
+                controls.removeEventListener('mouseenter', hideBubbleForElement);
+                controls.removeEventListener('mouseleave', showBubbleForElement);
+            }
         };
     }, []);
 
     /* ── Controls ── */
-    const togglePlay = () => {
+    const togglePlay = (e) => {
+        if (e) e.stopPropagation();
         if (!iframeRef.current) return;
         if (isPlaying) {
             iframeRef.current.pause();
@@ -81,13 +107,15 @@ export default function VimeoHero() {
         setIsPlaying(p => !p);
     };
 
-    const toggleMute = () => {
+    const toggleMute = (e) => {
+        if (e) e.stopPropagation();
         if (!iframeRef.current) return;
         iframeRef.current.muted = !isMuted;
         setIsMuted(m => !m);
     };
 
-    const toggleFullscreen = () => {
+    const toggleFullscreen = (e) => {
+        if (e) e.stopPropagation();
         if (!document.fullscreenElement) {
             playerRef.current?.requestFullscreen();
             setIsFullscreen(true);
@@ -103,7 +131,6 @@ export default function VimeoHero() {
             <div
                 ref={bubbleRef}
                 className={`vimeo-mute-bubble ${isMuted ? 'is--muted' : 'is--unmuted'}`}
-                onClick={toggleMute}
                 style={{ pointerEvents: 'none' }}
             >
                 <div className="vimeo-mute-bubble__blob">
@@ -135,6 +162,7 @@ export default function VimeoHero() {
             <div
                 className={`vimeo-hero ${isPlaying ? 'is-playing' : 'is-paused'} ${isMuted ? 'is-muted' : 'is-unmuted'}`}
                 ref={playerRef}
+                onClick={toggleMute}
             >
                 {/* 
                   Video Placeholder: 
@@ -157,10 +185,10 @@ export default function VimeoHero() {
 
                 {/* ① Headline — bottom left, word-by-word layout */}
                 <div className="home-header__title">
-                    <h1 className="vimeo-hero__title">
+                    <h1 className="vimeo-hero__title" ref={titleRef} onClick={(e) => e.stopPropagation()}>
 
-                        {/* "We" */}
-                        <span className="vimeo-hero__word">We </span>
+                        {/* "we" */}
+                        <span className="vimeo-hero__word">we </span>
 
                         {/* "make" + ⑤ smiley (no animation) */}
                         <span className="vimeo-hero__word is--relative">
@@ -179,8 +207,11 @@ export default function VimeoHero() {
                         {/* "advertising" italic */}
                         <span className="vimeo-hero__word"><em>advertising </em></span>
 
-                        {/* "for the new" */}
+                        {/* "for" */}
                         <span className="vimeo-hero__word">for </span>
+
+                        <div style={{ flexBasis: '100%', height: 0 }} />
+
                         <span className="vimeo-hero__word">the </span>
                         <span className="vimeo-hero__word">new </span>
 
@@ -204,7 +235,7 @@ export default function VimeoHero() {
                 </div>
 
                 {/* ① Controls — bottom LEFT: pause/play + fullscreen */}
-                <div className="vimeo-hero__controls">
+                <div className="vimeo-hero__controls" ref={controlsRef} onClick={(e) => e.stopPropagation()}>
                     {/* Play / Pause */}
                     <button className="vimeo-hero__btn" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
                         {isPlaying ? (
