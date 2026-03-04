@@ -20,6 +20,11 @@ This project is a high-fidelity clone of the Truus advertising agency website. I
 
 The codebase was originally built in vanilla HTML/CSS/JS and has been **fully transformed to Next.js 15 + React 19**, with all animations, interactions, and assets ported 1:1.
 
+### ⚠️ Note on the Hero Video
+The original Truus.co website uses a privately-hosted Vimeo video for its hero section background. Due to **Vimeo's Domain-Level Privacy Settings**, the original video (`1100291628`) is restricted to play *only* on the `truus.co` domain. Attempting to embed the original iframe URL in a local development environment (or any other domain) will result in CORB (Cross-Origin Read Blocking) network errors and infinite buffering.
+
+To prevent these issues, the hero component was migrated from a Vimeo `<iframe src="...">` element to a standard HTML5 `<video src="...">` element. Currently, the video `src` property in `components/VimeoHero.jsx` is intentionally commented out, rendering a solid dark background. This allows the typography, SVGs, and animations on top of it to be perfectly styled without distraction. Once your design is set, simply place your personal `.mp4` video inside the `public/` directory and update the `<video>` source in `VimeoHero.jsx`!
+
 ---
 
 ## ✨ Key Features
