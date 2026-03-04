@@ -13,31 +13,8 @@ export default function VimeoHero() {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    /* ── Vimeo postMessage helper ── */
-    const sendCommand = (method, value = '') => {
-        if (!iframeRef.current) return;
-        iframeRef.current.contentWindow.postMessage(
-            JSON.stringify({ method, value }),
-            'https://player.vimeo.com'
-        );
-    };
-
-    /* ── Vimeo ready listener ── */
-    useEffect(() => {
-        const onMessage = (e) => {
-            if (e.origin !== 'https://player.vimeo.com') return;
-            try {
-                const data = JSON.parse(e.data);
-                if (data.event === 'ready') {
-                    setIsLoaded(true);
-                    sendCommand('setMuted', true);
-                    sendCommand('play');
-                }
-            } catch (_) { }
-        };
-        window.addEventListener('message', onMessage);
-        return () => window.removeEventListener('message', onMessage);
-    }, []);
+    // Native video loads immediately enough that we don't need a heavy ready listener.
+    // We already handle `setIsLoaded(true)` directly on the <video onLoadedData={...}> element.
 
     /* ────────────────────────────────────────────────────
        ⑥ Reveal hero AFTER the TransitionScribble finishes.
@@ -95,12 +72,18 @@ export default function VimeoHero() {
 
     /* ── Controls ── */
     const togglePlay = () => {
-        isPlaying ? sendCommand('pause') : sendCommand('play');
+        if (!iframeRef.current) return;
+        if (isPlaying) {
+            iframeRef.current.pause();
+        } else {
+            iframeRef.current.play();
+        }
         setIsPlaying(p => !p);
     };
 
     const toggleMute = () => {
-        sendCommand('setMuted', !isMuted);
+        if (!iframeRef.current) return;
+        iframeRef.current.muted = !isMuted;
         setIsMuted(m => !m);
     };
 
@@ -153,23 +136,20 @@ export default function VimeoHero() {
                 className={`vimeo-hero ${isPlaying ? 'is-playing' : 'is-paused'} ${isMuted ? 'is-muted' : 'is-unmuted'}`}
                 ref={playerRef}
             >
-                {/* Vimeo Iframe */}
-                <iframe
+                {/* 
+                  Video Placeholder: 
+                  Currently left blank to display a solid black background while you work on text, SVGs, and the navbar.
+                  Once you have your personal video file in the `public/` folder, uncomment and update the src below!
+                */}
+                <video
                     ref={iframeRef}
-                    src="https://player.vimeo.com/video/1100291628?api=1&background=1&autoplay=1&loop=1&muted=1"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
+                    // src="/your-personal-video.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     className="vimeo-hero__iframe"
-                    title="Hero background video"
-                />
-
-                {/* Thumbnail placeholder */}
-                <img
-                    src="https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/686f6ace62e3e07623327aca_thumb.avif"
-                    alt=""
-                    className={`vimeo-hero__placeholder ${isLoaded ? 'vimeo-hero__placeholder--hidden' : ''}`}
-                    loading="eager"
+                    style={{ objectFit: 'cover', backgroundColor: '#111' }}
                 />
 
                 {/* Gradient fade */}
@@ -256,16 +236,7 @@ export default function VimeoHero() {
                     </button>
                 </div>
 
-                {/* Loading spinner */}
-                {!isLoaded && (
-                    <div className="vimeo-hero__loading">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="vimeo-hero__spinner">
-                            <path fill="white" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
-                                <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="360 50 50" repeatCount="indefinite" />
-                            </path>
-                        </svg>
-                    </div>
-                )}
+                {/* Loading spinner removed because native HTML video loads silently in background */}
             </div>
         </>
     );
