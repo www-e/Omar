@@ -38,13 +38,51 @@ export default function Footer() {
         const creditsWrapper = document.querySelector('.footer-credits-wrapper');
         if (creditsWrapper) {
             const creditsBox = creditsWrapper.querySelector('.credits-box');
-            const creditsTexts = creditsBox.querySelectorAll('.credits-label, .credits-name');
-            const creditsTl = gsap.timeline({ paused: true, onReverseComplete: () => gsap.set(creditsBox, { visibility: 'hidden' }) });
-            creditsTl
-                .fromTo(creditsBox, { scale: 0, opacity: 0, y: 50, x: 50, transformOrigin: 'bottom right' }, { scale: 1, opacity: 1, y: 0, x: 0, duration: 0.5, ease: 'back.out(1.5)' })
-                .fromTo(creditsTexts, { y: '100%' }, { y: '0%', duration: 0.4, stagger: 0.05, ease: 'power2.out' }, '-=0.3');
-            const onEnter = () => { gsap.set(creditsBox, { visibility: 'visible' }); creditsTl.play(); };
-            const onLeave = () => creditsTl.reverse();
+            const creditsItems = creditsBox.querySelectorAll('.credits-item');
+
+            // Temporarily make the box visible to measure full dimensions
+            gsap.set(creditsBox, { visibility: 'visible', width: 'auto', height: 'auto', opacity: 1 });
+            const boxRect = creditsBox.getBoundingClientRect();
+            const fullWidth = boxRect.width;
+            const fullHeight = boxRect.height;
+            const boxHeight = boxRect.height; // for text Y translation
+
+            // Distance from box's final position down to behind the credits button
+            const creditsBtn = creditsWrapper.querySelector('.footer-credits');
+            const startY = creditsBtn.offsetHeight + 15;
+
+            // Set precise initial states for box and text
+            // Box starts collapsed rather than 0 scale
+            gsap.set(creditsBox, { visibility: 'hidden', width: 0, height: 0, opacity: 0, y: startY });
+            gsap.set(creditsItems, { y: boxHeight });
+
+            const onEnter = () => {
+                gsap.set(creditsBox, { visibility: 'visible' });
+                gsap.killTweensOf(creditsBox);
+                gsap.killTweensOf(creditsItems);
+
+                // Box physically grows to full dimensions instead of scaling
+                gsap.to(creditsBox, { width: fullWidth, height: fullHeight, opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' });
+
+                // Text slides up smoothly, slightly delayed
+                gsap.to(creditsItems, { y: 0, duration: 0.5, stagger: 0.04, ease: 'power3.out', delay: 0.1 });
+            };
+
+            const onLeave = () => {
+                gsap.killTweensOf(creditsBox);
+                gsap.killTweensOf(creditsItems);
+
+                // Box physically shrinks to 0x0
+                gsap.to(creditsBox, {
+                    width: 0, height: 0, opacity: 0, y: startY, duration: 0.35, ease: 'power3.in',
+                    onComplete: () => gsap.set(creditsBox, { visibility: 'hidden' })
+                });
+
+                // Text sits perfectly still while the box begins crushing it, 
+                // and then slowly slides back down in reverse order (`stagger: -0.03`) so the rightmost column clears first
+                gsap.to(creditsItems, { y: boxHeight, duration: 0.4, ease: 'power3.in', stagger: -0.03, delay: 0.1 });
+            };
+
             creditsWrapper.addEventListener('mouseenter', onEnter);
             creditsWrapper.addEventListener('mouseleave', onLeave);
         }
@@ -188,13 +226,15 @@ export default function Footer() {
                     <div></div>
                     <div className="footer-credits-wrapper">
                         <div className="credits-box">
-                            <div className="credits-item">
-                                <div className="overflow-wrapper"><span className="credits-label">design by</span></div>
-                                <div className="overflow-wrapper"><span className="credits-name">Jordan</span></div>
-                            </div>
-                            <div className="credits-item">
-                                <div className="overflow-wrapper"><span className="credits-label">code by</span></div>
-                                <div className="overflow-wrapper"><span className="credits-name">Dennis</span></div>
+                            <div className="credits-content">
+                                <div className="credits-item">
+                                    <div className="overflow-wrapper"><span className="credits-label">design by</span></div>
+                                    <div className="overflow-wrapper"><span className="credits-name">Jordan</span></div>
+                                </div>
+                                <div className="credits-item">
+                                    <div className="overflow-wrapper"><span className="credits-label">code by</span></div>
+                                    <div className="overflow-wrapper"><span className="credits-name">Dennis</span></div>
+                                </div>
                             </div>
                         </div>
                         <a href="#" className="footer-credits">credits</a>
