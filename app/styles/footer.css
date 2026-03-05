@@ -239,8 +239,9 @@
 
 .credits-content {
     display: flex;
+    /* REDUCED BOX SIZE: Makes the box smaller without changing text size */
     gap: 38px;
-    padding: 40px 38px;
+    padding: 34px 26px;
     white-space: nowrap;
     width: max-content;
     height: max-content;
@@ -264,7 +265,7 @@
 
 .credits-label {
     color: #fff;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 950;
     font-family: 'Epilogue', sans-serif;
 }
@@ -275,6 +276,11 @@
     font-weight: 450;
     font-family: 'Epilogue', sans-serif;
     opacity: 0.9;
+    text-decoration: none;
+    /* Removed underline since it's an <a> tag now */
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 12 12, pointer;
+    /* Added custom pointer */
+    display: inline-block;
 }
 
 /* ─── Footer Stickers ────────────────────────────────────────────────────── */

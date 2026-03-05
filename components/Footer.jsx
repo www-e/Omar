@@ -97,7 +97,11 @@ export default function Footer() {
             scale: 1, opacity: 1,
             rotation: (i) => stickerRotations[i % stickerRotations.length] * 0.7,
             duration: 0.7, ease: 'back.out(1.7)', stagger: 0.12,
-            scrollTrigger: { trigger: '.footer-stickers', start: 'top 80%', once: true }
+            scrollTrigger: {
+                trigger: '.footer-stickers',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse' // Play on enter, reverse on leave up
+            }
         });
 
         // ─── Sticker cursor-velocity push ───
@@ -115,7 +119,11 @@ export default function Footer() {
                 const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
                 const onSticker = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
                 const speed = Math.hypot(dx, dy);
-                if (!onSticker && dist < PROXIMITY_RADIUS && speed > MIN_SPEED) {
+
+                // Disable proximity push if the mouse is hovering over the open credits popup box
+                const isOverCreditsBox = e.target.closest('.credits-box') !== null;
+
+                if (!onSticker && !isOverCreditsBox && dist < PROXIMITY_RADIUS && speed > MIN_SPEED) {
                     const falloff = 1 - (dist / PROXIMITY_RADIUS);
                     const pushX = clamp(dx * STRENGTH * falloff, MAX_PUSH);
                     const pushY = clamp(dy * STRENGTH * falloff, MAX_PUSH);
@@ -134,6 +142,7 @@ export default function Footer() {
             { selector: '.footer-map-link span', key: 'googleMap' },
             { selector: '.footer-email', key: 'email' },
             { selector: '.footer-whatsapp', key: 'whatsapp' },
+            { selector: '.credits-name', key: 'socials' }, // Added wiggle target for names using social intensity
         ];
         wiggleTargets.forEach(({ selector, key }) => {
             document.querySelectorAll(selector).forEach(el => initWiggle(el, WIGGLE_CONFIG[key]));
@@ -227,13 +236,13 @@ export default function Footer() {
                     <div className="footer-credits-wrapper">
                         <div className="credits-box">
                             <div className="credits-content">
-                                <div className="credits-item">
+                                <div className="credits-item credit-wiggle">
                                     <div className="overflow-wrapper"><span className="credits-label">design by</span></div>
-                                    <div className="overflow-wrapper"><span className="credits-name">Jordan</span></div>
+                                    <div className="overflow-wrapper"><a href="#" className="credits-name" data-wiggle-target="true">Jordan</a></div>
                                 </div>
-                                <div className="credits-item">
+                                <div className="credits-item credit-wiggle">
                                     <div className="overflow-wrapper"><span className="credits-label">code by</span></div>
-                                    <div className="overflow-wrapper"><span className="credits-name">Dennis</span></div>
+                                    <div className="overflow-wrapper"><a href="#" className="credits-name" data-wiggle-target="true">Dennis</a></div>
                                 </div>
                             </div>
                         </div>

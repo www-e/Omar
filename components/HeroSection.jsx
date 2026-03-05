@@ -17,7 +17,7 @@ export default function HeroSection() {
             scrollTrigger: {
                 trigger: '.content-section',
                 start: 'top 70%',
-                once: true
+                toggleActions: 'play none none reverse' // Replay when scrolled to
             }
         });
     }, []);
