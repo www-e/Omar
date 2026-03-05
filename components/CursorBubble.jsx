@@ -20,12 +20,14 @@ export default function CursorBubble() {
         };
 
         const onMouseOver = (e) => {
-            const targetSelector = '.footer-column h3, .footer-map-link span, .footer-email, .footer-whatsapp, .single-social, .logo-truus';
+            const targetSelector = '.footer-column h3, .footer-map-link span, .footer-email, .footer-whatsapp, .single-social, .logo-truus, .nav-work-btn';
             const found = e.target.closest(targetSelector);
 
             if (found && !isHoveringClickable) {
                 isHoveringClickable = true;
-                cursorBubble.textContent = found.matches('.logo-truus') ? 'to home' : 'click';
+                if (found.matches('.logo-truus')) cursorBubble.textContent = 'to home';
+                else if (found.matches('.nav-work-btn')) cursorBubble.textContent = 'click';
+                else cursorBubble.textContent = 'click';
                 gsap.killTweensOf(cursorBubble, 'opacity,scale,rotation');
                 gsap.to(cursorBubble, { opacity: 1, scale: 1, rotation: 0, duration: 1.7, delay: 0.1, ease: 'elastic.out(1, 0.4)' });
             } else if (!found && isHoveringClickable) {
