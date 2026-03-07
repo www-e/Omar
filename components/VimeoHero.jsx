@@ -135,9 +135,11 @@ export default function VimeoHero() {
             >
                 <div className="vimeo-mute-bubble__blob">
                     {/* Blob shape */}
-                    <svg className="vimeo-mute-bubble__blob-svg" viewBox="0 0 166 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <use href="/assets/VimeoHero SVG/mute-bubble-blob.svg#root" />
-                    </svg>
+                    <img
+                        src="/assets/VimeoHero SVG/mute-bubble-blob.svg"
+                        alt=""
+                        className="vimeo-mute-bubble__blob-svg"
+                    />
                     {/* Mute icon (shown when sound is ON → click to mute) */}
                     <div className="vimeo-mute-bubble__icon vimeo-mute-bubble__mute">
                         <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
