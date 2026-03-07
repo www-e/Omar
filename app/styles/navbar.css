@@ -48,11 +48,11 @@
 }
 
 .navbar.on-dark {
-    color: #f0ebe6;
+    color: var(--bg-color);
 }
 
 .navbar.on-light {
-    color: #1a1a1a;
+    color: var(--color-dark);
 }
 
 .logo-truus {
@@ -99,9 +99,9 @@
 
 .nav-popout {
     position: absolute;
-    background: #f0ebe6;
+    background: var(--bg-color);
     /* Off-white beige from image */
-    color: #1a1a1a;
+    color: var(--color-dark);
     border-radius: 16px;
     opacity: 0;
     visibility: hidden;
@@ -151,7 +151,7 @@
 
 /* Force text dark when hovering, since popout bg is light */
 .nav-left:hover .logo-work-text {
-    color: #1a1a1a !important;
+    color: var(--color-dark) !important;
 }
 
 /* The work items layout */
@@ -199,13 +199,13 @@
 .badge-maroon {
     background-color: #B1536E;
     /* Deep maroon/pink */
-    color: #1a1a1a;
+    color: var(--color-dark);
 }
 
 .badge-pink {
     background-color: #EBB6F4;
     /* Light pink */
-    color: #1a1a1a;
+    color: var(--color-dark);
 }
 
 .nav-work-title {
@@ -219,8 +219,8 @@
 .nav-work-btn {
     display: block;
     text-align: center;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--color-black);
+    color: var(--color-white);
     padding: 20px;
     border-radius: 12px;
     font-weight: 800;
