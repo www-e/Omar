@@ -5,16 +5,17 @@ A highly interactive, visually stunning recreation of the **Truus.co** website, 
 <table>
   <tr>
     <td align="center"><b>Header Section</b><br/><img width="100%" alt="Header Section" src="https://github.com/user-attachments/assets/195d1543-3e28-4678-8545-567ca9b08767" /></td>
-    <td align="center"><b>MotionCard Section</b><br/><img width="100%" alt="MotionCard Section placeholder" src="https://placehold.co/1200x600/1a1a1a/ffffff?text=MotionCard+Section+Preview" /></td>
+    <td align="center"><b>MotionCard Section</b><br/><img width="100%" alt="MotionCard Section placeholder" src="https://github.com/user-attachments/assets/14d46fcf-f5d4-4b32-ac8e-e99eef1e964f" /></td>
   </tr>
   <tr>
     <td align="center"><b>Service Card Section</b><br/><img width="100%" alt="Service Card Section" src="https://github.com/user-attachments/assets/cb80f406-998e-4853-9ea5-7dec87952117" /></td>
     <td align="center"><b>Double Marquee Section</b><br/><img width="100%" alt="Double marquee section" src="https://github.com/user-attachments/assets/9ca5af12-5e0b-4b81-954c-1dcb484c671a" /></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><b>Footer Section</b><br/><img width="100%" alt="Footer section" src="https://github.com/user-attachments/assets/6335c2ee-a2ad-4795-96ad-e1b9841cacf0" /></td>
+    <td align="center" colspan="2"><b>Footer Section</b><br/><img width="100%" alt="Footer section" src="https://github.com/user-attachments/assets/1f0c8b9c-50c7-452e-af4c-23cadcdb58c0" /></td>
   </tr>
 </table>
+
 
 ---
 
@@ -220,7 +221,7 @@ This project uses Next.js, so you need Node.js installed.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Thakuma07/truus.git
+   git clone https://github.com/Thakuma07/Truus.co-Awwward-Website.git
    cd truus
    ```
 
