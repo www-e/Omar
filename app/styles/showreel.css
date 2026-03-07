@@ -3,7 +3,7 @@
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background-color: #0a0a0a;
+    background-color: var(--color-black-deep);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +19,7 @@
     font-size: 5rem;
     font-weight: 900;
     letter-spacing: -3px;
-    color: #ffffff;
+    color: var(--color-white);
     margin-bottom: 1rem;
 }
 
