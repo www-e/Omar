@@ -3,8 +3,9 @@
 import SvgSymbols from '@/components/SvgSymbols';
 import Navbar from '@/components/Navbar';
 import VimeoHero from '@/components/VimeoHero';
-import HeroSection from '@/components/HeroSection';
 import ServiceCards from '@/components/ServiceCards';
+import MotionCards from '@/components/MotionCards';
+import Showreel from '@/components/Showreel';
 import DoubleMarquee from '@/components/DoubleMarquee';
 import Footer from '@/components/Footer';
 import TransitionScribble from '@/components/TransitionScribble';
@@ -21,9 +22,14 @@ export default function Home() {
                 <Navbar />
                 <VimeoHero />
             </header>
-            <main className="content-section">
-                <HeroSection />
-                <ServiceCards />
+            <main>
+                <div className="content-section motion-cards-wrapper">
+                    <MotionCards />
+                </div>
+                <Showreel />
+                <div className="content-section service-cards-wrapper">
+                    <ServiceCards />
+                </div>
             </main>
             <section className="Double-marquee">
                 <DoubleMarquee />
