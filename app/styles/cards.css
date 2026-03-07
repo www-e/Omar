@@ -23,7 +23,7 @@
     padding: 3.5rem 1.5rem 1.5rem;
     cursor: pointer;
     border-radius: 10px;
-    color: white;
+    color: var(--color-white);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     transform-origin: center center;
     cursor: url("/assets/Cursor SVG/cursor-text.svg") 12 12, auto;
@@ -58,7 +58,7 @@
 
 .card-darkblue {
     background-color: var(--color-lightblue);
-    color: #1a1a1a;
+    color: var(--color-dark);
     left: calc(50% - 430px);
     top: 100px;
     transform: rotate(-5deg);
@@ -67,7 +67,7 @@
 
 .card-orange {
     background-color: var(--color-orange);
-    color: #1a1a1a;
+    color: var(--color-dark);
     left: calc(50% - 220px);
     top: 20px;
     transform: rotate(5deg);
@@ -84,7 +84,7 @@
 
 .card-pink {
     background-color: var(--color-pink);
-    color: #1a1a1a;
+    color: var(--color-dark);
     left: calc(50% + 320px);
     top: 70px;
     transform: rotate(5deg);
