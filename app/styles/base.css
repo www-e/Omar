@@ -21,6 +21,11 @@
     --color-maroon: #a0325a;
     --color-pink: #f0befa;
     --bg-color: #f0ebe6;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-dark: #1a1a1a;
+    --color-black-soft: #111111;
+    --color-black-deep: #0a0a0a;
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────────── */
@@ -31,8 +36,8 @@
 }
 
 ::selection {
-    background-color: #f0befa;
-    color: #000;
+    background-color: var(--color-pink);
+    color: var(--color-black);
 }
 
 /* Prevent selection on non-text elements */
@@ -52,7 +57,7 @@ object {
 body {
     background-color: var(--bg-color);
     font-family: 'Epilogue', sans-serif;
-    color: #1a1a1a;
+    color: var(--color-dark);
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
