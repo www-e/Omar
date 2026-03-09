@@ -12,6 +12,8 @@ import TransitionScribble from '@/components/TransitionScribble';
 import CursorBubble from '@/components/CursorBubble';
 import SmoothScroll from '@/components/SmoothScroll';
 
+import HorizontalWords from '@/components/HorizontalWords';
+
 export default function Home() {
     return (
         <>
@@ -22,6 +24,7 @@ export default function Home() {
                 <Navbar />
                 <VimeoHero />
             </header>
+            <HorizontalWords />
             <main>
                 <div className="content-section motion-cards-wrapper">
                     <MotionCards />
