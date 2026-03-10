@@ -5,7 +5,8 @@ A highly interactive, visually stunning recreation of the **Truus.co** website, 
 <table>
   <tr>
     <td align="center"><b>Header Section</b><br/><img width="100%" alt="Header Section" src="https://github.com/user-attachments/assets/195d1543-3e28-4678-8545-567ca9b08767" /></td>
-    <td align="center"><b>HorizontalWords Section</b><br/><img width="100%" alt="HorizontalWords Section placeholder" src="https://github.com/user-attachments/assets/14d46fcf-f5d4-4b32-ac8e-e99eef1e964f" /></td>
+    <td align="center"><b>HorizontalWords Section</b><br/><img width="100%" alt="HorizontalWords Section placeholder" src="https://github.com/user-attachments/assets/fd76c800-fe37-48a3-a5bc-728aa5cdf5ef" /></td>
+
   </tr>
   <tr>
     <td align="center"><b>MotionCard Section</b><br/><img width="100%" alt="MotionCard Section placeholder" src="https://github.com/user-attachments/assets/14d46fcf-f5d4-4b32-ac8e-e99eef1e964f" /></td>
