@@ -5,14 +5,15 @@ A highly interactive, visually stunning recreation of the **Truus.co** website, 
 <table>
   <tr>
     <td align="center"><b>Header Section</b><br/><img width="100%" alt="Header Section" src="https://github.com/user-attachments/assets/195d1543-3e28-4678-8545-567ca9b08767" /></td>
+    <td align="center"><b>HorizontalWords Section</b><br/><img width="100%" alt="HorizontalWords Section placeholder" src="https://github.com/user-attachments/assets/14d46fcf-f5d4-4b32-ac8e-e99eef1e964f" /></td>
+  </tr>
+  <tr>
     <td align="center"><b>MotionCard Section</b><br/><img width="100%" alt="MotionCard Section placeholder" src="https://github.com/user-attachments/assets/14d46fcf-f5d4-4b32-ac8e-e99eef1e964f" /></td>
-  </tr>
-  <tr>
     <td align="center"><b>Service Card Section</b><br/><img width="100%" alt="Service Card Section" src="https://github.com/user-attachments/assets/cb80f406-998e-4853-9ea5-7dec87952117" /></td>
-    <td align="center"><b>Double Marquee Section</b><br/><img width="100%" alt="Double marquee section" src="https://github.com/user-attachments/assets/9ca5af12-5e0b-4b81-954c-1dcb484c671a" /></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><b>Footer Section</b><br/><img width="100%" alt="Footer section" src="https://github.com/user-attachments/assets/1f0c8b9c-50c7-452e-af4c-23cadcdb58c0" /></td>
+    <td align="center"><b>Double Marquee Section</b><br/><img width="100%" alt="Double marquee section" src="https://github.com/user-attachments/assets/9ca5af12-5e0b-4b81-954c-1dcb484c671a" /></td>
+    <td align="center"><b>Footer Section</b><br/><img width="100%" alt="Footer section" src="https://github.com/user-attachments/assets/1f0c8b9c-50c7-452e-af4c-23cadcdb58c0" /></td>
   </tr>
 </table>
 
@@ -43,6 +44,7 @@ The original Truus.co website uses a privately-hosted Vimeo video. Due to **Vime
 - **Double Marquee** — Infinite scrolling brand logos with smart randomization (no adjacent duplicates for logos or colors, even at the loop seam).
 - **Credits Pop-out** — Footer credits box physically grows/shrinks with staggered text slide animations.
 - **Lenis Smooth Scroll** — Buttery-smooth page scrolling synced with GSAP's ticker.
+- **Horizontal Scroll & Letter Bounce** — Pinned section that scrolls letters horizontally across the screen with random elastic bounces for letters and stickers as they enter the viewport.
 - **Tab Title Change** — Title becomes `"Hey, over here! 👋"` when the tab loses focus.
 
 ### 🏗️ Architecture
@@ -83,6 +85,7 @@ truus/
 │   │   ├── marquee.css          # Double marquee section + animations
 │   │   ├── footer.css           # Footer layout, credits, stickers
 │   │   ├── cursor.css           # Custom cursor bubble + scribble overlay
+│   │   ├── horizontal-words.css # Horizontal scrolling section styles
 │   │   └── responsive.css       # All media queries (tablet + mobile)
 │   ├── globals.css              # Entry point — imports all partials
 │   ├── layout.jsx               # Root layout — <html>, metadata, favicon
@@ -92,6 +95,7 @@ truus/
 │   ├── CursorBubble.jsx         # Custom "click" cursor bubble with GSAP tracking
 │   ├── DoubleMarquee.jsx        # Randomised logo marquee + scroll-triggered SVGs
 │   ├── Footer.jsx               # Footer — credits, stickers, socials, wiggles
+│   ├── HorizontalWords.jsx      # Pinned section with elastic letter bounce
 │   ├── MotionCards.jsx          # Motion cards + floating labels + InertiaPlugin fling
 │   ├── Navbar.jsx               # Fixed navbar + scroll color logic + logo wiggle
 │   ├── ServiceCards.jsx         # "Call us if you need" + 5 service cards
@@ -146,6 +150,9 @@ truus/
 | **Cursor bubble follow** | CursorBubble | GSAP quickTo |
 | **Mute bubble follow** | VimeoHero | GSAP quickTo |
 | **Wiggle on hover** | Navbar, Footer | GSAP steps(1) yoyo |
+| **Horizontal scroll & pin**| HorizontalWords | GSAP ScrollTrigger |
+| **Letter & sticker bounce**| HorizontalWords | GSAP Elastic (Scroll) |
+| **SVG arrow draw** | HorizontalWords | GSAP stroke animation |
 | **Lenis smooth scroll** | SmoothScroll | Lenis + GSAP ticker |
 | **Tab title change** | SmoothScroll | Visibility API |
 
