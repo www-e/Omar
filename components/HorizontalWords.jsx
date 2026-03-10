@@ -28,20 +28,46 @@ const HorizontalWords = () => {
             // that the querySelectorAll will find nothing and the animation will gracefully skip.
             const arrows = container.querySelectorAll('.horizontal-words__arrow-svg path, .horizontal-words__arrow-end-svg path');
 
-            // ScrollTween for horizontal movement of the text block
-            const scrollTween = gsap.fromTo(textRef, {
-                xPercent: 50 // Start far right so it slides in naturally
-            }, {
-                xPercent: -100, // Make sure the ending frame stops in view for the paragraph
-                ease: 'none',
+            // --- ENTRANCE & PINNING LOGIC ---
+            // To make letters start animating as we scroll down from VimeoHero,
+            // we start the horizontal movement as soon as the section enters the viewport (top bottom).
+            const entranceDistance = window.innerHeight;
+            const pinnedDistance = 2500;
+
+            const scrollTween = gsap.timeline({
                 scrollTrigger: {
                     trigger: container,
-                    start: "top top", // Begin the pinning when the container reaches the top
-                    end: "+=3000", // The scroll duration distance
+                    start: "top bottom",
+                    end: () => `+=${entranceDistance + pinnedDistance}`,
                     scrub: 1,
-                    pin: true
+                    invalidateOnRefresh: true,
                 }
             });
+
+            scrollTween
+                .fromTo(textRef, {
+                    x: window.innerWidth // Start words off-screen right
+                }, {
+                    x: window.innerWidth * 0.5,
+                    ease: "none",
+                    duration: entranceDistance
+                })
+                .to(textRef, {
+                    x: () => -(textRef.scrollWidth - window.innerWidth * 0.5),
+                    ease: "none",
+                    duration: pinnedDistance
+                });
+
+            // Separate pinning logic so it only locks when the section hits the top
+            ScrollTrigger.create({
+                trigger: container,
+                start: "top top",
+                end: () => `+=${pinnedDistance}`,
+                pin: true,
+                pinSpacing: true,
+                invalidateOnRefresh: true
+            });
+            // ------------------------------------
 
             // Bounce each letter randomly
             letters.forEach((letter) => {
@@ -53,7 +79,7 @@ const HorizontalWords = () => {
                         trigger: letter,
                         containerAnimation: scrollTween,
                         start: 'left 90%',
-                        end: 'left 10%',
+                        end: 'left 50%', // Finish as it reaches center
                         scrub: 0.5
                     }
                 });
@@ -70,13 +96,13 @@ const HorizontalWords = () => {
                         trigger: sticker,
                         containerAnimation: scrollTween,
                         start: 'left 90%',
-                        end: 'left 10%',
+                        end: 'left 50%', // Finish as it reaches center
                         scrub: 0.5
                     }
                 });
             });
 
-            // Animate Drawing SVG Arrows (Custom stroke-dashoffset alternative to DrawSVGPlugin)
+            // Animate Drawing SVG Arrows 
             arrows.forEach((arrowPath) => {
                 if (arrowPath.getTotalLength) {
                     const pathLen = arrowPath.getTotalLength();
@@ -85,10 +111,10 @@ const HorizontalWords = () => {
                         strokeDashoffset: 0,
                         duration: 1,
                         scrollTrigger: {
-                            trigger: arrowPath.parentElement, // trigger on the SVG itself
+                            trigger: arrowPath.parentElement,
                             containerAnimation: scrollTween,
                             start: 'left 90%',
-                            end: 'left 30%',
+                            end: 'left 50%', // This is the last arrow's end point
                             scrub: 0.5
                         }
                     });
