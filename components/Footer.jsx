@@ -158,15 +158,15 @@ export default function Footer() {
             <div className="footer-top">
                 {/* Jobs */}
                 <div className="footer-column">
-                    <span className="footer-badge">looking for a job?</span>
-                    <h3>not hiring right now :(</h3>
+                    <span className="footer-badge">looking for a developer?</span>
+                    <h3>available for opportunities</h3>
                 </div>
                 {/* Office */}
                 <div className="footer-column">
-                    <span className="footer-badge">office</span>
+                    <span className="footer-badge">location</span>
                     <address>
-                        papaverhof 21<br />
-                        1032 LX amsterdam
+                        Benha, Egypt<br />
+                        Available Remote: KSA, Hungary, Egypt, Indonesia
                     </address>
                     <a href="#" className="footer-map-link">
                         <span>Google Maps</span>
@@ -179,9 +179,8 @@ export default function Footer() {
                 {/* Contact */}
                 <div className="footer-column">
                     <span className="footer-badge">contact</span>
-                    <a href="mailto:hello@truus.co" className="footer-email">hello@truus.co</a>
-                    <a href="#" className="footer-whatsapp">send us a whatsapp*</a>
-                    <p className="footer-note">*we&apos;re millennials and gen-z: please do not call us.</p>
+                    <a href="mailto:omarasj445@gmail.com" className="footer-email">omarasj445@gmail.com</a>
+                    <a href="tel:+20115468628" className="footer-whatsapp">+20 115 468 8628</a>
                     <div className="footer-socials" id="footer-socials">
                         {SOCIAL_ICONS.map(({ href, label, svg }) => (
                             <a

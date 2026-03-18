@@ -61,6 +61,19 @@
     height: auto;
 }
 
+.logo-omar {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    font-family: var(--font-display, 'Epilogue', sans-serif);
+    transition: transform 0.3s ease;
+}
+
+.logo-omar:hover {
+    transform: scale(1.05);
+}
+
 .logo-truus path,
 .nav-bar__whatsapp-svg path {
     fill: currentColor;
@@ -79,6 +92,84 @@
 .main-header {
     width: 100%;
     position: relative;
+}
+
+/* ─── Navigation Links ─── */
+.nav-links {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 12px 28px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    z-index: 1001;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 12 12, pointer;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-dark);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+}
+
+.nav-link:hover {
+    color: var(--color-dark);
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .nav-links {
+        top: 16px;
+        padding: 10px 20px;
+        gap: 20px;
+        border-radius: 40px;
+    }
+
+    .nav-link {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        top: 12px;
+        padding: 8px 16px;
+        gap: 16px;
+        border-radius: 30px;
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+    }
 }
 
 /* ─── Full-screen dark overlay when navbar popout is open ─── */
@@ -205,6 +296,12 @@
 .badge-pink {
     background-color: #EBB6F4;
     /* Light pink */
+    color: var(--color-dark);
+}
+
+.badge-blue {
+    background-color: #B6D9EB;
+    /* Light blue */
     color: var(--color-dark);
 }
 

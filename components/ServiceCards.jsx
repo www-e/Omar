@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CARDS_DATA } from '@/lib/data';
+import { SKILLS_DATA } from '@/lib/data';
 
 export default function ServiceCards() {
     useEffect(() => {
@@ -27,39 +27,39 @@ export default function ServiceCards() {
 
     return (
         <>
-            {/* ─── "Call us if you need:" Heading ─── */}
+            {/* ─── "Expertise Across:" Heading ─── */}
             <div className="title-container">
-                <h2 className="main-title">call us if you <span className="italic-text">need:</span></h2>
+                <h2 className="main-title">expertise <span className="italic-text">across:</span></h2>
                 <svg xmlns="http://www.w3.org/2000/svg" width="160" viewBox="0 0 159 17" fill="none" className="title-underline-svg">
                     <path d="M1 12.1515C53.0771 5.7187 105.529 2.30552 158 1.93652" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M30.2672 15.9461C64.1899 12.8158 98.2663 11.3583 132.33 11.5735" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                 </svg>
             </div>
 
-            {/* ─── Service Cards ─── */}
+            {/* ─── Skills Cards ─── */}
             <div className="cards-wrapper" id="cards-wrapper">
-                {CARDS_DATA.map((card) => (
-                    <div key={card.color} className={`card card-${card.color}`}>
-                        <div className={`card-sticker sticker-${card.sticker}`}>
+                {SKILLS_DATA.map((skill) => (
+                    <div key={skill.color} className={`card card-${skill.color}`}>
+                        <div className={`card-sticker sticker-${skill.sticker}`}>
                             <img
-                                src={`/assets/Card-Sticker SVG/sticker-${card.sticker}.svg`}
+                                src={`/assets/Card-Sticker SVG/sticker-${skill.sticker}.svg`}
                                 alt=""
                                 width="100%"
                                 loading="lazy"
                                 aria-hidden="true"
                             />
                         </div>
-                        <h3 className="card-title">{card.title}</h3>
+                        <h3 className="card-title">{skill.category}</h3>
                         <svg width="100%" height="10" className="card-divider-svg" aria-hidden="true">
                             <use href="#card-divider" />
                         </svg>
                         <ul className="card-list">
-                            {card.services.map((service) => (
-                                <li key={service}>
+                            {skill.skills.map((skillItem) => (
+                                <li key={skillItem}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="16" className="services-card__bullet-svg" aria-hidden="true">
                                         <use href="#bullet-icon" />
                                     </svg>
-                                    {service}
+                                    {skillItem}
                                 </li>
                             ))}
                         </ul>

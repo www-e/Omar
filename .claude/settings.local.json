@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"D:\\\\portfolio\\\\Truus.co-Awwward-Website\" && npm run build)",
+      "Bash(find /d/portfolio/Truus.co-Awwward-Website -type d -name \"*data*\" -o -name \"*constants*\" -o -name \"*lib*\" 2>/dev/null | grep -v node_modules | grep -v .next)",
+      "Bash(cd \"D:\\\\portfolio\\\\Truus.co-Awwward-Website\" && npm list --depth=0)",
+      "Bash(cd \"D:\\\\portfolio\\\\Truus.co-Awwward-Website\\\\public\\\\assets\\\\Card-Sticker SVG\" && cp sticker-camera.svg sticker-monitor.svg && cp sticker-phone.svg sticker-server.svg && cp sticker-hand.svg sticker-database.svg && cp sticker-heart.svg sticker-cloud.svg && cp sticker-smiley.svg sticker-check.svg)",
+      "Bash(npm run:*)",
+      "Bash(ls -la app/styles/*.css)"
+    ]
+  }
+}

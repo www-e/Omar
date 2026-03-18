@@ -128,12 +128,12 @@ export default function MotionCards() {
             {/* ─── Part 1: Bold Heading Text with SVG Sticker Placeholders ─── */}
             <div className="motion-card__heading">
                 <h2 className="motion-card__title">
-                    an agency built
+                    featured projects.
                     <br />
-                    for the future.
+                    built for impact.
                 </h2>
                 <p className="motion-card__subtitle">
-                    from TV to TikTok.
+                    2040+ hours • 13+ production apps
                     {/* SVG sticker placeholder — top-right area */}
                     <span className="motion-card__sticker motion-card__sticker--top">
                         <img
@@ -160,16 +160,16 @@ export default function MotionCards() {
                 </div>
 
 
-                {/* 4 Photo Cards */}
+                {/* 4 Photo Cards - Featured Projects */}
                 <div ref={containerRef} className="motion-card__cards">
                     <div className="motion-card__card motion-card__card--1">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/686b8e614494dac669a4099c_c310914b5a1a573b4c7499e9531f8d52_DE.avif"
+                                src="https://agentic.navaia.sa/dashboard"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
-                                alt=""
+                                alt="Navaia Agentic AI Platform"
                                 className="cover-image"
                             />
                         </div>
@@ -178,11 +178,11 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--2">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/686b8e607142a7a25157d9dd_1875b9852ca289170917f9060c95b6a4_BolpuntJapie.avif"
+                                src="https://www.graphictablet.store/"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
-                                alt=""
+                                alt="Graphic Tablet Store E-commerce"
                                 className="cover-image"
                             />
                         </div>
@@ -191,11 +191,11 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--3">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/686b8e60ba19eb1109d3daa5_b1280272f47b3cd3ea25b91391935efa_RonaldoMassage.avif"
+                                src="https://sportologyacademy.vercel.app/"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
-                                alt=""
+                                alt="Sportology Academy Education Platform"
                                 className="cover-image"
                             />
                         </div>
@@ -204,11 +204,11 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--4">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/686b8e607d351d1335f06e04_f1aafb2150d81c3990c906d901d2e7e4_Esprix.avif"
+                                src="https://qaportal1.vercel.app/"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
-                                alt=""
+                                alt="Tawaqlna QA Portal"
                                 className="cover-image"
                             />
                         </div>
@@ -218,13 +218,13 @@ export default function MotionCards() {
                 {/* Floating labels — positioned freely over the cards area */}
                 <div ref={containerRef} className="motion-card__floating-labels">
                     <div className="motion-card__floating-label motion-card__floating-label--pink">
-                        <p className="motion-card__floating-text">girls just wanna have fun!</p>
+                        <p className="motion-card__floating-text">AI-Powered Platform</p>
                     </div>
                     <div className="motion-card__floating-label motion-card__floating-label--orange">
-                        <p className="motion-card__floating-text">mainstream is not a dirty word</p>
+                        <p className="motion-card__floating-text">E-commerce Solutions</p>
                     </div>
                     <div className="motion-card__floating-label motion-card__floating-label--red">
-                        <p className="motion-card__floating-text">arrogance = old fashioned</p>
+                        <p className="motion-card__floating-text">Education Platforms</p>
                     </div>
                 </div>
             </div>
@@ -232,10 +232,10 @@ export default function MotionCards() {
             {/* ─── Part 3: Bottom Paragraph Text ─── */}
             <div className="motion-card__footer-text">
                 <p className="motion-card__description">
-                    To reach the new generation you need to know where
-                    they are. We are a true 360° agency, working the
-                    whole spectrum from TikTok content to TVC and from influencer
-                    collabs to out of home spectaculars.
+                    Full-stack developer specializing in AI-powered platforms, e-commerce solutions,
+                    and education technology. Building production applications with modern tech stacks
+                    including Next.js, React, Python, and cloud infrastructure. From market intelligence
+                    dashboards to specialized e-commerce stores, delivering robust solutions that scale.
                 </p>
             </div>
         </section>
