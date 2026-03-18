@@ -165,7 +165,7 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--1">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://agentic.navaia.sa/dashboard"
+                                src="/assets/projects/navaia-agentic.jpg"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
@@ -178,7 +178,7 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--2">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://www.graphictablet.store/"
+                                src="/assets/projects/graphictablet-store.jpg"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
@@ -191,7 +191,7 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--3">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://sportologyacademy.vercel.app/"
+                                src="/assets/projects/sportology-academy.jpg"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}
@@ -204,7 +204,7 @@ export default function MotionCards() {
                     <div className="motion-card__card motion-card__card--4">
                         <div className="motion-card__card-image">
                             <img
-                                src="https://qaportal1.vercel.app/"
+                                src="/assets/projects/tawaqlna.jpg"
                                 loading="lazy"
                                 width={1000}
                                 height={1000}

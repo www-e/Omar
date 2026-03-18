@@ -67,7 +67,7 @@ export default function Navbar() {
         // Wiggle on logo and whatsapp
         const cleanups = [];
         const logoOmar = document.querySelector('.logo-omar');
-        if (logoOmar) cleanups.push(initWiggle(logoOmar, WIGGLE_CONFIG.logoTruus));
+        if (logoOmar) cleanups.push(initWiggle(logoOmar, WIGGLE_CONFIG.logoOmar));
 
         const overlay = document.querySelector('.nav-overlay');
         if (overlay) {

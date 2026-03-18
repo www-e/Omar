@@ -105,7 +105,7 @@
 /* ─── Responsive Design ───────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .about-hero {
-    padding: 100px 24px 60px;
+    padding: 140px 24px 60px;
     min-height: auto;
   }
 

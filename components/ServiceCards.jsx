@@ -40,15 +40,6 @@ export default function ServiceCards() {
             <div className="cards-wrapper" id="cards-wrapper">
                 {SKILLS_DATA.map((skill) => (
                     <div key={skill.color} className={`card card-${skill.color}`}>
-                        <div className={`card-sticker sticker-${skill.sticker}`}>
-                            <img
-                                src={`/assets/Card-Sticker SVG/sticker-${skill.sticker}.svg`}
-                                alt=""
-                                width="100%"
-                                loading="lazy"
-                                aria-hidden="true"
-                            />
-                        </div>
                         <h3 className="card-title">{skill.category}</h3>
                         <svg width="100%" height="10" className="card-divider-svg" aria-hidden="true">
                             <use href="#card-divider" />

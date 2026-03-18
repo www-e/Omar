@@ -166,21 +166,17 @@ export default function VimeoHero() {
                 ref={playerRef}
                 onClick={toggleMute}
             >
-                {/* 
-                  Video Placeholder: 
-                  Currently left blank to display a solid black background while you work on text, SVGs, and the navbar.
-                  Once you have your personal video file in the `public/` folder, uncomment and update the src below!
-                */}
-                <video
-                    ref={iframeRef}
-                    // src="/your-personal-video.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="vimeo-hero__iframe"
-                    style={{ objectFit: 'cover', backgroundColor: '#111' }}
-                />
+                {/* Responsive Hero Image: wideBanner.png for PC, mee.jpeg for mobile */}
+                <picture className="vimeo-hero__picture">
+                    <source media="(min-width: 769px)" srcSet="/assets/omar/wideBanner.png" />
+                    <img
+                        ref={iframeRef}
+                        src="/assets/omar/mee.jpeg"
+                        alt="Omar Ashraf - Full Stack Engineer"
+                        className="vimeo-hero__iframe"
+                        style={{ objectFit: 'cover', backgroundColor: '#111', width: '100%', height: '100%' }}
+                    />
+                </picture>
 
                 {/* Gradient fade */}
                 <div className="vimeo-hero__fade" />

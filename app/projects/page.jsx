@@ -127,9 +127,12 @@ export default function ProjectsPage() {
                                 style={{ '--project-color': `var(--color-${project.color})` }}
                             >
                                 <div className="project-image">
-                                    <div className="image-placeholder" style={{ backgroundColor: `var(--color-${project.color})` }}>
-                                        <span className="project-initial">{project.name.charAt(0)}</span>
-                                    </div>
+                                    <img
+                                        src={project.image}
+                                        alt={project.name}
+                                        className="project-image-img"
+                                        loading="lazy"
+                                    />
                                     <div className="category-badge">
                                         {project.category}
                                     </div>
