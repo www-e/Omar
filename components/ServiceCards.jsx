@@ -148,15 +148,23 @@ function initCardAnimations() {
             });
         });
 
+        // Track which card is currently on top
+        let currentTopCardIndex = 0;
+
         // Add touch/swipe interaction for each card
         cards.forEach((card, i) => {
             let startX = 0;
             let currentX = 0;
             let isDragging = false;
+            let startLeft = 0;
 
             const onStart = (e) => {
+                // Only allow interaction for the top card or cards that haven't been swiped
+                if (i !== currentTopCardIndex) return;
+                
                 isDragging = true;
                 startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                startLeft = gsap.getProperty(card, 'x');
                 gsap.set(card, { cursor: 'grabbing' });
             };
 
@@ -164,8 +172,8 @@ function initCardAnimations() {
                 if (!isDragging) return;
                 currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                 const deltaX = currentX - startX;
-                const rotation = mobileRotations[i] + (deltaX * 0.1);
-                gsap.set(card, { x: `calc(-50% + ${deltaX}px)`, rotation });
+                const rotation = mobileRotations[i] + (deltaX * 0.15);
+                gsap.set(card, { x: startLeft + deltaX, rotation });
             };
 
             const onEnd = () => {
@@ -173,8 +181,8 @@ function initCardAnimations() {
                 isDragging = false;
                 gsap.set(card, { cursor: 'grab' });
 
-                const deltaX = currentX - startX;
-                const threshold = 80;
+                const deltaX = gsap.getProperty(card, 'x');
+                const threshold = 100;
 
                 if (Math.abs(deltaX) > threshold) {
                     // Swipe far enough - animate card away
@@ -182,23 +190,25 @@ function initCardAnimations() {
                         x: deltaX > 0 ? '150%' : '-150%',
                         rotation: deltaX > 0 ? 30 : -30,
                         opacity: 0,
-                        duration: 0.4,
+                        duration: 0.5,
                         ease: 'power2.in',
                         onComplete: () => {
-                            // Reset card to stack after animation
-                            gsap.set(card, {
-                                xPercent: -50,
-                                x: 0,
-                                rotation: mobileRotations[i],
-                                opacity: 1,
-                                top: `${cardHeights[i]}px`
-                            });
+                            // Move to next card
+                            currentTopCardIndex = Math.min(currentTopCardIndex + 1, cards.length - 1);
+                            
+                            // Animate the next card to pop forward
+                            if (currentTopCardIndex < cards.length) {
+                                const nextCard = cards[currentTopCardIndex];
+                                gsap.fromTo(nextCard,
+                                    { scale: 0.95, opacity: 0.8 },
+                                    { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' }
+                                );
+                            }
                         }
                     });
                 } else {
                     // Not far enough - spring back to center
                     gsap.to(card, {
-                        xPercent: -50,
                         x: 0,
                         rotation: mobileRotations[i],
                         duration: 0.5,
@@ -215,9 +225,19 @@ function initCardAnimations() {
             card.addEventListener('touchend', onEnd);
 
             // Mouse events for desktop testing
-            card.addEventListener('mousedown', onStart);
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', onEnd);
+            const onMouseUpGlobal = () => {
+                if (isDragging) {
+                    onEnd();
+                }
+            };
+            
+            card.addEventListener('mousedown', (e) => {
+                if (i === currentTopCardIndex) {
+                    onStart(e);
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onMouseUpGlobal, { once: true });
+                }
+            });
         });
 
         // Add scroll-based reveal animation
