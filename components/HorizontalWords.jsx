@@ -16,6 +16,9 @@ const HorizontalWords = () => {
             const textRef = container.querySelector('.horizontal-words__relative');
             const letters = container.querySelectorAll('.letter');
 
+            // Check if mobile
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
             // Select the individual stickers instead of just the wrapper
             // or we select the images directly if they are the elements we want to animate.
             // The original logic animated .horizontal-words__sticker-svg, but since you have multiple images:
@@ -31,8 +34,8 @@ const HorizontalWords = () => {
             // --- ENTRANCE & PINNING LOGIC ---
             // To make letters start animating as we scroll down from VimeoHero,
             // we start the horizontal movement as soon as the section enters the viewport (top bottom).
-            const entranceDistance = window.innerHeight;
-            const pinnedDistance = 2500;
+            const entranceDistance = isMobile ? window.innerHeight * 0.3 : window.innerHeight;
+            const pinnedDistance = isMobile ? 800 : 2500;
 
             const scrollTween = gsap.timeline({
                 scrollTrigger: {
@@ -44,16 +47,20 @@ const HorizontalWords = () => {
                 }
             });
 
+            // On mobile, start closer to center so text is visible sooner
+            const startX = isMobile ? window.innerWidth * 0.2 : window.innerWidth;
+            const endX = isMobile ? -(textRef.scrollWidth - window.innerWidth * 0.8) : -(textRef.scrollWidth - window.innerWidth * 0.5);
+
             scrollTween
                 .fromTo(textRef, {
-                    x: window.innerWidth // Start words off-screen right
+                    x: startX // Start words off-screen right
                 }, {
-                    x: window.innerWidth * 0.5,
+                    x: isMobile ? window.innerWidth * 0.3 : window.innerWidth * 0.5,
                     ease: "none",
                     duration: entranceDistance
                 })
                 .to(textRef, {
-                    x: () => -(textRef.scrollWidth - window.innerWidth * 0.5),
+                    x: endX,
                     ease: "none",
                     duration: pinnedDistance
                 });

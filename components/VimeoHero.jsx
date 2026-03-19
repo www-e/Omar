@@ -174,7 +174,7 @@ export default function VimeoHero() {
                         src="/assets/omar/mee.jpeg"
                         alt="Omar Ashraf - Full Stack Engineer"
                         className="vimeo-hero__iframe"
-                        style={{ objectFit: 'cover', backgroundColor: '#111', width: '100%', height: '100%' }}
+                        style={{ objectFit: 'contain', backgroundColor: '#111', width: '100%', height: '100%' }}
                     />
                 </picture>
 

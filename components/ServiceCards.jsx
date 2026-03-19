@@ -131,49 +131,120 @@ function initCardAnimations() {
             });
         });
     } else {
-        // ─── Mobile: Stacked card scroll reveal ───
-        const cardsWrapper = document.querySelector('.cards-wrapper');
-        const scrollPerCard = window.innerHeight * 0.8;
-        const navH = 60;
-        const mobileRotations = [-6, 4, -8, 5, -3];
+        // ─── Mobile: Stacked card deck with swipe interaction ───
+        const mobileRotations = [-3, 2, -2, 3, -3];
+        const cardHeights = [40, 50, 60, 70, 80];
 
+        // Set initial stacked positions
         cards.forEach((card, i) => {
             gsap.set(card, {
-                position: 'absolute', left: '50%', top: '0', xPercent: -50,
-                y: i === 0 ? 0 : window.innerHeight * 1.1,
-                rotation: mobileRotations[i % mobileRotations.length],
+                position: 'absolute',
+                left: '50%',
+                top: `${cardHeights[i]}px`,
+                xPercent: -50,
+                rotation: mobileRotations[i],
                 zIndex: i + 1,
                 transformOrigin: 'center center'
             });
         });
 
-        const wrapperH = window.innerHeight * 0.7 + scrollPerCard * (cards.length - 1);
-        gsap.set(cardsWrapper, { height: wrapperH });
-
-        ScrollTrigger.create({
-            trigger: cardsWrapper,
-            start: `top ${navH}px`,
-            end: `+=${scrollPerCard * (cards.length - 1)}`,
-            pin: true,
-            pinSpacing: true,
-            id: 'mobile-cards-pin'
-        });
-
+        // Add touch/swipe interaction for each card
         cards.forEach((card, i) => {
-            if (i === 0) return;
-            gsap.fromTo(card,
-                { y: window.innerHeight * 1.1 },
-                {
-                    y: 0,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: cardsWrapper,
-                        start: `top+=${(i - 1) * scrollPerCard} ${navH}px`,
-                        end: `top+=${i * scrollPerCard} ${navH}px`,
-                        scrub: 0.4
-                    }
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
+
+            const onStart = (e) => {
+                isDragging = true;
+                startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                gsap.set(card, { cursor: 'grabbing' });
+            };
+
+            const onMove = (e) => {
+                if (!isDragging) return;
+                currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const deltaX = currentX - startX;
+                const rotation = mobileRotations[i] + (deltaX * 0.1);
+                gsap.set(card, { x: `calc(-50% + ${deltaX}px)`, rotation });
+            };
+
+            const onEnd = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                gsap.set(card, { cursor: 'grab' });
+
+                const deltaX = currentX - startX;
+                const threshold = 80;
+
+                if (Math.abs(deltaX) > threshold) {
+                    // Swipe far enough - animate card away
+                    gsap.to(card, {
+                        x: deltaX > 0 ? '150%' : '-150%',
+                        rotation: deltaX > 0 ? 30 : -30,
+                        opacity: 0,
+                        duration: 0.4,
+                        ease: 'power2.in',
+                        onComplete: () => {
+                            // Reset card to stack after animation
+                            gsap.set(card, {
+                                xPercent: -50,
+                                x: 0,
+                                rotation: mobileRotations[i],
+                                opacity: 1,
+                                top: `${cardHeights[i]}px`
+                            });
+                        }
+                    });
+                } else {
+                    // Not far enough - spring back to center
+                    gsap.to(card, {
+                        xPercent: -50,
+                        x: 0,
+                        rotation: mobileRotations[i],
+                        duration: 0.5,
+                        ease: 'elastic.out(1, 0.5)'
+                    });
                 }
-            );
+                startX = 0;
+                currentX = 0;
+            };
+
+            // Touch events
+            card.addEventListener('touchstart', onStart, { passive: true });
+            card.addEventListener('touchmove', onMove, { passive: true });
+            card.addEventListener('touchend', onEnd);
+
+            // Mouse events for desktop testing
+            card.addEventListener('mousedown', onStart);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onEnd);
         });
+
+        // Add scroll-based reveal animation
+        const cardsWrapper = document.querySelector('.cards-wrapper');
+        if (cardsWrapper) {
+            ScrollTrigger.create({
+                trigger: cardsWrapper,
+                start: 'top 80%',
+                end: 'bottom 60%',
+                onEnter: () => {
+                    cards.forEach((card, i) => {
+                        gsap.fromTo(card,
+                            { y: 100, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 0.6,
+                                delay: i * 0.1,
+                                ease: 'power3.out'
+                            }
+                        );
+                    });
+                },
+                onLeaveBack: () => {
+                    gsap.to(cards, { y: 100, opacity: 0, duration: 0.4 });
+                }
+            });
+        }
     }
 }

@@ -109,14 +109,125 @@
     }
 
     .card {
-        width: 82vw;
-        max-width: 340px;
-        min-height: 420px;
-        height: auto;
+        width: 85vw;
+        max-width: 320px;
+        height: 400px;
     }
 
     .card-sticker {
         pointer-events: none;
+    }
+
+    /* ── Motion Cards Section ───────── */
+    .motion-card-section {
+        padding: 60px 16px 40px;
+    }
+
+    .motion-card__title {
+        font-size: 2.8rem;
+        letter-spacing: -1.5px;
+    }
+
+    .motion-card__subtitle {
+        font-size: 2rem;
+        top: -12px;
+    }
+
+    .motion-card__sticker--top {
+        width: 70px;
+        height: 45px;
+        right: -10px;
+    }
+
+    .motion-card__underline-svg {
+        max-width: 300px;
+        margin: -20px auto 0;
+    }
+
+    .motion-card__cards-area {
+        height: 350px;
+        margin: 20px auto 30px;
+    }
+
+    .motion-card__blob {
+        width: 320px;
+        height: 280px;
+    }
+
+    .motion-card__card {
+        width: 30vw;
+        height: 40vw;
+    }
+
+    .motion-card__floating-text {
+        font-size: 0.7rem;
+    }
+
+    .motion-card__description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    /* ── VimeoHero Section ──────────── */
+    .vimeo-hero {
+        border-radius: 16px;
+        margin: 8px auto;
+        width: calc(100% - 16px);
+        height: calc(100vh - 16px);
+    }
+
+    .home-header__title {
+        padding: 0 24px;
+        bottom: 60px;
+    }
+
+    .vimeo-hero__title {
+        font-size: clamp(2rem, 5vw, 4rem);
+        gap: 0.1em;
+    }
+
+    .home-header__smiley {
+        width: 0.8em;
+        height: 0.8em;
+        top: -0.3em;
+        left: 0.3em;
+    }
+
+    .home-header__star {
+        width: 0.6em;
+        height: 0.6em;
+        right: -0.4em;
+    }
+
+    .vimeo-hero__controls {
+        left: 24px;
+        bottom: 20px;
+    }
+
+    .vimeo-hero__btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .vimeo-mute-bubble__blob {
+        width: 120px;
+        height: 120px;
+    }
+
+    /* ── Navigation Links ───────────── */
+    .nav-links {
+        top: 16px;
+        padding: 10px 16px;
+        gap: 16px;
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+    }
+
+    /* ── Showreel Section ───────────── */
+    #showreel-section {
+        padding: 60px 20px;
     }
 
     /* ── Double Marquee ─────────────── */
@@ -321,5 +432,312 @@
 
     .credits-name {
         font-size: 0.95rem;
+    }
+}
+
+/* ── Small Mobile (≤ 480px) ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+    /* ── Navbar ─────────────────────── */
+    .navbar {
+        padding: 12px 14px;
+    }
+
+    .logo-work-container {
+        width: 42px;
+        height: 38px;
+    }
+
+    .logo-work-text {
+        font-size: 1.2rem;
+        margin-left: 46px;
+    }
+
+    .nav-bar__whatsapp-svg {
+        width: 24px;
+    }
+
+    /* ── Navigation Links ───────────── */
+    .nav-links {
+        top: 10px;
+        padding: 8px 12px;
+        gap: 12px;
+        max-width: 90vw;
+    }
+
+    .nav-link {
+        font-size: 0.68rem;
+    }
+
+    /* ── VimeoHero ──────────────────── */
+    .vimeo-hero {
+        border-radius: 12px;
+        margin: 6px auto;
+        width: calc(100% - 12px);
+        height: calc(100vh - 12px);
+    }
+
+    .home-header__title {
+        padding: 0 16px;
+        bottom: 50px;
+    }
+
+    .vimeo-hero__title {
+        font-size: clamp(1.8rem, 4.5vw, 3rem);
+        gap: 0.08em;
+    }
+
+    .home-header__smiley {
+        width: 0.7em;
+        height: 0.7em;
+    }
+
+    .home-header__star {
+        width: 0.5em;
+        height: 0.5em;
+    }
+
+    .vimeo-hero__controls {
+        left: 16px;
+        bottom: 16px;
+        gap: 4px;
+    }
+
+    .vimeo-hero__btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .vimeo-mute-bubble__blob {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* ── Motion Cards ───────────────── */
+    .motion-card-section {
+        padding: 50px 14px 30px;
+    }
+
+    .motion-card__title {
+        font-size: 2.2rem;
+    }
+
+    .motion-card__subtitle {
+        font-size: 1.6rem;
+    }
+
+    .motion-card__sticker--top {
+        width: 55px;
+        height: 35px;
+    }
+
+    .motion-card__underline-svg {
+        max-width: 220px;
+    }
+
+    .motion-card__cards-area {
+        height: 280px;
+    }
+
+    .motion-card__blob {
+        width: 260px;
+        height: 220px;
+    }
+
+    .motion-card__card {
+        width: 32vw;
+        height: 42vw;
+    }
+
+    .motion-card__description {
+        font-size: 0.85rem;
+    }
+
+    /* ── Service Cards ──────────────── */
+    .cards-wrapper {
+        height: 420px !important;
+        margin: 30px auto !important;
+    }
+
+    .card {
+        width: 90vw !important;
+        max-width: 300px !important;
+        height: 360px !important;
+    }
+
+    .card-title {
+        font-size: 1.3rem !important;
+    }
+
+    .card-list li {
+        font-size: 0.8rem !important;
+    }
+
+    /* ── Double Marquee ─────────────── */
+    .Double-marquee {
+        padding: 40px 16px 0;
+    }
+
+    .marquee-left {
+        min-height: 280px;
+    }
+
+    .marquee-left h2 {
+        font-size: 2rem;
+    }
+
+    .marquee-blob-container {
+        width: 180px;
+        height: 220px;
+    }
+
+    .marquee-right {
+        grid-template-rows: 100px 100px;
+        grid-auto-columns: 100px;
+        gap: 6px;
+        padding: 16px 16px 24px;
+    }
+
+    .marquee-item {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* ── Footer ─────────────────────── */
+    .footer-inner {
+        padding: 40px 16px 24px;
+        border-radius: 12px;
+    }
+
+    .footer-top {
+        gap: 28px;
+    }
+
+    .footer-column h3 {
+        font-size: 1.2rem;
+    }
+
+    .footer-column address {
+        font-size: 1.1rem;
+    }
+
+    .footer-email {
+        font-size: 1.15rem;
+    }
+
+    .footer-sticker.sticker-camera,
+    .footer-sticker.sticker-hands,
+    .footer-sticker.sticker-100,
+    .sticker-boom,
+    .sticker-smiley,
+    .sticker-heart {
+        width: 70px;
+    }
+
+    .footer-bottom {
+        margin-top: 160px;
+    }
+
+    .footer-logo__svg {
+        width: 120%;
+        margin-left: -10%;
+    }
+
+    .credits-box {
+        padding: 12px 14px;
+        gap: 14px;
+    }
+
+    .credits-label {
+        font-size: 0.75rem;
+    }
+
+    .credits-name {
+        font-size: 0.85rem;
+    }
+}
+
+/* ── Extra Small Mobile (≤ 380px) ─────────────────────────────────────────── */
+@media (max-width: 380px) {
+
+    /* ── Navbar ─────────────────────── */
+    .navbar {
+        padding: 10px 12px;
+    }
+
+    .logo-work-container {
+        width: 38px;
+        height: 34px;
+    }
+
+    .logo-work-text {
+        font-size: 1.1rem;
+        margin-left: 42px;
+    }
+
+    .nav-bar__whatsapp-svg {
+        width: 22px;
+    }
+
+    /* ── Navigation Links ───────────── */
+    .nav-links {
+        top: 8px;
+        padding: 6px 10px;
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 0.62rem;
+    }
+
+    /* ── VimeoHero ──────────────────── */
+    .vimeo-hero {
+        border-radius: 10px;
+        margin: 4px auto;
+        width: calc(100% - 8px);
+    }
+
+    .vimeo-hero__title {
+        font-size: clamp(1.6rem, 4vw, 2.5rem);
+    }
+
+    /* ── Motion Cards ───────────────── */
+    .motion-card-section {
+        padding: 40px 12px 20px;
+    }
+
+    .motion-card__title {
+        font-size: 1.9rem;
+    }
+
+    .motion-card__subtitle {
+        font-size: 1.4rem;
+    }
+
+    .motion-card__cards-area {
+        height: 240px;
+    }
+
+    .motion-card__blob {
+        width: 220px;
+        height: 180px;
+    }
+
+    /* ── Service Cards ──────────────── */
+    .cards-wrapper {
+        height: 380px !important;
+        margin: 20px auto !important;
+    }
+
+    .card {
+        height: 320px !important;
+    }
+
+    .card-title {
+        font-size: 1.2rem !important;
+    }
+
+    .card-list li {
+        font-size: 0.75rem !important;
     }
 }
