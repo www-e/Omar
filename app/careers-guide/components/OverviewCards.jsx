@@ -137,7 +137,7 @@ export default function OverviewCards() {
           <p
             style={{
               fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.55)',
+              color: 'rgba(255, 255, 255, 0.72)',
               maxWidth: '500px',
               margin: '0 auto',
               lineHeight: 1.7,

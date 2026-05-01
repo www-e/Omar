@@ -3,6 +3,11 @@
    RTL-first, dark theme, high-contrast, Awwward-level visual polish
 ───────────────────────────────────────────────────────────────────────────── */
 
+/* ─── Animation Fallback ─────────────────────────────────────────────────── */
+.cg-fade {
+  opacity: 1;
+}
+
 /* ─── Page Base ──────────────────────────────────────────────────────────── */
 .careers-guide-page {
   background: #0b0f19;
@@ -42,7 +47,7 @@
 
 .cg-subtitle {
   font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.72);
   max-width: 600px;
   margin: 0 auto 3rem;
   line-height: 1.7;
@@ -90,20 +95,20 @@
 
 .cg-table thead th {
   padding: 0.85rem 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   white-space: nowrap;
 }
 
 .cg-table tbody td {
   padding: 0.85rem 1.25rem;
-  color: rgba(255, 255, 255, 0.75);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   vertical-align: middle;
 }
 
@@ -227,7 +232,7 @@
 
 .section-subtitle {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.72);
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.7;
@@ -259,7 +264,7 @@
 .table-note {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.65);
   text-align: center;
 }
 
@@ -311,17 +316,13 @@
 }
 
 .flow-arrow {
-  color: rgba(255, 255, 255, 0.25);
-  width: 24px;
-  height: 24px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1.25rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.flow-arrow svg {
-  width: 100%;
-  height: 100%;
+  padding: 0 0.25rem;
 }
 
 .flow-connector {
@@ -332,14 +333,14 @@
 }
 
 .connector-line {
-  width: 1px;
+  width: 2px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .connector-arrow {
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
 }
 
 /* ─── Comparison Tables ──────────────────────────────────────────────────── */
@@ -422,7 +423,7 @@
 
 .cg-callout-body p {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.7;
   margin-bottom: 0.75rem;
 }
@@ -436,7 +437,7 @@
 .cg-callout-list li {
   padding: 0.35rem 0;
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .cg-callout-list li code {
@@ -475,7 +476,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .cg-legend-dot {
@@ -562,8 +563,8 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
 }
 
 .cg-arrow {
@@ -685,7 +686,7 @@
   align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.6;
 }
 

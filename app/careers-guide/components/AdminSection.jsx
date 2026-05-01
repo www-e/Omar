@@ -153,7 +153,7 @@ export default function AdminSection() {
           <p
             style={{
               fontSize: '1.1rem',
-              color: 'rgba(255, 255, 255, 0.55)',
+              color: 'rgba(255, 255, 255, 0.72)',
               maxWidth: '600px',
               lineHeight: 1.7,
             }}

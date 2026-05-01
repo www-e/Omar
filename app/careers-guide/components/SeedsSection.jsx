@@ -32,20 +32,17 @@ export default function SeedsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.cg-fade', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: 'power3.out',
-      });
+      gsap.fromTo('.cg-fade',
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power3.out' }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} dir="rtl" className="cg-section cg-seeds">
+    <section id="seeds" ref={sectionRef} dir="rtl" className="cg-section cg-seeds">
       <div className="cg-container">
         <h2 className="cg-title cg-fade">البيانات الأولية — Database Seeds</h2>
         <p className="cg-subtitle cg-fade">
