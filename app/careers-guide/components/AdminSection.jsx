@@ -206,7 +206,7 @@ export default function AdminSection() {
                     style={{
                       padding: '1rem 1.5rem',
                       textAlign: 'right',
-                      color: 'rgba(255, 255, 255, 0.5)',
+                      color: 'rgba(255, 255, 255, 0.72)',
                       fontWeight: 600,
                       fontSize: '0.8rem',
                       textTransform: 'uppercase',
@@ -221,12 +221,12 @@ export default function AdminSection() {
                     style={{
                       padding: '1rem 1.5rem',
                       textAlign: 'right',
-                      color: 'rgba(255, 255, 255, 0.5)',
+                      color: 'rgba(255, 255, 255, 0.72)',
                       fontWeight: 600,
                       fontSize: '0.8rem',
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                       background: 'rgba(255, 255, 255, 0.02)',
                     }}
                   >
@@ -239,7 +239,7 @@ export default function AdminSection() {
                   <td
                     style={{
                       padding: '1rem 1.5rem',
-                      color: 'rgba(255, 255, 255, 0.7)',
+                      color: 'rgba(255, 255, 255, 0.88)',
                       borderBottom: '1px solid rgba(255, 255, 255, 0.03)',
                       fontWeight: 500,
                     }}
@@ -263,8 +263,8 @@ export default function AdminSection() {
                   <td
                     style={{
                       padding: '1rem 1.5rem',
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.03)',
+                      color: 'rgba(255, 255, 255, 0.88)',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
                       fontWeight: 500,
                     }}
                   >
@@ -399,7 +399,7 @@ export default function AdminSection() {
               <p
                 style={{
                   fontSize: '0.9rem',
-                  color: 'rgba(255, 255, 255, 0.55)',
+                  color: 'rgba(255, 255, 255, 0.78)',
                   lineHeight: 1.7,
                   margin: 0,
                 }}

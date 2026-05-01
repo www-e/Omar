@@ -82,8 +82,24 @@
 /* ─── Tables ─────────────────────────────────────────────────────────────── */
 .cg-table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.cg-table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cg-table-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cg-table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
 }
 
 .cg-table {
@@ -91,6 +107,7 @@
   border-collapse: collapse;
   font-size: 0.92rem;
   text-align: right;
+  min-width: 100%;
 }
 
 .cg-table thead th {
@@ -118,6 +135,74 @@
 
 .cg-table tbody tr:hover {
   background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Mobile-First Responsive Tables ─────────────────────────────────────── */
+/* Default (mobile): wide tables become card stacks via data-label */
+@media (max-width: 639px) {
+  .cg-table-responsive .cg-table,
+  .cg-table-responsive .cg-table thead,
+  .cg-table-responsive .cg-table tbody,
+  .cg-table-responsive .cg-table th,
+  .cg-table-responsive .cg-table td,
+  .cg-table-responsive .cg-table tr {
+    display: block;
+  }
+
+  .cg-table-responsive .cg-table thead {
+    display: none;
+  }
+
+  .cg-table-responsive .cg-table tbody tr {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .cg-table-responsive .cg-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .cg-table-responsive .cg-table td {
+    border: none;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .cg-table-responsive .cg-table td:last-child {
+    border-bottom: none;
+  }
+
+  .cg-table-responsive .cg-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-left: 0.75rem;
+  }
+
+  /* Small-table horizontal scroll fallback (non-responsive class) */
+  .cg-table-wrap:not(.cg-table-responsive) .cg-table {
+    min-width: 520px;
+  }
+}
+
+/* Desktop: normal table layout */
+@media (min-width: 640px) {
+  .cg-table-responsive .cg-table { display: table; }
+  .cg-table-responsive .cg-table thead { display: table-header-group; }
+  .cg-table-responsive .cg-table tbody { display: table-row-group; }
+  .cg-table-responsive .cg-table tr { display: table-row; margin: 0; border: none; padding: 0; background: transparent; }
+  .cg-table-responsive .cg-table td,
+  .cg-table-responsive .cg-table th { display: table-cell; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+  .cg-table-responsive .cg-table td::before { content: none; }
 }
 
 /* ─── Badges ─────────────────────────────────────────────────────────────── */
@@ -182,8 +267,8 @@
 
 .cg-badge-outline {
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* ─── Code / Inline values ───────────────────────────────────────────────── */
@@ -200,7 +285,7 @@
 }
 
 .cg-muted {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* ─── Section Headers (used by Professional & Employer) ──────────────────── */
@@ -785,7 +870,7 @@
   color: #fbbf24;
 }
 
-/* ─── Responsive ─────────────────────────────────────────────────────────── */
+/* ─── Mobile-First Responsive Overrides ──────────────────────────────────── */
 @media (max-width: 768px) {
   .cg-section {
     padding: 3rem 1rem;
@@ -797,12 +882,6 @@
 
   .cg-card {
     padding: 1.25rem;
-  }
-
-  .cg-table thead th,
-  .cg-table tbody td {
-    padding: 0.65rem 0.75rem;
-    font-size: 0.85rem;
   }
 
   .flow-main,
@@ -836,5 +915,21 @@
   .cg-arrow-column {
     flex-direction: row;
     padding-top: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .cg-container {
+    padding: 0 1rem;
+  }
+
+  .cg-table thead th,
+  .cg-table tbody td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .cg-exp-cell {
+    text-align: left;
   }
 }

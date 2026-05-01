@@ -64,7 +64,7 @@ export default function ProfessionalSection() {
           <h3>🔐 بيانات تسجيل الدخول</h3>
           <span className="cg-badge cg-badge-demo">حسابات تجريبية</span>
         </div>
-        <div className="table-wrapper">
+        <div className="cg-table-wrap cg-table-responsive">
           <table className="cg-table">
             <thead>
               <tr>
@@ -76,13 +76,13 @@ export default function ProfessionalSection() {
             </thead>
             <tbody>
               {accounts.map((acc, idx) => (
-                <tr key={idx} className="table-row-animate">
-                  <td>
+                <tr key={idx}>
+                  <td data-label="اسم المستخدم:">
                     <code className="username-code">{acc.username}</code>
                   </td>
-                  <td className="font-semibold">{acc.name}</td>
-                  <td>{acc.role}</td>
-                  <td>
+                  <td data-label="الاسم:" className="font-semibold">{acc.name}</td>
+                  <td data-label="المهنة:">{acc.role}</td>
+                  <td data-label="النوع:">
                     <span className={acc.tier === 'Pro' ? 'cg-badge cg-badge-pro' : 'cg-badge cg-badge-basic'}>
                       {acc.tier}
                     </span>
@@ -134,7 +134,7 @@ export default function ProfessionalSection() {
           <h3>⚖️ مقارنة الباقات</h3>
           <span className="cg-badge cg-badge-info">اختر ما يناسبك</span>
         </div>
-        <div className="table-wrapper">
+        <div className="cg-table-wrap">
           <table className="cg-table cg-compare">
             <thead>
               <tr>
@@ -146,8 +146,8 @@ export default function ProfessionalSection() {
             <tbody>
               {comparison.map((row, idx) => (
                 <tr key={idx}>
-                  <td className="feature-name">{row.feature}</td>
-                  <td className="col-basic">
+                  <td data-label="الميزة:" className="feature-name">{row.feature}</td>
+                  <td data-label="Basic:" className="col-basic">
                     {row.basic === '✕' ? (
                       <span className="x-mark">✕</span>
                     ) : row.basic === '✓' ? (
@@ -156,7 +156,7 @@ export default function ProfessionalSection() {
                       row.basic
                     )}
                   </td>
-                  <td className="col-pro">
+                  <td data-label="Pro:" className="col-pro">
                     {row.pro === '✕' ? (
                       <span className="x-mark">✕</span>
                     ) : row.pro === '✓' ? (

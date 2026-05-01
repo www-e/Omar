@@ -75,9 +75,9 @@ export default function SeedsSection() {
               <tbody>
                 {jobs.map((job, i) => (
                   <tr key={i}>
-                    <td className="cg-job-title">{job.title}</td>
-                    <td>{job.company}</td>
-                    <td>
+                    <td data-label="اسم الوظيفة:" className="cg-job-title">{job.title}</td>
+                    <td data-label="الشركة:">{job.company}</td>
+                    <td data-label="المدينة:">
                       <span className="cg-badge cg-badge-amber">{job.city}</span>
                     </td>
                   </tr>
@@ -92,7 +92,7 @@ export default function SeedsSection() {
             <span className="cg-badge cg-badge-amber">5</span>
             المحترفين المسجلين
           </h3>
-          <div className="cg-table-wrap">
+          <div className="cg-table-wrap cg-table-responsive">
             <table className="cg-table cg-pros-table">
               <thead>
                 <tr>
@@ -106,13 +106,13 @@ export default function SeedsSection() {
               <tbody>
                 {professionals.map((pro, i) => (
                   <tr key={i}>
-                    <td className="cg-pro-name">{pro.name}</td>
-                    <td>{pro.role}</td>
-                    <td>
+                    <td data-label="الاسم:" className="cg-pro-name">{pro.name}</td>
+                    <td data-label="الدور:">{pro.role}</td>
+                    <td data-label="الرياضة:">
                       <span className="cg-badge cg-badge-outline">{pro.sport}</span>
                     </td>
-                    <td className="cg-exp-cell">{pro.exp}</td>
-                    <td>
+                    <td data-label="سنين الخبرة:" className="cg-exp-cell">{pro.exp}</td>
+                    <td data-label="المستوى:">
                       <span
                         className={`cg-badge ${
                           pro.level === 'خبير'

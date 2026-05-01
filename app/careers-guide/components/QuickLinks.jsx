@@ -47,13 +47,10 @@ export default function QuickLinks() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.cg-fade', {
-        y: 30,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-        ease: 'power3.out',
-      });
+      gsap.fromTo('.cg-fade',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out' }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -81,11 +78,11 @@ export default function QuickLinks() {
               <tbody>
                 {quickLinks.map((link, i) => (
                   <tr key={i}>
-                    <td className="font-semibold">{link.role}</td>
-                    <td>
+                    <td data-label="الدور:" className="font-semibold">{link.role}</td>
+                    <td data-label="الرابط الرئيسي:">
                       <code className="cg-code">{link.main}</code>
                     </td>
-                    <td>
+                    <td data-label="رابط التسجيل:">
                       {link.register === '-' ? (
                         <span className="cg-muted">—</span>
                       ) : (
