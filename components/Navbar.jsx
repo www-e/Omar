@@ -299,6 +299,7 @@ export default function Navbar() {
                 <a href="/about" className="nav-link">About</a>
                 <a href="/projects" className="nav-link">Projects</a>
                 <a href="/experience" className="nav-link">Experience</a>
+                <a href="/careers-guide" className="nav-link">Careers Guide</a>
             </div>
             <nav className="navbar">
                 <div className="nav-left" style={{ cursor: "url('/assets/Cursor SVG/cursor-pointer.svg') 12 12, pointer" }}>

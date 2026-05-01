@@ -1,0 +1,839 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   careers-guide.css — Styles for the Arabic Careers Guide page
+   RTL-first, dark theme, high-contrast, Awwward-level visual polish
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Page Base ──────────────────────────────────────────────────────────── */
+.careers-guide-page {
+  background: #0b0f19;
+  color: #f8fafc;
+  min-height: 100vh;
+  direction: rtl;
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+}
+
+.cg-header {
+  position: relative;
+  z-index: 100;
+}
+
+/* ─── Container ──────────────────────────────────────────────────────────── */
+.cg-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── Section Base ───────────────────────────────────────────────────────── */
+.cg-section {
+  padding: 5rem 1.5rem;
+  position: relative;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+.cg-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.cg-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────────────── */
+.cg-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.cg-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.cg-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ─── Tables ─────────────────────────────────────────────────────────────── */
+.cg-table-wrap {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  text-align: right;
+}
+
+.cg-table thead th {
+  padding: 0.85rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+}
+
+.cg-table tbody td {
+  padding: 0.85rem 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  vertical-align: middle;
+}
+
+.cg-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cg-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Badges ─────────────────────────────────────────────────────────────── */
+.cg-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.cg-badge-pro {
+  background: rgba(34, 197, 94, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.cg-badge-basic {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.cg-badge-demo {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.cg-badge-info {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.cg-badge-orange {
+  background: rgba(249, 115, 22, 0.12);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+.cg-badge-amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.cg-badge-gold {
+  background: rgba(234, 179, 8, 0.12);
+  color: #facc15;
+  border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.cg-badge-rose {
+  background: rgba(244, 63, 94, 0.12);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+}
+
+.cg-badge-outline {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Code / Inline values ───────────────────────────────────────────────── */
+.cg-code,
+.username-code {
+  font-family: 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.4rem;
+  color: #e2e8f0;
+  direction: ltr;
+  display: inline-block;
+}
+
+.cg-muted {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Section Headers (used by Professional & Employer) ──────────────────── */
+.section-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 0.4rem 1rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.text-cyan-400 { color: #22d3ee; }
+.text-emerald-400 { color: #34d399; }
+.font-semibold { font-weight: 600; }
+
+/* ─── Card Header (Professional / Employer) ──────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+}
+
+/* ─── Flow Diagrams (Professional / Employer) ────────────────────────────── */
+.cg-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.flow-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.flow-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cg-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  color: #f8fafc;
+  white-space: nowrap;
+}
+
+.step-sub {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+}
+
+.step-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.flow-arrow {
+  color: rgba(255, 255, 255, 0.25);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.flow-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.connector-line {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.connector-arrow {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.85rem;
+}
+
+/* ─── Comparison Tables ──────────────────────────────────────────────────── */
+.cg-compare .col-basic {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cg-compare .col-pro {
+  text-align: center;
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.cg-compare .feature-name {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.check-mark {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+.x-mark {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Stats Grid (Seeds) ─────────────────────────────────────────────────── */
+.cg-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cg-stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.cg-stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cg-stat-orange .cg-stat-value { color: #fb923c; }
+.cg-stat-amber .cg-stat-value { color: #fbbf24; }
+.cg-stat-gold .cg-stat-value { color: #facc15; }
+
+/* ─── Callouts ───────────────────────────────────────────────────────────── */
+.cg-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cg-callout-warning {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.03) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.cg-callout-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.cg-callout-body h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
+
+.cg-callout-body p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.cg-callout-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cg-callout-list li {
+  padding: 0.35rem 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cg-callout-list li code {
+  font-family: monospace;
+  font-size: 0.82em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.3rem;
+  color: #e2e8f0;
+}
+
+/* ─── Database Diagram ───────────────────────────────────────────────────── */
+.cg-diagram {
+  background: linear-gradient(180deg, #0b0f19 0%, #140a1a 50%, #0b0f19 100%);
+}
+
+.cg-diagram-board {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.cg-diagram-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.cg-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.cg-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.cg-dot-root { background: #a855f7; }
+.cg-dot-profile { background: #3b82f6; }
+.cg-dot-job { background: #22c55e; }
+.cg-dot-application { background: #f97316; }
+.cg-dot-bookmark { background: #f43f5e; }
+
+.cg-diagram-tree {
+  display: flex;
+  justify-content: center;
+}
+
+.cg-node-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cg-node {
+  padding: 0.6rem 1.25rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8fafc;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cg-node-root {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+  font-size: 1rem;
+}
+
+.cg-node-profile {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+}
+
+.cg-node-job {
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+}
+
+.cg-node-application {
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.25);
+  color: #fb923c;
+}
+
+.cg-node-bookmark {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: rgba(244, 63, 94, 0.25);
+  color: #fb7185;
+}
+
+.cg-node-children {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cg-arrow-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.cg-arrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.8rem;
+}
+
+.cg-arrow {
+  font-size: 1rem;
+}
+
+.cg-node-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cg-node-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cg-node-meta {
+  margin-top: 0.25rem;
+}
+
+.cg-relationships-card {
+  margin-top: 0;
+}
+
+.cg-relationships-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cg-relationships-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.6rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.5rem;
+}
+
+.cg-rel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cg-rel-entity {
+  font-family: monospace;
+  font-size: 0.85em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.3rem;
+  color: #e2e8f0;
+}
+
+/* ─── Quick Links & Scenarios ────────────────────────────────────────────── */
+.cg-quicklinks {
+  background: linear-gradient(180deg, #0b0f19 0%, #0a1220 100%);
+  padding-bottom: 6rem;
+}
+
+.cg-scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.cg-scenario-card {
+  margin-bottom: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cg-scenario-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.cg-scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.cg-scenario-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cg-scenario-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.cg-scenario-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cg-scenario-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+.cg-step-num {
+  font-weight: 700;
+  font-size: 0.85rem;
+  min-width: 1.25rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cg-master-password {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08) 0%, rgba(251, 191, 36, 0.03) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.cg-password-label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cg-password-value {
+  font-family: monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 0.05em;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  direction: ltr;
+  display: inline-block;
+}
+
+/* ─── Professional Section Theme Overrides ───────────────────────────────── */
+.professional-section {
+  background: linear-gradient(180deg, #0f172a 0%, #0a1a2e 50%, #0f172a 100%);
+}
+
+.professional-section .section-tag {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.professional-section .cg-card:hover {
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+/* ─── Employer Section Theme Overrides ───────────────────────────────────── */
+.employer-section {
+  background: linear-gradient(180deg, #0f172a 0%, #0a2e1a 50%, #0f172a 100%);
+}
+
+.employer-section .section-tag {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.employer-section .cg-card:hover {
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
+/* ─── Seeds Section ──────────────────────────────────────────────────────── */
+.cg-seeds {
+  background: linear-gradient(180deg, #0f172a 0%, #2a1a0a 50%, #0f172a 100%);
+}
+
+.cg-seeds .cg-card-title {
+  margin-bottom: 1rem;
+}
+
+.cg-jobs-table .cg-job-title {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cg-pros-table .cg-pro-name {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cg-exp-cell {
+  text-align: center;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cg-section {
+    padding: 3rem 1rem;
+  }
+
+  .cg-title {
+    font-size: 1.5rem;
+  }
+
+  .cg-card {
+    padding: 1.25rem;
+  }
+
+  .cg-table thead th,
+  .cg-table tbody td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .flow-main,
+  .flow-sub {
+    gap: 0.5rem;
+  }
+
+  .cg-step {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .cg-scenarios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cg-master-password {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cg-diagram-board {
+    padding: 1rem;
+  }
+
+  .cg-node-children {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cg-arrow-column {
+    flex-direction: row;
+    padding-top: 0;
+  }
+}

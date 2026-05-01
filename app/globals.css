@@ -25,3 +25,5 @@
 /* Custom cursor bubble + scribble overlay  */
 @import './styles/responsive.css';
 /* All media queries (tablet + mobile)      */
+@import './styles/careers-guide.css';
+/* Careers guide page styles                */
