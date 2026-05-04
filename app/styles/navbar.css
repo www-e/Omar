@@ -364,16 +364,13 @@
 .nav-right .logo-whatsapp {
     position: relative;
     z-index: 105;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
-.nav-wa-qr {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    top: -60px;
-    border-radius: 0px;
-    object-fit: contain;
+.nav-right .logo-whatsapp:hover {
+    transform: scale(1.1);
 }
 
 .nav-wa-title {
@@ -381,7 +378,7 @@
     font-weight: 800;
     letter-spacing: -0.5px;
     text-transform: lowercase;
-    margin-top: -40px;
+    margin-top: 0;
 }
 
 .nav-wa-desc {
@@ -429,4 +426,349 @@
 .nav-hover-trigger:hover .nav-wa-link-svg path {
     stroke-dashoffset: 0;
     transition-delay: 0.15s;
+}
+/* ─── Mobile Hamburger Button ─── */
+.mobile-hamburger {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1002;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-hamburger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-dark);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.hamburger-line:nth-child(1) {
+    margin-bottom: 6px;
+}
+
+.hamburger-line:nth-child(2) {
+    margin-bottom: 6px;
+}
+
+.mobile-hamburger .hamburger-line.open:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-hamburger .hamburger-line.open:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.mobile-hamburger .hamburger-line.open:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ─── Mobile Drawer Backdrop ─── */
+.mobile-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1003;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Mobile Drawer ─── */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 85%;
+    max-width: 400px;
+    height: 100vh;
+    background: var(--bg-color);
+    z-index: 1004;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-drawer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+}
+
+.mobile-drawer-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+.mobile-drawer-close:active {
+    transform: scale(0.95);
+}
+
+.mobile-nav {
+    padding: 80px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobile-nav-link {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    text-decoration: none;
+    padding: 16px 20px;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.5px;
+}
+
+.mobile-nav-link:hover {
+    background: rgba(0, 0, 0, 0.04);
+    transform: translateX(4px);
+}
+
+.mobile-nav-link:active {
+    transform: translateX(2px);
+}
+
+/* ─── Mobile Accordion ─── */
+.mobile-nav-accordion {
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.mobile-nav-accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    letter-spacing: -0.5px;
+}
+
+.mobile-nav-accordion-header:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.accordion-arrow {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.accordion-arrow.open {
+    transform: rotate(180deg);
+}
+
+.mobile-nav-accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-left: 20px;
+}
+
+.mobile-nav-accordion-panel.open {
+    max-height: 500px;
+}
+
+.mobile-nav-sublink {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: var(--color-dark);
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.mobile-nav-sublink:hover {
+    background: rgba(0, 0, 0, 0.04);
+    transform: translateX(4px);
+}
+
+.sublink-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.mobile-nav-view-all {
+    display: block;
+    text-align: center;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 18px 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Epilogue', sans-serif;
+}
+
+.mobile-nav-view-all:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-nav-view-all:active {
+    transform: scale(0.98);
+}
+
+/* ─── Mobile WhatsApp CTA ─── */
+.mobile-nav-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 24px 0;
+}
+
+.mobile-whatsapp-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px 24px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+}
+
+.mobile-whatsapp-cta:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+    background: #20C85F;
+}
+
+.mobile-whatsapp-cta:active {
+    transform: scale(0.98);
+}
+
+.whatsapp-icon {
+    flex-shrink: 0;
+}
+
+/* ─── Mobile Social Links ─── */
+.mobile-social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 0 20px;
+}
+
+.social-link {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    color: var(--color-dark);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-link:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.social-link:active {
+    transform: translateY(0);
+}
+
+/* ─── Mobile Responsive Overrides ─── */
+@media (max-width: 768px) {
+    .mobile-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .navbar {
+        padding: 20px 24px;
+    }
+
+    .nav-left,
+    .nav-right {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-drawer {
+        width: 100%;
+        max-width: none;
+    }
+
+    .mobile-nav {
+        padding: 80px 24px 24px;
+    }
+
+    .mobile-nav-link,
+    .mobile-nav-accordion-header {
+        font-size: 1.35rem;
+    }
 }
