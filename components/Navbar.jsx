@@ -67,8 +67,8 @@ export default function Navbar() {
                 // Slide in drawer
                 gsap.set(drawer, { visibility: 'visible' });
                 gsap.fromTo(drawer,
-                    { x: '100%' },
-                    { x: '0%', duration: 0.4, ease: 'power3.out' }
+                    { x: '100%', opacity: 0 },
+                    { x: '0%', opacity: 1, duration: 0.4, ease: 'power3.out' }
                 );
             } else {
                 // Hide backdrop
@@ -82,6 +82,7 @@ export default function Navbar() {
                 // Slide out drawer
                 gsap.to(drawer, {
                     x: '100%',
+                    opacity: 0,
                     duration: 0.3,
                     ease: 'power2.in',
                     onComplete: () => gsap.set(drawer, { visibility: 'hidden' })
