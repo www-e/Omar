@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
-import { WIGGLE_CONFIG } from '@/lib/data';
+import { WIGGLE_CONFIG, SOCIAL_ICONS } from '@/lib/data';
 
 function initWiggle(element, intensity) {
     const target = element.querySelector('[data-wiggle-target]') || element;
@@ -438,7 +438,6 @@ export default function Navbar() {
                     </div>
 
                     <Link href="/experience" className="mobile-nav-link" onClick={closeMobileMenu}>Experience</Link>
-                    <Link href="/careers-guide" className="mobile-nav-link" onClick={closeMobileMenu}>Careers Guide</Link>
 
                     <div className="mobile-nav-divider"></div>
 
@@ -458,16 +457,17 @@ export default function Navbar() {
 
                     {/* Social Icons */}
                     <div className="mobile-social-links">
-                        <a href="https://www.linkedin.com/in/omar-ashraf-176790262/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.upwork.com/freelancers/~016247fec408960a4d" target="_blank" rel="noopener noreferrer" aria-label="Upwork" className="social-link">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.476-2.158.005-.021c.322-1.423.855-2.525 1.739-3.602.459-.561 1.036-.908 1.722-.908.994 0 1.796.802 1.796 1.796 0 .995-.802 1.796-1.796 1.796-.398 0-.785-.133-1.1-.37l-.212 1.021c.387.16.842.241 1.312.241 1.796 0 3.232-1.436 3.232-3.232S20.357 4 18.561 4c-1.348 0-2.556.731-3.525 1.971-1.049 1.34-1.83 3.108-2.349 5.296l-.639 2.876c-.576 2.583-1.65 4.069-3.166 4.069-.994 0-1.796-.802-1.796-1.796 0-.994.802-1.796 1.796-1.796.423 0 .825.146 1.137.388l.188-.903c-.366-.161-.832-.248-1.325-.248-1.796 0-3.232 1.436-3.232 3.232s1.436 3.232 3.232 3.232c1.348 0 2.547-.731 3.503-1.971 1.034-1.34 1.817-3.108 2.338-5.296l.637-2.876c.576-2.583 1.652-4.069 3.168-4.069.994 0 1.796.802 1.796 1.796 0 .995-.802 1.796-1.796 1.796z"/>
-                            </svg>
-                        </a>
+                        {SOCIAL_ICONS.map(({ href, label, svg }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={label}
+                                className="social-link"
+                                dangerouslySetInnerHTML={{ __html: svg }}
+                            />
+                        ))}
                     </div>
                 </nav>
             </div>
@@ -478,7 +478,6 @@ export default function Navbar() {
                 <a href="/about" className="nav-link">About</a>
                 <a href="/projects" className="nav-link">Projects</a>
                 <a href="/experience" className="nav-link">Experience</a>
-                <a href="/careers-guide" className="nav-link">Careers Guide</a>
             </div>
 
             <nav className="navbar">
