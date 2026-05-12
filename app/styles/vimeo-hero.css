@@ -219,6 +219,50 @@
 }
 
 /* ─────────────────────────────────────────────────
+   ③ CV Download Button — bottom RIGHT
+───────────────────────────────────────────────── */
+.vimeo-hero__cv {
+    position: absolute;
+    bottom: 28px;
+    right: 44px;
+    z-index: 4;
+}
+
+.vimeo-hero__cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Epilogue', sans-serif;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.2s ease;
+}
+
+.vimeo-hero__cv-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
+}
+
+.vimeo-hero__cv-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────
    ④ Hover mute cursor bubble — appears on video hover
    (same elastic spring as .cursor-bubble)
 ───────────────────────────────────────────────── */
