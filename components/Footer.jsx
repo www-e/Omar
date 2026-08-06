@@ -165,7 +165,7 @@ export default function Footer() {
                 <div className="footer-column">
                     <span className="footer-badge">location</span>
                     <address>
-                        Benha, Egypt<br />
+                        Cairo, Egypt<br />
                         Available Remote: KSA, Hungary, Egypt, Indonesia
                     </address>
                     <a href="#" className="footer-map-link">

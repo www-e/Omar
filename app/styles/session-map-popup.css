@@ -1,0 +1,141 @@
+/* ============================================================
+   Session Map Popup — fixed bottom pill CTA
+   RTL Arabic card. Rendered in the root layout, so it appears
+   on every page and re-enters on every route change.
+   z-index 9990: below the custom cursor bubble (9999/10000).
+   ============================================================ */
+
+.session-map-popup {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 9990;
+
+    direction: rtl;
+    font-family: var(--font-cairo, 'Segoe UI'), 'Segoe UI', Tahoma, system-ui, sans-serif;
+
+    background: var(--color-black-deep, #0a0a0a);
+    color: var(--color-white, #ffffff);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 50px 50px 50px 0;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transform-origin: bottom left;
+
+    opacity: 0;
+    visibility: hidden;
+    max-width: min(calc(100vw - 32px), 380px);
+}
+
+.session-map-popup__link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 18px 12px 20px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.session-map-popup__icon {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--color-lightblue, #82a0ff);
+    color: var(--color-black-soft, #111111);
+}
+
+.session-map-popup__icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.session-map-popup__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.session-map-popup__title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.session-map-popup__sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.5;
+}
+
+.session-map-popup__arrow {
+    flex-shrink: 0;
+    margin-inline-start: auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-white);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.session-map-popup__arrow svg {
+    width: 13px;
+    height: 13px;
+}
+
+.session-map-popup__link:hover .session-map-popup__arrow {
+    background: var(--color-lightblue, #82a0ff);
+    color: var(--color-black-soft, #111111);
+    transform: translateX(-3px);
+}
+
+.session-map-popup__close {
+    position: absolute;
+    top: 4px;
+    inset-inline-end: 8px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+}
+
+.session-map-popup__close:hover {
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.session-map-popup__link:focus-visible,
+.session-map-popup__close:focus-visible {
+    outline: 2px solid var(--color-lightblue, #82a0ff);
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .session-map-popup {
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .session-map-popup__link:hover .session-map-popup__arrow {
+        transform: none;
+    }
+}

@@ -53,13 +53,13 @@ export default function AboutPage() {
 
             <div className="about-hero__text">
               <p>
-                Mid-senior full-stack engineer and B.Sc. in Computer Science & Artificial Intelligence from Benha University with 4+ years architecting and delivering scalable end-to-end web platforms.
+                Senior Full-Stack Engineer with a B.Sc. in Computer Science & Artificial Intelligence from Benha University and 5+ years architecting and delivering scalable end-to-end web platforms. Currently engineering production-grade systems at Navaia.sa while serving as a Coding Instructor at iSchool.
               </p>
               <p>
-                Proven expertise as Tech Solution Engineer at Navaia.sa, designing optimized database systems, implementing production CI/CD pipelines, and leading E2E testing strategies. Specialized in building high-performance solutions across LMS, e-commerce, QA, and analytics platforms with a focus on code quality, system reliability, and clean architecture.
+                Deep technical proficiency across React, Next.js, Node.js, and Python, with extensive experience building REST APIs, integrating complex systems, and designing optimized database architectures on PostgreSQL and SQL Server. Skilled in developing executive dashboards and interactive reporting systems powered by Power BI and Tableau, with strong capabilities in data integration, processing, and transformation pipelines.
               </p>
               <p>
-                From AI-powered market platforms to luxury real estate investment systems, I transform complex requirements into elegant, production-grade applications that scale.
+                Hands-on experience with machine learning concepts leveraging Pandas, NumPy, and Scikit-learn to build and integrate ML models into production applications. Domain experience spans LMS, e-commerce, QA, analytics, and entertainment platforms. Consistently driven by clean architecture, system reliability, and measurable business impact.
               </p>
             </div>
 
@@ -73,7 +73,7 @@ export default function AboutPage() {
                 <div className="stat-label">Projects</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">4+</div>
+                <div className="stat-number">5+</div>
                 <div className="stat-label">Years</div>
               </div>
             </div>

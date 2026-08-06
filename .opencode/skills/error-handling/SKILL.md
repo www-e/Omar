@@ -27,7 +27,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px]">
+    <div className="flex flex-col items-center justify-center min-h-100">
       <h2 className="text-xl font-bold mb-4">Something went wrong</h2>
       <p className="text-muted-foreground mb-6">
         {process.env.NODE_ENV === 'development' 
@@ -47,7 +47,7 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[400px]">
+    <div className="flex flex-col items-center justify-center min-h-100">
       <h2 className="text-2xl font-bold">Page Not Found</h2>
       <Link href="/" className="text-primary hover:underline">
         Return Home

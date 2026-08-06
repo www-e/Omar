@@ -133,7 +133,7 @@ export default function MotionCards() {
                     built for impact.
                 </h2>
                 <p className="motion-card__subtitle">
-                    2040+ hours • 13+ production apps
+                    2040+ hours • 15+ production apps
                     {/* SVG sticker placeholder — top-right area */}
                     <span className="motion-card__sticker motion-card__sticker--top">
                         <img

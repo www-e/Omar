@@ -1,12 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// useLayoutEffect on the client so scroll reset + lenis init happen synchronously
+// in the commit phase, before the browser paints the new route.
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 export default function SmoothScroll() {
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
         const lenis = new Lenis({
@@ -15,6 +19,12 @@ export default function SmoothScroll() {
             smoothWheel: true,
             touchMultiplier: 1.5,
         });
+
+        // New pages must start from the very top: Lenis keeps its internal
+        // scroll position across client-side navigations, which overrides
+        // Next.js's default scroll reset. Force an immediate jump to 0.
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
 
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => { lenis.raf(time * 1000); });

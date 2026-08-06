@@ -14,71 +14,132 @@ import SvgSymbols from '@/components/SvgSymbols';
 const EXPERIENCE_DATA = [
     {
         id: 1,
-        company: 'Navaia.sa',
-        role: 'Mid-Senior Full-Stack & Tech Solution Engineer',
-        location: 'KSA',
-        period: '2025 – Present',
+        company: 'iSchool',
+        role: 'English Coding Instructor',
+        location: 'Cairo, Egypt (Hybrid)',
+        period: 'Feb 2026 – Present',
         type: 'Full-time',
         achievements: [
-            'Architected and maintained scalable QA platform and reporting systems',
-            'Designed optimized PostgreSQL schemas and integrated MongoDB for high-volume data',
-            'Led end-to-end CI/CD deployments on AWS with automated testing pipelines',
-            'Implemented Playwright-based E2E test suites for multi-environment reliability',
-            'Developed secure REST APIs and tRPC/ORPC endpoints with authentication',
-            'Mentored junior developers on clean code principles and design patterns',
-            'Troubleshot production issues and optimized system performance via CloudWatch'
+            'Delivering live coding education entirely in English to diverse student cohorts',
+            'Conducted 500+ live coding sessions covering web development, programming logic, and modern frameworks',
+            'Designed adaptive hands-on projects and exercises tailored to varying student skill levels',
+            'Tracked individual progress through structured assessments and code reviews with targeted feedback',
+            'Collaborated with education team to refine curriculum structure and instructional materials'
         ],
-        tech: ['PostgreSQL', 'MongoDB', 'AWS', 'Playwright', 'tRPC', 'CI/CD', 'Node.js', 'Python']
+        tech: ['JavaScript', 'React', 'Web Development', 'Mentoring', 'Curriculum Design', 'English Instruction']
     },
     {
         id: 2,
-        company: 'Outlier',
-        role: 'Tech Solution Engineer',
-        location: 'Remote',
-        period: '2024 – 2025',
+        company: 'Navaia.sa',
+        role: 'Full-Stack Engineer & Tech Solution Consultant',
+        location: 'KSA (Remote)',
+        period: 'Jun 2025 – Present',
         type: 'Full-time',
         achievements: [
-            'Supported development and integration of data-driven web tools',
-            'Enhanced system performance through schema optimization and caching strategies',
-            'Implemented automated testing frameworks for feature validation',
-            'Collaborated with cross-functional teams for reliable E2E deliveries',
-            'Maintained code quality standards across staging and production'
+            'Architected and maintained scalable QA platform and reporting systems across frontend, backend, and AI teams',
+            'Designed optimized PostgreSQL schemas and integrated MongoDB for high-volume data processing',
+            'Led end-to-end CI/CD deployments on AWS with automated testing pipelines and staging environments',
+            'Built Playwright-based E2E test suites ensuring reliability across multiple environments',
+            'Developed secure REST APIs and tRPC/ORPC endpoints with proper authentication, authorization, and error handling',
+            'Mentored junior developers on clean code principles, design patterns, and full-stack best practices',
+            'Troubleshot production issues with CloudWatch monitoring and optimized system performance'
         ],
-        tech: ['API Optimization', 'Testing', 'Performance', 'CI/CD']
+        tech: ['PostgreSQL', 'MongoDB', 'AWS', 'Playwright', 'tRPC', 'ORPC', 'CI/CD', 'Node.js', 'Python', 'CloudWatch']
     },
     {
         id: 3,
-        company: 'Freelance (Upwork)',
+        company: 'Suplift',
         role: 'Full-Stack Developer',
+        location: 'Riyadh, KSA (Remote)',
+        period: 'Jan 2025 – Mar 2025',
+        type: 'Full-time',
+        achievements: [
+            'Developed and maintained features for "Yallanrooh", Suplift\'s flagship entertainment platform',
+            'Built responsive UI components using React and integrated APIs for real-time data delivery',
+            'Collaborated with product and design teams to implement interactive user experiences',
+            'Optimized rendering performance and contributed to CI/CD pipeline improvements'
+        ],
+        tech: ['React', 'Node.js', 'API Integration', 'CI/CD', 'UI/UX', 'Performance Optimization']
+    },
+    {
+        id: 4,
+        company: 'Freelance (Upwork)',
+        role: 'Freelance Full-Stack Developer',
         location: 'Remote (KSA, Hungary, Egypt, Indonesia)',
         period: '2024 – Present',
         type: 'Freelance',
         achievements: [
-            'Designed and delivered LMS, e-commerce platforms, and analytics systems',
-            'Owned full delivery lifecycle: requirements, architecture, development, deployment',
-            'Built scalable backend systems using Node.js and Python (FastAPI)',
-            'Implemented comprehensive E2E test suites with Playwright',
-            'Set up CI/CD pipelines on Vercel and AWS for automated deployments',
-            'Designed normalized PostgreSQL schemas and optimized queries',
-            'Managed client relationships and milestone tracking for long-term partnerships',
-            'Deployed applications to AWS (EC2, S3, RDS) and Vercel with monitoring'
+            'Designed and delivered production-grade LMS, e-commerce platforms, and analytics systems for international clients',
+            'Owned full delivery lifecycle: requirements gathering, architecture, development, testing, deployment',
+            'Built scalable backend systems using Node.js and Python (FastAPI) with Prisma ORM and robust authentication',
+            'Implemented comprehensive E2E test suites with Playwright and unit tests for code reliability',
+            'Set up CI/CD pipelines on Vercel and AWS for automated deployments and continuous integration',
+            'Designed normalized PostgreSQL schemas and optimized queries for high-performance data retrieval',
+            'Managed client relationships, milestone tracking, and async workflows for long-term partnerships',
+            'Deployed applications to AWS (EC2, S3, RDS) and Vercel with proper monitoring and fallback strategies'
         ],
-        tech: ['Next.js', 'Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'Playwright', 'AWS', 'Vercel', 'Stripe']
+        tech: ['Next.js', 'Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'Playwright', 'AWS', 'Vercel', 'Prisma']
     },
     {
-        id: 4,
-        company: 'Google Developer Student Club',
-        role: 'Frontend Web Tutor (React & Flutter)',
-        location: 'Benha University',
-        period: '2021 – 2022',
+        id: 5,
+        company: 'Outlier',
+        role: 'AI/ML Specialist',
+        location: 'Remote (Part-time)',
+        period: 'Mar 2023 – Sep 2025',
         type: 'Part-time',
         achievements: [
-            'Delivered workshops on frontend and mobile development',
-            'Guided students in building production-like applications',
-            'Authored tutorials on state management and clean architecture',
-            'Mentored students in React, TypeScript, and Flutter best practices'
+            'Contributed to AI-driven evaluation tasks and data-driven web tool development',
+            'Worked with prompt engineering and large language models (LLMs) for benchmarking tasks',
+            'Enhanced system performance through schema optimization, caching strategies, and API improvements',
+            'Implemented automated testing frameworks to validate feature deliveries across environments',
+            'Collaborated with cross-functional teams to ensure reliable E2E deliveries and code quality'
         ],
-        tech: ['React', 'TypeScript', 'Flutter', 'Teaching', 'Workshops']
+        tech: ['Python', 'LLMs', 'Prompt Engineering', 'API Optimization', 'Testing', 'Performance']
+    },
+    {
+        id: 6,
+        company: 'Sportologyplus (Alostaz EDU)',
+        role: 'Software Developer & Data Analyst',
+        location: 'Benha, Egypt (On-site)',
+        period: 'Jan 2023 – Sep 2024',
+        type: 'Full-time',
+        achievements: [
+            'Led the development of a cutting-edge Learning Management System, enhancing user engagement and retention',
+            'Optimized PostgreSQL schema and implemented advanced Prisma ORM models for SQL analytics reporting',
+            'Developed interactive Power BI dashboards to monitor KPIs, improving leadership decision-making',
+            'Established continuous deployment pipelines on Vercel, boosting site performance and reliability'
+        ],
+        tech: ['Next.js', 'PostgreSQL', 'Prisma', 'Power BI', 'CI/CD', 'Vercel', 'LMS']
+    },
+    {
+        id: 7,
+        company: 'INTELCIA',
+        role: 'Data Analyst',
+        location: 'El Sheikh Zaid, Egypt (On-site)',
+        period: 'May 2024 – Sep 2024',
+        type: 'Full-time',
+        achievements: [
+            'Analyzed customer interaction data using SQL to identify trends and actionable opportunities',
+            'Created interactive Power BI dashboards visualizing response times, resolution rates, and CSAT scores',
+            'Collaborated with team leads to optimize support workflows through data-driven improvements',
+            'Resolved customer inquiries with high quality, ensuring satisfaction through clear communication'
+        ],
+        tech: ['SQL', 'Power BI', 'Data Analysis', 'KPI Tracking', 'Customer Support']
+    },
+    {
+        id: 8,
+        company: 'Google Developer Student Club (GDSC)',
+        role: 'Web Development Instructor',
+        location: 'Benha University (On-site)',
+        period: 'Jan 2022 – Jul 2022',
+        type: 'Part-time',
+        achievements: [
+            'Delivered engaging web development workshops on modern web technologies',
+            'Guided students in React, TypeScript, and Flutter best practices',
+            'Authored tutorials on state management, clean architecture, and backend API integration',
+            'Collaborated to create a supportive learning environment, resulting in 30% increase in student engagement'
+        ],
+        tech: ['React', 'TypeScript', 'Flutter', 'Teaching', 'Workshops', 'Mentoring']
     }
 ];
 
@@ -156,7 +217,7 @@ export default function ExperiencePage() {
           {/* Hero Section */}
           <section className="experience-hero" ref={heroRef}>
             <h1 className="hero-title">Experience Journey</h1>
-            <p className="hero-subtitle">4+ years building scalable solutions across LMS, e-commerce, QA, and analytics platforms</p>
+            <p className="hero-subtitle">5+ years architecting scalable platforms across LMS, e-commerce, QA, analytics, and entertainment</p>
           </section>
 
           {/* Timeline Section */}

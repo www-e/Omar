@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../app/styles/horizontal-words.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// useLayoutEffect on the client (runs synchronously in React's commit phase,
+// BEFORE DOM nodes are removed on unmount) — fixes the GSAP pin-spacer +
+// React `removeChild` NotFoundError on client-side navigation.
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 const HorizontalWords = () => {
     const sectionRef = useRef(null);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const ctx = gsap.context(() => {
             const container = sectionRef.current;
             const textRef = container.querySelector('.horizontal-words__relative');

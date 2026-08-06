@@ -79,7 +79,7 @@ Always start with mobile styles and enhance for larger screens:
 - Form inputs: comfortable tap targets
 
 ```tsx
-<Button className="min-h-[44px] min-w-[44px]">
+<Button className="min-h-11 min-w-11">
   Click Me
 </Button>
 ```
