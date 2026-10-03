@@ -111,7 +111,7 @@ truus/
 │
 ├── public/
 │   ├── assets/
-│   │   ├── Brand Logos SVG/     # 8 self-hosted marquee brand logos
+│   │   ├── Brand Logos SVG/     # 13 self-hosted marquee brand logos (PNG)
 │   │   ├── Card-Sticker SVG/    # Stickers overlaying service cards
 │   │   ├── Cursor SVG/          # Custom cursor SVG states
 │   │   ├── Footer-Sticker SVG/  # 6 decorative footer stickers
@@ -212,7 +212,7 @@ All SVGs are handled using one of three strategies:
 
 | Folder | Contents |
 |---|---|
-| `Brand Logos SVG/` | 8 marquee brand logos |
+| `Brand Logos SVG/` | 13 marquee brand logos (PNG) |
 | `Card-Sticker SVG/` | 5 stickers for service cards |
 | `Cursor SVG/` | Custom cursor states |
 | `Footer-Sticker SVG/` | 6 decorative footer stickers |
