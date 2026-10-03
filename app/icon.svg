@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Local favicon: dark plate + cream "O" monogram. Replaces the remote
+       cdn.prod.website-files.com URL, which was a link-rot risk (same failure
+       mode as the dead marquee logos) and is not self-hosted. -->
+  <rect width="64" height="64" rx="14" fill="#1a1a1a"/>
+  <circle cx="32" cy="32" r="17" fill="none" stroke="#f0ebe6" stroke-width="7"/>
+  <circle cx="32" cy="32" r="4.5" fill="#f5693c"/>
+</svg>

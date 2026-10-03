@@ -10,7 +10,9 @@ const cairo = Cairo({
     display: 'swap',
 });
 
-const SITE_URL = 'https://truus.co'; // TODO(orchestrator): confirm production origin before relying on absolute OG URLs
+// Production origin for absolute OG/Canonical URLs. Set via NEXT_PUBLIC_SITE_URL
+// if the domain ever changes; falls back to the live apex.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.omarashraf.online';
 
 export const metadata = {
     metadataBase: new URL(SITE_URL),
@@ -19,6 +21,15 @@ export const metadata = {
     keywords: ['Omar Ashraf', 'Full-Stack Engineer', 'Tech Solution Architect', 'Next.js', 'React', 'Portfolio'],
     authors: [{ name: 'Omar Ashraf' }],
     creator: 'Omar Ashraf',
+    // No `icons` entry here on purpose: app/icon.svg is Next's file-based
+    // metadata convention and is auto-served, so the old remote
+    // website-files.com favicon PNG (same link-rot risk as the marquee logos)
+    // is gone and nothing competes with the local asset.
+    //
+    // Likewise no `openGraph.images` / `twitter.images`: app/opengraph-image.tsx
+    // is the file-based convention and Next injects og:image + twitter:image
+    // itself. Declaring them here too would emit duplicate tags and could
+    // shadow the generated asset.
     openGraph: {
         type: 'website',
         siteName: 'Omar Ashraf',
@@ -30,9 +41,6 @@ export const metadata = {
         card: 'summary_large_image',
         title: 'Omar Ashraf — Senior Full-Stack Engineer & Tech Solution Architect',
         description: 'Senior Full-Stack Engineer with 5+ years architecting scalable web platforms. Specializing in Next.js, React, Node.js, Python, cloud infrastructure, and data-driven solutions.',
-    },
-    icons: {
-        icon: 'https://cdn.prod.website-files.com/683703490bc01e1b8c052e06/68381362603d6402ee03c00e_favicon.png',
     },
 };
 
