@@ -13,7 +13,6 @@ import CursorBubble from '@/components/CursorBubble';
 import SmoothScroll from '@/components/SmoothScroll';
 
 import HorizontalWords from '@/components/HorizontalWords';
-import SessionMapTeaser from '@/components/SessionMapTeaser';
 
 export default function Home() {
     return (
@@ -38,7 +37,6 @@ export default function Home() {
             <section className="Double-marquee">
                 <DoubleMarquee />
             </section>
-            <SessionMapTeaser />
             <footer className="main-footer">
                 <Footer />
             </footer>

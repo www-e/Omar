@@ -1,6 +1,5 @@
 import { Cairo } from 'next/font/google';
 import './globals.css';
-import SessionMapPopup from '@/components/SessionMapPopup';
 
 const cairo = Cairo({
     subsets: ['arabic'],
@@ -21,7 +20,6 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={cairo.variable}>
                 {children}
-                <SessionMapPopup />
             </body>
         </html>
     );
