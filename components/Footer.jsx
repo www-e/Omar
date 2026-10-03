@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SOCIAL_ICONS, WIGGLE_CONFIG } from '@/lib/data';
+import SocialIcon from '@/components/SocialIcons';
 
 function initWiggle(element, intensity) {
     const target = element.querySelector('[data-wiggle-target]') || element;
@@ -19,6 +20,7 @@ function initWiggle(element, intensity) {
 export default function Footer() {
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
+        const cleanups = [];
 
         // ─── Map link underline draw/undraw ───
         const footerMapLink = document.querySelector('.footer-map-link');
@@ -32,10 +34,15 @@ export default function Footer() {
             const onLeave = () => gsap.to(mapSvgPaths, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out', overwrite: true });
             footerMapLink.addEventListener('mouseenter', onEnter);
             footerMapLink.addEventListener('mouseleave', onLeave);
+            cleanups.push(() => {
+                footerMapLink.removeEventListener('mouseenter', onEnter);
+                footerMapLink.removeEventListener('mouseleave', onLeave);
+            });
         }
 
         // ─── Credits pop-out ───
         const creditsWrapper = document.querySelector('.footer-credits-wrapper');
+        let pinned = false;
         if (creditsWrapper) {
             const creditsBox = creditsWrapper.querySelector('.credits-box');
             const creditsItems = creditsBox.querySelectorAll('.credits-item');
@@ -47,16 +54,15 @@ export default function Footer() {
             const fullHeight = boxRect.height;
             const boxHeight = boxRect.height; // for text Y translation
 
-            // Distance from box's final position down to behind the credits button
             const creditsBtn = creditsWrapper.querySelector('.footer-credits');
-            const startY = creditsBtn.offsetHeight + 15;
+            const startY = creditsBtn.offsetHeight + 16; // keeps in sync with .credits-box bottom: calc(100% + 16px)
 
             // Set precise initial states for box and text
             // Box starts collapsed rather than 0 scale
             gsap.set(creditsBox, { visibility: 'hidden', width: 0, height: 0, opacity: 0, y: startY });
             gsap.set(creditsItems, { y: boxHeight });
 
-            const onEnter = () => {
+            const openBox = () => {
                 gsap.set(creditsBox, { visibility: 'visible' });
                 gsap.killTweensOf(creditsBox);
                 gsap.killTweensOf(creditsItems);
@@ -68,7 +74,7 @@ export default function Footer() {
                 gsap.to(creditsItems, { y: 0, duration: 0.5, stagger: 0.04, ease: 'power3.out', delay: 0.1 });
             };
 
-            const onLeave = () => {
+            const closeBox = () => {
                 gsap.killTweensOf(creditsBox);
                 gsap.killTweensOf(creditsItems);
 
@@ -83,8 +89,28 @@ export default function Footer() {
                 gsap.to(creditsItems, { y: boxHeight, duration: 0.4, ease: 'power3.in', stagger: -0.03, delay: 0.1 });
             };
 
-            creditsWrapper.addEventListener('mouseenter', onEnter);
+            creditsWrapper.addEventListener('mouseenter', openBox);
+            const onLeave = () => { if (!pinned) closeBox(); };
             creditsWrapper.addEventListener('mouseleave', onLeave);
+
+            // Tap / keyboard access: hover alone left the box unreachable on touch
+            // devices, and the pill used to be an <a href="#"> that just jumped to
+            // the top of the page. It is a real disclosure button now.
+            if (creditsBtn) {
+                const toggle = () => {
+                    pinned = !pinned;
+                    creditsBtn.setAttribute('aria-expanded', String(pinned));
+                    if (pinned) openBox(); else closeBox();
+                };
+                creditsBtn.setAttribute('aria-expanded', 'false');
+                creditsBtn.addEventListener('click', toggle);
+                cleanups.push(() => creditsBtn.removeEventListener('click', toggle));
+            }
+
+            cleanups.push(() => {
+                creditsWrapper.removeEventListener('mouseenter', openBox);
+                creditsWrapper.removeEventListener('mouseleave', onLeave);
+            });
         }
 
         // ─── Footer sticker pop-up on scroll ───
@@ -93,7 +119,7 @@ export default function Footer() {
         gsap.set(footerStickers, { scale: 0, opacity: 0, transformOrigin: 'center bottom' });
         footerStickers.forEach((sticker, i) => gsap.set(sticker, { rotation: stickerRotations[i % stickerRotations.length] }));
 
-        gsap.to(footerStickers, {
+        const stickerTween = gsap.to(footerStickers, {
             scale: 1, opacity: 1,
             rotation: (i) => stickerRotations[i % stickerRotations.length] * 0.7,
             duration: 0.7, ease: 'back.out(1.7)', stagger: 0.12,
@@ -102,6 +128,10 @@ export default function Footer() {
                 start: 'top 80%',
                 toggleActions: 'play none none reverse' // Play on enter, reverse on leave up
             }
+        });
+        cleanups.push(() => {
+            stickerTween.scrollTrigger?.kill();
+            stickerTween.kill();
         });
 
         // ─── Sticker cursor-velocity push ───
@@ -133,7 +163,7 @@ export default function Footer() {
                 }
             };
             document.addEventListener('mousemove', onMove);
-            // No cleanup stored here to match original behaviour (lives for page lifetime)
+            cleanups.push(() => document.removeEventListener('mousemove', onMove));
         });
 
         // ─── Wiggle on footer interactive elements ───
@@ -145,12 +175,13 @@ export default function Footer() {
             { selector: '.credits-name', key: 'socials' }, // Added wiggle target for names using social intensity
         ];
         wiggleTargets.forEach(({ selector, key }) => {
-            document.querySelectorAll(selector).forEach(el => initWiggle(el, WIGGLE_CONFIG[key]));
+            document.querySelectorAll(selector).forEach(el => cleanups.push(initWiggle(el, WIGGLE_CONFIG[key])));
         });
 
         // ─── Social icon wiggle ───
-        document.querySelectorAll('.single-social').forEach(el => initWiggle(el, WIGGLE_CONFIG.socials));
+        document.querySelectorAll('.single-social').forEach(el => cleanups.push(initWiggle(el, WIGGLE_CONFIG.socials)));
 
+        return () => cleanups.forEach(fn => fn());
     }, []);
 
     return (
@@ -165,10 +196,15 @@ export default function Footer() {
                 <div className="footer-column">
                     <span className="footer-badge">location</span>
                     <address>
-                        Cairo, Egypt<br />
+                        Banha, Egypt<br />
                         Available Remote: KSA, Hungary, Egypt, Indonesia
                     </address>
-                    <a href="#" className="footer-map-link">
+                    <a
+                        href="https://www.google.com/maps/search/?api=1&query=Banha%2C+Al-Qalyubia%2C+Egypt"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="footer-map-link"
+                    >
                         <span>Google Maps</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 169 10" fill="none" className="draw-btn__svg">
                             <path d="M1 6.5661C56.3941 3.06082 112.187 1.20095 168 0.999878" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.25"></path>
@@ -180,18 +216,27 @@ export default function Footer() {
                 <div className="footer-column">
                     <span className="footer-badge">contact</span>
                     <a href="mailto:omarasj445@gmail.com" className="footer-email">omarasj445@gmail.com</a>
-                    <a href="tel:+20115468628" className="footer-whatsapp">+20 115 468 8628</a>
+                    <a
+                        href="https://wa.me/201154688628"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="footer-whatsapp"
+                        aria-label="WhatsApp: +20 115 468 8628"
+                    >
+                        +20 115 468 8628
+                    </a>
                     <div className="footer-socials" id="footer-socials">
-                        {SOCIAL_ICONS.map(({ href, label, svg }) => (
+                        {SOCIAL_ICONS.map(({ href, label, icon }) => (
                             <a
                                 key={label}
                                 href={href}
-                                target="_blank"
+                                target={href.startsWith('mailto:') ? undefined : '_blank'}
                                 rel="noopener noreferrer"
                                 className="single-social w-inline-block"
                                 aria-label={label}
-                                dangerouslySetInnerHTML={{ __html: svg }}
-                            />
+                            >
+                                <SocialIcon name={icon} size={30} />
+                            </a>
                         ))}
                     </div>
                 </div>
@@ -233,19 +278,26 @@ export default function Footer() {
                 <div className="footer-bottom-row">
                     <div></div>
                     <div className="footer-credits-wrapper">
-                        <div className="credits-box">
+                        <div className="credits-box" id="footer-credits-box">
                             <div className="credits-content">
                                 <div className="credits-item credit-wiggle">
                                     <div className="overflow-wrapper"><span className="credits-label">design by</span></div>
-                                    <div className="overflow-wrapper"><a href="#" className="credits-name" data-wiggle-target="true">Jordan</a></div>
+                                    <div className="overflow-wrapper"><span className="credits-name" data-wiggle-target="true">Jordan</span></div>
                                 </div>
                                 <div className="credits-item credit-wiggle">
                                     <div className="overflow-wrapper"><span className="credits-label">code by</span></div>
-                                    <div className="overflow-wrapper"><a href="#" className="credits-name" data-wiggle-target="true">Dennis</a></div>
+                                    <div className="overflow-wrapper"><span className="credits-name" data-wiggle-target="true">Dennis</span></div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#" className="footer-credits">credits</a>
+                        <button
+                            type="button"
+                            className="footer-credits"
+                            aria-controls="footer-credits-box"
+                            aria-expanded="false"
+                        >
+                            credits
+                        </button>
                     </div>
                 </div>
             </div>

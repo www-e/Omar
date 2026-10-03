@@ -3,10 +3,24 @@
 /* ─── Page Layout ─────────────────────────────────────────────────────────────── */
 .projects-page {
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: var(--bg-color);
     padding: 120px 20px 80px;
     position: relative;
     overflow-x: hidden;
+}
+
+/* Visually hidden (screen-reader-only headings) */
+.projects-page .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* ─── Hero Section ────────────────────────────────────────────────────────────── */
@@ -142,9 +156,10 @@
     font-weight: 600;
     color: var(--color-dark);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     text-transform: capitalize;
+    min-height: 44px;
 }
 
 .filter-tab::before {
@@ -212,18 +227,20 @@
     border: 3px solid var(--color-dark);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 0 var(--color-dark);
 }
 
-.project-card:hover {
+.project-card:hover,
+.project-card:focus-within {
     transform: translateY(-8px) rotate(1deg);
     box-shadow: 0 12px 0 var(--color-dark);
 }
 
-.project-card:nth-child(even):hover {
+.project-card:nth-child(even):hover,
+.project-card:nth-child(even):focus-within {
     transform: translateY(-8px) rotate(-1deg);
+    box-shadow: 0 12px 0 var(--color-dark);
 }
 
 /* ─── Project Image ────────────────────────────────────────────────────────────── */
@@ -304,8 +321,10 @@
 .meta-label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-dark);
-    opacity: 0.6;
+    /* dark at opacity .6 measures 4.29:1 on cream (fails AA small text);
+       --text-muted is 5.03:1 on cream / 5.95:1 on white */
+    color: var(--text-muted);
+    opacity: 1;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -316,16 +335,17 @@
     color: var(--color-dark);
 }
 
+/* Status colors meet WCAG AA on white: #c2410c = 5.18:1, #3f5ad0 = 5.86:1 */
 .meta-value.status-completed {
     color: var(--color-green);
 }
 
 .meta-value.status-in-progress {
-    color: var(--color-orange);
+    color: #c2410c;
 }
 
 .meta-value.status-planned {
-    color: var(--color-lightblue);
+    color: #3f5ad0;
 }
 
 /* ─── Tech Tags ────────────────────────────────────────────────────────────────── */
@@ -340,11 +360,11 @@
     padding: 6px 12px;
     background: var(--bg-color);
     border: 1px solid var(--color-dark);
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--color-dark);
-    transition: all 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tech-tag:hover {
@@ -365,25 +385,29 @@
     border-radius: 50px;
     font-weight: 700;
     font-size: 0.95rem;
-    transition: all 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     justify-content: center;
+    min-height: 44px;
 }
 
-.project-link:hover {
+.project-link:hover,
+.project-link:focus-visible {
     background: var(--color-darkblue);
     transform: scale(1.02);
 }
 
 .link-arrow {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-link:hover .link-arrow {
+.project-link:hover .link-arrow,
+.project-link:focus-visible .link-arrow {
     transform: translateX(4px);
 }
 
 /* ─── Featured Badge ───────────────────────────────────────────────────────────── */
+/* Gradient stops both keep white text >= 4.6:1 (WCAG AA body) */
 .featured-badge {
     position: absolute;
     top: 16px;
@@ -392,23 +416,23 @@
     align-items: center;
     gap: 6px;
     padding: 8px 14px;
-    background: linear-gradient(135deg, var(--color-orange), var(--color-maroon));
+    background: linear-gradient(135deg, #c2410c, var(--color-maroon));
     color: var(--color-white);
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    box-shadow: 0 4px 12px rgba(240, 105, 60, 0.4);
+    box-shadow: 0 4px 12px rgba(194, 65, 12, 0.4);
     animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
     0%, 100% {
-        box-shadow: 0 4px 12px rgba(240, 105, 60, 0.4);
+        box-shadow: 0 4px 12px rgba(194, 65, 12, 0.4);
     }
     50% {
-        box-shadow: 0 6px 20px rgba(240, 105, 60, 0.6);
+        box-shadow: 0 6px 20px rgba(194, 65, 12, 0.6);
     }
 }
 
@@ -419,9 +443,20 @@
 }
 
 .no-projects-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-muted);
+}
+
+.no-projects-icon svg {
+    width: 28px;
+    height: 28px;
 }
 
 .no-projects h3 {
@@ -504,12 +539,14 @@
         gap: 20px;
     }
 
-    .project-card:hover {
+    .project-card:hover,
+    .project-card:focus-within {
         transform: translateY(-4px);
         box-shadow: 0 8px 0 var(--color-dark);
     }
 
-    .project-card:nth-child(even):hover {
+    .project-card:nth-child(even):hover,
+    .project-card:nth-child(even):focus-within {
         transform: translateY(-4px);
     }
 
@@ -544,9 +581,12 @@
 }
 
 /* ─── Animation Enhancements ────────────────────────────────────────────────────── */
-.project-card {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
+/* Pre-reveal state only when JS-driven GSAP will run AND motion is allowed,
+   so reduced-motion / no-JS users still see the cards. */
+@media (prefers-reduced-motion: no-preference) {
+    .project-card {
+        opacity: 0;
+    }
 }
 
 /* ─── Print Styles ─────────────────────────────────────────────────────────────── */
