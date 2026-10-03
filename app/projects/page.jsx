@@ -20,15 +20,11 @@ export default function ProjectsPage() {
 
     const categories = [
         'All',
-        'AI/ML',
-        'E-commerce',
-        'Education',
-        'Web Development',
-        'Development Tools',
-        'Computer Vision'
+        ...new Set(PROJECTS_DATA.map(project => project.category))
     ];
 
     useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         // Page load animation - add null check
         if (pageRef.current) {
             gsap.fromTo(pageRef.current,
@@ -48,7 +44,9 @@ export default function ProjectsPage() {
     }, [activeFilter]);
 
     useEffect(() => {
-        // Animate projects when filtered - add null check
+        // Animate projects when filtered
+        projectsRef.current = projectsRef.current.slice(0, filteredProjects.length);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         if (projectsRef.current.length > 0) {
             gsap.fromTo(projectsRef.current,
                 { opacity: 0, y: 30, scale: 0.95 },
@@ -78,7 +76,7 @@ export default function ProjectsPage() {
             <TransitionScribble />
             <Navbar />
 
-            <div ref={pageRef} className="projects-page">
+            <main ref={pageRef} className="projects-page" id="main-content" tabIndex={-1}>
                 {/* Hero Section */}
                 <section className="projects-hero">
                     <div className="hero-content">
@@ -90,7 +88,7 @@ export default function ProjectsPage() {
                             {totalHours}+ hours across {PROJECTS_DATA.length} production-grade applications
                         </p>
                     </div>
-                    <div className="hero-decoration">
+                    <div className="hero-decoration" aria-hidden="true">
                         <div className="decoration-circle decoration-circle-1"></div>
                         <div className="decoration-circle decoration-circle-2"></div>
                         <div className="decoration-circle decoration-circle-3"></div>
@@ -98,40 +96,46 @@ export default function ProjectsPage() {
                 </section>
 
                 {/* Filter Section */}
-                <section className="filter-section">
+                <section className="filter-section" aria-labelledby="filter-heading">
+                    <h2 id="filter-heading" className="sr-only">Filter projects by category</h2>
                     <div className="filter-container">
                         {categories.map((category) => (
                             <button
                                 key={category}
+                                type="button"
+                                aria-pressed={activeFilter === category}
                                 className={`filter-tab ${activeFilter === category ? 'active' : ''}`}
                                 onClick={() => handleFilterClick(category)}
                             >
                                 {category}
-                                {activeFilter === category && <span className="tab-indicator"></span>}
+                                {activeFilter === category && <span className="tab-indicator" aria-hidden="true"></span>}
                             </button>
                         ))}
                     </div>
-                    <div className="filter-count">
+                    <div className="filter-count" role="status" aria-live="polite">
                         Showing {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''}
                     </div>
                 </section>
 
                 {/* Projects Grid */}
-                <section className="projects-section">
+                <section className="projects-section" aria-labelledby="projects-heading">
+                    <h2 id="projects-heading" className="sr-only">All projects</h2>
                     <div className="projects-grid">
                         {filteredProjects.map((project, index) => (
-                            <div
+                            <article
                                 key={project.id}
-                                ref={(el) => (projectsRef.current[index] = el)}
+                                ref={(el) => { projectsRef.current[index] = el; }}
                                 className="project-card"
+                                aria-label={`${project.name}, ${project.category} project`}
                                 style={{ '--project-color': `var(--color-${project.color})` }}
                             >
                                 <div className="project-image">
                                     <img
                                         src={project.image}
-                                        alt={project.name}
+                                        alt={`${project.name} — ${project.category} project screenshot`}
                                         className="project-image-img"
                                         loading="lazy"
+                                        decoding="async"
                                     />
                                     <div className="category-badge">
                                         {project.category}
@@ -169,8 +173,8 @@ export default function ProjectsPage() {
                                         rel="noopener noreferrer"
                                         className="project-link"
                                     >
-                                        <span>View Live</span>
-                                        <svg className="link-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <span>View Live <span className="sr-only">of {project.name} (opens in a new tab)</span></span>
+                                        <svg className="link-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                                             <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                     </a>
@@ -178,25 +182,30 @@ export default function ProjectsPage() {
 
                                 {project.featured && (
                                     <div className="featured-badge">
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                                             <path d="M8 0L9.856 6.144L16 8L9.856 9.856L8 16L6.144 9.856L0 8L6.144 6.144L8 0Z"/>
                                         </svg>
                                         Featured
                                     </div>
                                 )}
-                            </div>
+                            </article>
                         ))}
                     </div>
 
                     {filteredProjects.length === 0 && (
                         <div className="no-projects">
-                            <div className="no-projects-icon">🔍</div>
+                            <div className="no-projects-icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="11" cy="11" r="7" />
+                                    <path d="M20 20l-3.5-3.5" />
+                                </svg>
+                            </div>
                             <h3>No projects found</h3>
                             <p>Try selecting a different category</p>
                         </div>
                     )}
                 </section>
-            </div>
+            </main>
 
             <footer className="main-footer">
                 <Footer />

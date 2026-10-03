@@ -3,6 +3,7 @@
     position: relative;
     width: 100%;
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: var(--color-black-deep);
     display: flex;
     align-items: center;
@@ -17,7 +18,7 @@
 
 .showreel__title {
     font-family: 'Epilogue', sans-serif;
-    font-size: 5rem;
+    font-size: clamp(2rem, 3.5vw + 1.25rem, 5rem);
     font-weight: 900;
     letter-spacing: -3px;
     color: var(--color-white);
@@ -29,7 +30,9 @@
     font-family: 'DM Sans', sans-serif;
     font-size: 1.2rem;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.4);
+    /* Was rgba(255,255,255,0.4) = 3.77:1 on #0a0a0a (fails 4.5:1 for body text).
+       0.55 alpha composites to #919191 = 6.26:1. */
+    color: rgba(255, 255, 255, 0.55);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 3rem;
@@ -44,4 +47,10 @@
     width: 120px;
     height: 120px;
     object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .showreel__sticker {
+        animation: none;
+    }
 }

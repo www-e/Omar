@@ -18,7 +18,9 @@ export default function AboutPage() {
 
   useEffect(() => {
     // Page load animation - using ref for reliable targeting
-    if (heroRef.current) {
+    // Skip entrance animation for users who prefer reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (heroRef.current && !prefersReduced) {
       gsap.from(heroRef.current, {
         opacity: 0,
         y: 100,
@@ -37,16 +39,17 @@ export default function AboutPage() {
       <TransitionScribble />
       <Navbar />
 
-      <main className="about-page">
-        <section className="about-hero" ref={heroRef}>
+      <main className="about-page" id="main-content" tabIndex={-1}>
+        <section className="about-hero" ref={heroRef} aria-labelledby="about-heading">
           <div className="about-hero-content">
-            <h1 className="about-hero-text">
+            <h1 className="about-hero-text" id="about-heading">
               About Me
             </h1>
             <div className="sticker-container">
               <img
                 src="/stickers/about-sticker.svg"
-                alt="About Sticker"
+                alt=""
+                role="presentation"
                 className="about-sticker"
               />
             </div>
@@ -63,31 +66,31 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="about-hero__stats">
-              <div className="stat-item">
-                <div className="stat-number">2040+</div>
-                <div className="stat-label">Hours</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">13+</div>
-                <div className="stat-label">Projects</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">5+</div>
-                <div className="stat-label">Years</div>
-              </div>
-            </div>
+            <ul className="about-hero__stats">
+              <li className="stat-item">
+                <span className="stat-number">2040+</span>
+                <span className="stat-label">Hours</span>
+              </li>
+              <li className="stat-item">
+                <span className="stat-number">13+</span>
+                <span className="stat-label">Projects</span>
+              </li>
+              <li className="stat-item">
+                <span className="stat-number">5+</span>
+                <span className="stat-label">Years</span>
+              </li>
+            </ul>
           </div>
         </section>
 
         {/* Education and Languages Section */}
-        <section className="education-section">
+        <section className="education-section" aria-label="Education and languages">
           <div className="education-container">
             {/* Education Block */}
             <div className="education-block">
               <div className="education-content">
                 <span className="education-badge">Education</span>
-                <h3>B.Sc. Computer Science & Artificial Intelligence</h3>
+                <h2>B.Sc. Computer Science & Artificial Intelligence</h2>
                 <p className="institution">Benha University, Egypt</p>
               </div>
             </div>
@@ -96,7 +99,7 @@ export default function AboutPage() {
             <div className="education-block">
               <div className="education-content">
                 <span className="education-badge">Languages</span>
-                <h3>Arabic & English</h3>
+                <h2>Arabic & English</h2>
                 <ul className="language-list">
                   <li className="language-item">
                     <span className="language-name">Arabic</span>

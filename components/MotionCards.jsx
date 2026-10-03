@@ -9,21 +9,29 @@ gsap.registerPlugin(InertiaPlugin, ScrollTrigger);
 
 export default function MotionCards() {
     const sectionRef = useRef(null);
-    const containerRef = useRef(null);
 
     useEffect(() => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const cleanups = [];
+        const tweens = [];
+
+        const attach = (el, type, handler, options) => {
+            el.addEventListener(type, handler, options);
+            cleanups.push(() => el.removeEventListener(type, handler, options));
+        };
+
         const ctx = gsap.context(() => {
-            // Inertia on cards
-            const cards = document.querySelectorAll(".motion-card__card");
-            cards.forEach((card) => {
+            // Shared inertia-fling behaviour for cards and floating labels
+            const addInertia = (el, velocityScale, rotationScale) => {
                 let lastX = 0;
                 let lastY = 0;
                 let speedX = 0;
                 let speedY = 0;
 
-                const startRotation = gsap.getProperty(card, "rotation");
-                const startX = gsap.getProperty(card, "x");
-                const startY = gsap.getProperty(card, "y");
+                const startRotation = gsap.getProperty(el, "rotation");
+                const startX = gsap.getProperty(el, "x");
+                const startY = gsap.getProperty(el, "y");
 
                 const onMove = (e) => {
                     speedX = e.clientX - lastX;
@@ -40,60 +48,27 @@ export default function MotionCards() {
                 };
 
                 const onLeave = () => {
-                    gsap.to(card, {
+                    tweens.push(gsap.to(el, {
                         inertia: {
-                            x: { velocity: speedX * 20, end: startX },
-                            y: { velocity: speedY * 20, end: startY },
-                            rotation: { velocity: speedX * 1.5, end: startRotation },
+                            x: { velocity: speedX * velocityScale, end: startX },
+                            y: { velocity: speedY * velocityScale, end: startY },
+                            rotation: { velocity: speedX * rotationScale, end: startRotation },
                         },
-                    });
+                    }));
                 };
 
-                card.addEventListener("mousemove", onMove);
-                card.addEventListener("mouseenter", onEnter);
-                card.addEventListener("mouseleave", onLeave);
-            });
+                attach(el, "mousemove", onMove);
+                attach(el, "mouseenter", onEnter);
+                attach(el, "mouseleave", onLeave);
+            };
 
-            // Inertia on floating labels
-            const labels = document.querySelectorAll(".motion-card__floating-label");
-            labels.forEach((label) => {
-                let lastX = 0;
-                let lastY = 0;
-                let speedX = 0;
-                let speedY = 0;
+            sectionRef.current
+                .querySelectorAll(".motion-card__card")
+                .forEach((card) => addInertia(card, 20, 1.5));
 
-                const startRotation = gsap.getProperty(label, "rotation");
-                const startX = gsap.getProperty(label, "x");
-                const startY = gsap.getProperty(label, "y");
-
-                const onMove = (e) => {
-                    speedX = e.clientX - lastX;
-                    speedY = e.clientY - lastY;
-                    lastX = e.clientX;
-                    lastY = e.clientY;
-                };
-
-                const onEnter = (e) => {
-                    speedX = 0;
-                    speedY = 0;
-                    lastX = e.clientX;
-                    lastY = e.clientY;
-                };
-
-                const onLeave = () => {
-                    gsap.to(label, {
-                        inertia: {
-                            x: { velocity: speedX * 25, end: startX },
-                            y: { velocity: speedY * 25, end: startY },
-                            rotation: { velocity: speedX * 2, end: startRotation },
-                        },
-                    });
-                };
-
-                label.addEventListener("mousemove", onMove);
-                label.addEventListener("mouseenter", onEnter);
-                label.addEventListener("mouseleave", onLeave);
-            });
+            sectionRef.current
+                .querySelectorAll(".motion-card__floating-label")
+                .forEach((label) => addInertia(label, 25, 2));
 
             // Entry Animations: Sticker Pop & Underline Draw
             const tl = gsap.timeline({
@@ -118,7 +93,11 @@ export default function MotionCards() {
             }
         }, sectionRef);
 
-        return () => ctx.revert();
+        return () => {
+            tweens.forEach((t) => t.kill());
+            ctx.revert();
+            cleanups.forEach((detach) => detach());
+        };
     }, []);
 
     return (
@@ -135,15 +114,15 @@ export default function MotionCards() {
                 <p className="motion-card__subtitle">
                     2040+ hours • 15+ production apps
                     {/* SVG sticker placeholder — top-right area */}
-                    <span className="motion-card__sticker motion-card__sticker--top">
+                    <span className="motion-card__sticker motion-card__sticker--top" aria-hidden="true">
                         <img
                             src="/assets/Footer-Sticker SVG/footer-sticker-hands.svg"
-                            alt="Green heart hands sticker"
+                            alt=""
                             className="motion-card__sticker-img"
                         />
                     </span>
                 </p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 634 28" fill="none" className="motion-card__underline-svg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 634 28" fill="none" className="motion-card__underline-svg" aria-hidden="true" focusable="false">
                     <path className="motion-card__underline-path" d="M2 26C41.0237 23.1556 79.9927 19.9419 118.634 15.5521C169.106 9.98633 227.314 2.42393 275.206 2C280.46 2.57436 264.768 4.99488 262.462 5.55556C257.837 6.43078 252.529 7.47009 247.317 8.59146C239.594 10.3556 212.496 15.8393 226.932 19.8051C239.594 22.6359 263.663 21.9521 280.978 21.3504C314.817 19.9829 349.311 16.7419 383.204 14.7863C465.931 9.5077 549.191 10.547 632 14.1436" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </div>
@@ -161,8 +140,8 @@ export default function MotionCards() {
 
 
                 {/* 4 Photo Cards - Featured Projects */}
-                <div ref={containerRef} className="motion-card__cards">
-                    <div className="motion-card__card motion-card__card--1">
+                <div className="motion-card__cards">
+                    <a className="motion-card__card motion-card__card--1" href="https://agentic.navaia.sa/dashboard" target="_blank" rel="noopener noreferrer">
                         <div className="motion-card__card-image">
                             <img
                                 src="/assets/projects/navaia-agentic.jpg"
@@ -173,9 +152,9 @@ export default function MotionCards() {
                                 className="cover-image"
                             />
                         </div>
-                    </div>
+                    </a>
 
-                    <div className="motion-card__card motion-card__card--2">
+                    <a className="motion-card__card motion-card__card--2" href="https://www.graphictablet.store/" target="_blank" rel="noopener noreferrer">
                         <div className="motion-card__card-image">
                             <img
                                 src="/assets/projects/graphictablet-store.jpg"
@@ -186,9 +165,9 @@ export default function MotionCards() {
                                 className="cover-image"
                             />
                         </div>
-                    </div>
+                    </a>
 
-                    <div className="motion-card__card motion-card__card--3">
+                    <a className="motion-card__card motion-card__card--3" href="https://sportologyacademy.vercel.app/" target="_blank" rel="noopener noreferrer">
                         <div className="motion-card__card-image">
                             <img
                                 src="/assets/projects/sportology-academy.jpg"
@@ -199,9 +178,9 @@ export default function MotionCards() {
                                 className="cover-image"
                             />
                         </div>
-                    </div>
+                    </a>
 
-                    <div className="motion-card__card motion-card__card--4">
+                    <a className="motion-card__card motion-card__card--4" href="https://qaportal1.vercel.app/" target="_blank" rel="noopener noreferrer">
                         <div className="motion-card__card-image">
                             <img
                                 src="/assets/projects/tawaqlna.jpg"
@@ -212,11 +191,11 @@ export default function MotionCards() {
                                 className="cover-image"
                             />
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 {/* Floating labels — positioned freely over the cards area */}
-                <div ref={containerRef} className="motion-card__floating-labels">
+                <div className="motion-card__floating-labels">
                     <div className="motion-card__floating-label motion-card__floating-label--pink">
                         <p className="motion-card__floating-text">AI-Powered Platform</p>
                     </div>

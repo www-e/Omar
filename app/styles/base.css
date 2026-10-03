@@ -1,18 +1,22 @@
 /* ─── Fonts ─────────────────────────────────────────────────────────────────── */
+/* font-display: swap avoids a ~3s invisible-text window on the local variable fonts. */
 @font-face {
     font-family: 'DM Sans';
     src: url('/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
     font-weight: 100 900;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Epilogue';
     src: url('/fonts/Epilogue-VariableFont_wght.ttf') format('truetype');
     font-weight: 100 900;
+    font-display: swap;
 }
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────────── */
 :root {
+    /* Brand palette */
     --color-green: #29725f;
     --color-lightblue: #82a0ff;
     --color-darkblue: #4b69f0;
@@ -26,6 +30,44 @@
     --color-dark: #1a1a1a;
     --color-black-soft: #111111;
     --color-black-deep: #0a0a0a;
+
+    /* Typography — the var() fallbacks keep the stack valid if --font-cairo is
+       ever out of scope (an undefined var() would otherwise invalidate the
+       whole font-family declaration and drop text to the serif default). */
+    --font-body: 'Epilogue', var(--font-cairo, sans-serif), sans-serif;
+    --font-display: 'DM Sans', var(--font-cairo, sans-serif), sans-serif;
+
+    /* Semantic text tokens — WCAG ratios measured against their intended surfaces
+       --text-primary   14.70:1 on --bg-color, 15.53:1 on --color-lightgreen
+       --text-muted      5.03:1 on --bg-color,  5.95:1 on --color-white (AA body)
+       --text-link       6.06:1 on --bg-color,  5.99:1 on --color-lightgreen (AA body)
+       --text-muted-on-dark 6.68:1 on --color-black-soft, 7.00:1 on --color-black-deep
+       Light tokens must not be used on the dark surfaces and vice versa. */
+    --text-primary: var(--color-dark);
+    --text-muted: #6b625c;
+    --text-link: #2f4bc4;
+    --text-muted-on-dark: #a2988f;
+
+    /* Focus ring — --color-darkblue is 3.87:1 on cream and 4.12:1 on --color-black-soft
+       (>=3:1 non-text contrast on the two dominant page backgrounds). */
+    --focus-ring-color: var(--color-darkblue);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 3px;
+
+    /* Radius scale — matches the recurring values already used across the site
+       (8 / 12 / 20 / 24 / pill). New rules should use these instead of raw px/rem. */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+
+    /* Elevation scale — normalises the duplicated 0 4px …/.08 and 0 8px 30px/.15 shadows.
+       --shadow-brutal is the brand's hard offset shadow. */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 14px 40px rgba(0, 0, 0, 0.22);
+    --shadow-brutal: 8px 8px 0 var(--color-dark);
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────────── */
@@ -38,6 +80,59 @@
 ::selection {
     background-color: var(--color-pink);
     color: var(--color-black);
+}
+
+/* ─── Global Focus Indicator ──────────────────────────────────────────────── */
+/* Keyboard-only ring for every interactive element. Class-based component
+   focus styles (e.g. .filter-tab:focus-visible) still win on specificity. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+[role="button"]:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* ─── Links ───────────────────────────────────────────────────────────────── */
+/* Only unclassed anchors: classed links (nav, footer, cards) keep their own
+   colours. Unclassed links previously inherited body colour and had no affordance. */
+a:not([class]) {
+    color: var(--text-link);
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.2em;
+}
+
+/* ─── Skip Link ───────────────────────────────────────────────────────────── */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    transform: translateY(-130%);
+    padding: 12px 20px;
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0 0 var(--radius-md) 0;
+    transition: transform 0.2s ease;
+}
+
+.skip-link:focus-visible,
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+/* Skip-link target: silence the ring for mouse users, keep it for keyboard. */
+#main-content:focus:not(:focus-visible) {
+    outline: none;
 }
 
 /* Prevent selection on non-text elements */
@@ -56,8 +151,8 @@ object {
 /* ─── Base Elements ──────────────────────────────────────────────────────────── */
 body {
     background-color: var(--bg-color);
-    font-family: 'Epilogue', sans-serif;
-    color: var(--color-dark);
+    font-family: var(--font-body);
+    color: var(--text-primary);
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -78,4 +173,28 @@ body::-webkit-scrollbar {
 @keyframes wiggle {
     0%, 100% { transform: rotate(-3deg); }
     50% { transform: rotate(3deg); }
+}
+
+/* ─── Reduced Motion Guard ────────────────────────────────────────────────── */
+/* Global baseline: collapses every animation/transition declared in any later
+   imported sheet (!important beats source order) and stops infinite loops such
+   as the double marquee, whose elements fall back to their static base state.
+   Caveat: GSAP tweens and Lenis smooth scroll are JS driven and are NOT covered
+   here — components/SmoothScroll.jsx and the GSAP components need their own
+   matchMedia('(prefers-reduced-motion: reduce)') checks. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: auto !important;
+    }
 }

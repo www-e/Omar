@@ -13,6 +13,22 @@ export default function SmoothScroll() {
     useIsomorphicLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
+        // Respect reduced-motion: skip Lenis entirely so scrolling is native/instant.
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        // Dynamic Tab Title Change
+        const originalTitle = document.title;
+        const handleVisibility = () => {
+            document.title = document.hidden ? "Hey, over here!👋 - Omar" : originalTitle;
+        };
+        document.addEventListener('visibilitychange', handleVisibility);
+
+        if (reduceMotion.matches) {
+            return () => {
+                document.removeEventListener('visibilitychange', handleVisibility);
+            };
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -27,20 +43,19 @@ export default function SmoothScroll() {
         lenis.scrollTo(0, { immediate: true });
 
         lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-        gsap.ticker.lagSmoothing(0);
 
-        // Dynamic Tab Title Change
-        const originalTitle = document.title;
-        const handleVisibility = () => {
-            document.title = document.hidden ? "Hey, over here!👋 - Omar" : originalTitle;
-        };
-        document.addEventListener('visibilitychange', handleVisibility);
+        // Keep a stable reference so the ticker callback can be removed on unmount;
+        // an anonymous fn in gsap.ticker.add() leaks and keeps calling lenis.raf
+        // on a destroyed instance.
+        const raf = (time) => { lenis.raf(time * 1000); };
+        gsap.ticker.add(raf);
+        gsap.ticker.lagSmoothing(0);
 
         // Store lenis on window so other components can access it
         window.__lenis = lenis;
 
         return () => {
+            gsap.ticker.remove(raf);
             lenis.destroy();
             document.removeEventListener('visibilitychange', handleVisibility);
             delete window.__lenis;

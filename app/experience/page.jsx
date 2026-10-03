@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
 import '../styles/experience.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -214,71 +213,74 @@ export default function ExperiencePage() {
           <TransitionScribble />
           <Navbar />
 
+          <main id="main-content" tabIndex={-1}>
           {/* Hero Section */}
-          <section className="experience-hero" ref={heroRef}>
-            <h1 className="hero-title">Experience Journey</h1>
+          <section className="experience-hero" ref={heroRef} aria-labelledby="experience-heading">
+            <h1 className="hero-title" id="experience-heading">Experience Journey</h1>
             <p className="hero-subtitle">5+ years architecting scalable platforms across LMS, e-commerce, QA, analytics, and entertainment</p>
           </section>
 
           {/* Timeline Section */}
-          <section className="experience-timeline-section" ref={timelineRef}>
+          <section className="experience-timeline-section" ref={timelineRef} aria-label="Career timeline">
             <div className="timeline-container">
-              <div className="timeline-vertical-line">
+              <div className="timeline-vertical-line" aria-hidden="true">
                 <div className="timeline-line-fill"></div>
               </div>
 
-              {EXPERIENCE_DATA.map((exp, index) => (
-                <div
-                  key={exp.id}
-                  ref={el => itemsRef.current[index] = el}
-                  className={`timeline-item ${index % 2 === 0 ? 'timeline-left' : 'timeline-right'}`}
-                >
-                  <div className="timeline-dot">
-                    <div className="timeline-dot-inner"></div>
-                  </div>
-
-                  <div className="timeline-content">
-                    <div className="timeline-content-header">
-                      <span className="timeline-period">{exp.period}</span>
-                      <span className={`timeline-type ${exp.type === 'Freelance' ? 'type-freelance' : 'type-fulltime'}`}>
-                        {exp.type}
-                      </span>
+              <ul className="timeline-list">
+                {EXPERIENCE_DATA.map((exp, index) => (
+                  <li
+                    key={exp.id}
+                    ref={el => itemsRef.current[index] = el}
+                    className={`timeline-item ${index % 2 === 0 ? 'timeline-left' : 'timeline-right'}`}
+                  >
+                    <div className="timeline-dot" aria-hidden="true">
+                      <div className="timeline-dot-inner"></div>
                     </div>
 
-                    <h2 className="timeline-company">{exp.company}</h2>
-                    <h3 className="timeline-role">{exp.role}</h3>
-                    <p className="timeline-location">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      {exp.location}
-                    </p>
+                    <div className="timeline-content">
+                      <div className="timeline-content-header">
+                        <span className="timeline-period">{exp.period}</span>
+                        <span className={`timeline-type ${exp.type === 'Freelance' ? 'type-freelance' : 'type-fulltime'}`}>
+                          {exp.type}
+                        </span>
+                      </div>
 
-                    <ul className="timeline-achievements">
-                      {exp.achievements.map((achievement, idx) => (
-                        <li key={idx}>{achievement}</li>
-                      ))}
-                    </ul>
+                      <h2 className="timeline-company">{exp.company}</h2>
+                      <h3 className="timeline-role">{exp.role}</h3>
+                      <p className="timeline-location">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
+                        </svg>
+                        {exp.location}
+                      </p>
 
-                    <div className="timeline-tech">
-                      {exp.tech.map((tech, idx) => (
-                        <span key={idx} className="tech-tag">{tech}</span>
-                      ))}
+                      <ul className="timeline-achievements">
+                        {exp.achievements.map((achievement, idx) => (
+                          <li key={idx}>{achievement}</li>
+                        ))}
+                      </ul>
+
+                      <div className="timeline-tech">
+                        {exp.tech.map((tech, idx) => (
+                          <span key={idx} className="tech-tag">{tech}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
           {/* Education Section */}
-          <section className="education-section">
+          <section className="education-section" aria-labelledby="experience-education-title">
             <div className="education-container">
-              <h2 className="education-title">Education</h2>
+              <h2 className="education-title" id="experience-education-title">Education</h2>
               <div className="education-card">
-                <div className="education-icon">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="education-icon" aria-hidden="true">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                     <path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M6 12v5c3 3 9 3 12 0v-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -292,6 +294,7 @@ export default function ExperiencePage() {
               </div>
             </div>
           </section>
+          </main>
 
           <footer className="main-footer">
             <Footer />

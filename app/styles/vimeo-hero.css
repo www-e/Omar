@@ -5,6 +5,10 @@
     position: relative;
     width: calc(100% - 24px);
     height: calc(100vh - 24px);
+    /* dvh tracks mobile browser dynamic toolbars; vh above is the fallback */
+    height: calc(100dvh - 24px);
+    /* never collapse below the stacked hero content on short/landscape screens */
+    min-height: 420px;
     margin: 12px auto;
     overflow: hidden;
     background-color: var(--color-black-soft);
@@ -24,6 +28,7 @@
     max-height: 100%;
     border: none;
     pointer-events: none;
+    object-fit: contain;
 }
 
 /* ── Thumbnail placeholder ── */
@@ -47,10 +52,13 @@
 .vimeo-hero__fade {
     position: absolute;
     inset: 0;
+    /* Strengthened so the headline keeps >=3:1 (large text) even over the
+       lightest possible video frames: worst-case scrim here measures 3.35:1
+       vs a pure-white frame (previously 2.19:1 with 0.2 @60%). */
     background: linear-gradient(to bottom,
             transparent 30%,
-            rgba(0, 0, 0, 0.2) 60%,
-            rgba(0, 0, 0, 0.7) 100%);
+            rgba(0, 0, 0, 0.45) 62%,
+            rgba(0, 0, 0, 0.85) 100%);
     z-index: 2;
     pointer-events: none;
 }
@@ -60,7 +68,8 @@
 ───────────────────────────────────────────────── */
 .home-header__title {
     position: absolute;
-    bottom: 72px;
+    /* reserved above the CV button (bottom 28 + ~44 hit area + 8 gap) */
+    bottom: 80px;
     left: 0;
     right: 0;
     padding: 0 44px;
@@ -185,10 +194,11 @@
     z-index: 4;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .vimeo-hero__btn {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -213,6 +223,23 @@
     transform: scale(1.08);
 }
 
+.vimeo-hero__btn:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+}
+
+.vimeo-hero__btn:active {
+    transform: scale(0.96);
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* extend touch target to >=44px without changing the visual size */
+.vimeo-hero__btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+}
+
 .vimeo-hero__btn svg {
     width: 16px;
     height: 16px;
@@ -232,8 +259,10 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 12px 20px;
+    min-height: 44px;
+    min-width: 44px;
+    border-radius: 12px;
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.08);
     color: var(--color-white);
@@ -254,6 +283,16 @@
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.7);
     transform: scale(1.05);
+}
+
+.vimeo-hero__cv-btn:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+}
+
+.vimeo-hero__cv-btn:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.28);
 }
 
 .vimeo-hero__cv-btn svg {
@@ -340,4 +379,28 @@
 .home-header__blob-svg,
 .home-header__mute-icons {
     display: none;
+}
+
+/* ─── Reduced motion: skip entrance/decorative animation ─── */
+@media (prefers-reduced-motion: reduce) {
+    .home-header__title-line-path {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+
+    .vimeo-hero__btn,
+    .vimeo-hero__cv-btn {
+        transition: none;
+    }
+
+    .vimeo-hero__btn:hover,
+    .vimeo-hero__cv-btn:hover,
+    .vimeo-hero__btn:active,
+    .vimeo-hero__cv-btn:active {
+        transform: none;
+    }
+
+    .vimeo-hero__placeholder {
+        transition: none;
+    }
 }

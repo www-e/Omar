@@ -1,5 +1,6 @@
-/* ─── Tablet (769px – 1200px) ────────────────────────────────────────────── */
-@media (min-width: 769px) and (max-width: 1200px) {
+/* ─── Tablet (768.02px – 1200px) ─────────────────────────────────────────── */
+/* 768.02 (not 769) closes the fractional-width gap at zoomed 768.x viewports */
+@media (min-width: 768.02px) and (max-width: 1200px) {
     .cards-wrapper {
         height: auto;
         display: flex;
@@ -46,37 +47,11 @@
 @media (max-width: 768px) {
 
     /* ── Navbar ─────────────────────── */
+    /* nav-links / logo-work / whatsapp sizing removed: navbar.css ≤768 hides
+       .nav-links, .nav-left and .nav-right (mobile hamburger takes over),
+       so sizing rules here could never apply. */
     .navbar {
         padding: 14px 16px;
-    }
-
-    .logo-truus {
-        width: 100px;
-    }
-
-    .logo-work-container {
-        width: 48px;
-        height: 44px;
-    }
-
-    .logo-work-text {
-        font-size: 1.4rem;
-        margin-left: 52px;
-    }
-
-    .nav-bar__whatsapp-svg {
-        width: 26px;
-    }
-
-    /* ── Header Hero ────────────────── */
-    .header-content {
-        height: 100svh;
-        padding: 0 24px;
-        text-align: center;
-    }
-
-    .header-content h1 {
-        font-size: 2rem;
     }
 
     /* ── Content / Hero Title ───────── */
@@ -164,7 +139,7 @@
     }
 
     .motion-card__description {
-        font-size: 0.95rem;
+        font-size: 1rem;
         line-height: 1.5;
     }
 
@@ -174,6 +149,7 @@
         margin: 8px auto;
         width: calc(100% - 16px);
         height: calc(100vh - 16px);
+        height: calc(100dvh - 16px);
     }
 
     .home-header__title {
@@ -205,24 +181,21 @@
     }
 
     .vimeo-hero__btn {
+        position: relative;
         width: 32px;
         height: 32px;
+    }
+
+    /* Invisible hit-area expander so the visual 32px button taps at ≥44px */
+    .vimeo-hero__btn::after {
+        content: '';
+        position: absolute;
+        inset: -8px;
     }
 
     .vimeo-mute-bubble__blob {
         width: 120px;
         height: 120px;
-    }
-
-    /* ── Navigation Links ───────────── */
-    .nav-links {
-        top: 16px;
-        padding: 10px 16px;
-        gap: 16px;
-    }
-
-    .nav-link {
-        font-size: 0.75rem;
     }
 
     /* ── Showreel Section ───────────── */
@@ -338,7 +311,7 @@
     }
 
     .footer-top {
-        flex-direction: column;
+        /* flex-direction: column inherited from the ≤900 block */
         gap: 36px;
     }
 
@@ -439,34 +412,9 @@
 @media (max-width: 480px) {
 
     /* ── Navbar ─────────────────────── */
+    /* (nav-link / logo sizing here was superseded — see ≤768 note) */
     .navbar {
         padding: 12px 14px;
-    }
-
-    .logo-work-container {
-        width: 42px;
-        height: 38px;
-    }
-
-    .logo-work-text {
-        font-size: 1.2rem;
-        margin-left: 46px;
-    }
-
-    .nav-bar__whatsapp-svg {
-        width: 24px;
-    }
-
-    /* ── Navigation Links ───────────── */
-    .nav-links {
-        top: 10px;
-        padding: 8px 12px;
-        gap: 12px;
-        max-width: 90vw;
-    }
-
-    .nav-link {
-        font-size: 0.68rem;
     }
 
     /* ── VimeoHero ──────────────────── */
@@ -475,6 +423,7 @@
         margin: 6px auto;
         width: calc(100% - 12px);
         height: calc(100vh - 12px);
+        height: calc(100dvh - 12px);
     }
 
     .home-header__title {
@@ -549,9 +498,7 @@
         height: 30vw;
     }
 
-    .motion-card__description {
-        font-size: 0.85rem;
-    }
+    /* (description keeps the 1rem from the ≤768 block — body copy ≥16px) */
 
     /* ── Service Cards ──────────────── */
     .cards-wrapper {
@@ -591,10 +538,16 @@
         height: 220px;
     }
 
+    /* Step-down from the ≤768 block's 220px: at 320–375px the wide item was
+       clipped by body overflow-x:hidden */
+    .marquee-svg-item:nth-child(2) {
+        width: 150px;
+    }
+
     .marquee-right {
         grid-template-rows: 100px 100px;
         grid-auto-columns: 100px;
-        gap: 6px;
+        gap: 8px;
         padding: 16px 16px 24px;
     }
 
@@ -644,8 +597,8 @@
     }
 
     .credits-box {
-        padding: 12px 14px;
-        gap: 14px;
+        padding: 12px 16px;
+        gap: 16px;
     }
 
     .credits-label {
@@ -661,33 +614,9 @@
 @media (max-width: 380px) {
 
     /* ── Navbar ─────────────────────── */
+    /* (nav-link / logo sizing here was superseded — see ≤768 note) */
     .navbar {
         padding: 10px 12px;
-    }
-
-    .logo-work-container {
-        width: 38px;
-        height: 34px;
-    }
-
-    .logo-work-text {
-        font-size: 1.1rem;
-        margin-left: 42px;
-    }
-
-    .nav-bar__whatsapp-svg {
-        width: 22px;
-    }
-
-    /* ── Navigation Links ───────────── */
-    .nav-links {
-        top: 8px;
-        padding: 6px 10px;
-        gap: 10px;
-    }
-
-    .nav-link {
-        font-size: 0.62rem;
     }
 
     /* ── VimeoHero ──────────────────── */
@@ -738,6 +667,69 @@
     }
 
     .card-list li {
-        font-size: 0.75rem !important;
+        /* 0.8rem keeps parity with the ≤480 block (was an off-grid 0.75rem) */
+        font-size: 0.8rem !important;
+    }
+}
+
+/* ─── Reduced Motion: neutralise the CSS animations the sections run ─────── */
+/* Class names verified in marquee.css (.marquee-track / marqueeUp /
+   marqueeDown), showreel.css (.showreel__sticker wiggle) and vimeo-hero.css
+   (.home-header__title-line-path underline draw). GSAP-driven motion needs a
+   JS matchMedia guard inside the components — noted in the audit report. */
+@media (prefers-reduced-motion: reduce) {
+    .marquee-column:nth-child(1) .marquee-track,
+    .marquee-column:nth-child(2) .marquee-track {
+        animation: none;
+    }
+
+    .showreel__sticker {
+        animation: none;
+    }
+
+    .home-header__title-line-path {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ─── Coarse pointer / no-hover: touch tablets (768.02–1200px) currently
+       expose .nav-left / .nav-right pop-outs that only open on :hover and
+       hide nothing else — swap them for the mobile drawer chrome, exactly
+       as navbar.css does at ≤768. ──────────────────────────────────────── */
+@media (hover: none) and (min-width: 768.02px) and (max-width: 1200px) {
+    .mobile-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nav-links,
+    .nav-left,
+    .nav-right {
+        display: none;
+    }
+}
+
+/* ─── Short landscape phones (e.g. 844×390, 667×375): keep hero chrome
+       clear of the video edges instead of trusting portrait bottom offsets ─ */
+@media (orientation: landscape) and (max-height: 520px) {
+    .vimeo-hero {
+        height: calc(100vh - 8px);
+        height: calc(100dvh - 8px);
+        margin: 4px auto;
+    }
+
+    .home-header__title {
+        bottom: 24px;
+    }
+
+    .vimeo-hero__controls {
+        bottom: 12px;
+    }
+
+    .Double-marquee {
+        min-height: unset;
     }
 }

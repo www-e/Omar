@@ -6,7 +6,7 @@
     pointer-events: none;
     background-color: var(--color-pink);
     color: var(--color-black);
-    padding: 5px 7px 3px 7px;
+    padding: 4px 8px;
     border-radius: 50px 50px 50px 0px;
     font-size: 18px;
     font-family: 'Epilogue', sans-serif;
@@ -15,6 +15,19 @@
     transform-origin: left center;
     z-index: 10000;
     white-space: nowrap;
+}
+
+/* ─── Hide the custom cursor bubble on touch devices and reduced motion ── */
+@media (hover: none), (pointer: coarse) {
+    .cursor-bubble {
+        display: none !important; /* !important: beats GSAP inline styles */
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cursor-bubble {
+        display: none !important;
+    }
 }
 
 /* ─── Page Transition Scribble ───────────────────────────────────────────── */

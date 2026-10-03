@@ -4,7 +4,7 @@
     width: 100%;
     max-width: 1400px;
     height: 650px;
-    margin: 100px auto 100px 100px;
+    margin: 96px auto;
     display: flex;
     justify-content: center;
     cursor: url("/assets/Cursor SVG/cursor-text.svg") 12 12, auto;
@@ -21,12 +21,20 @@
     align-items: stretch;
     gap: 1.5rem;
     padding: 3.5rem 1.5rem 1.5rem;
-    cursor: pointer;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     color: var(--color-white);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
     transform-origin: center center;
     cursor: url("/assets/Cursor SVG/cursor-text.svg") 12 12, auto;
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.card:active {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
@@ -47,11 +55,11 @@
     margin: 0;
 }
 
-/* ─── Card Color Variants ────────────────────────────────────────────────── */
+/* ─── Card Color Variants (order must match SKILLS_DATA + ServiceCards JS rotations) ─── */
 .card-green {
     background-color: var(--color-green);
     left: calc(50% - 700px);
-    top: 50px;
+    top: 56px;
     transform: rotate(4deg);
     z-index: 1;
 }
@@ -59,40 +67,42 @@
 .card-darkblue {
     background-color: var(--color-lightblue);
     color: var(--color-dark);
-    left: calc(50% - 430px);
-    top: 100px;
+    left: calc(50% - 432px);
+    top: 96px;
     transform: rotate(-5deg);
     z-index: 2;
+}
+
+/* SKILLS_DATA "Database" card (color: lightblue). No background rule existed for it,
+   so its white text rendered invisible on the cream page — added with dark-blue surface. */
+.card-lightblue {
+    background-color: var(--color-darkblue);
+    left: calc(50% - 216px);
+    top: 16px;
+    transform: rotate(5deg);
+    z-index: 3;
 }
 
 .card-orange {
     background-color: var(--color-orange);
     color: var(--color-dark);
-    left: calc(50% - 220px);
-    top: 20px;
-    transform: rotate(5deg);
-    z-index: 3;
-}
-
-.card-maroon {
-    background-color: var(--color-maroon);
-    left: calc(50% + 50px);
-    top: 30px;
+    left: calc(50% + 48px);
+    top: 32px;
     transform: rotate(-8deg);
     z-index: 4;
 }
 
-.card-pink {
-    background-color: var(--color-pink);
-    color: var(--color-dark);
+.card-maroon {
+    background-color: var(--color-maroon);
     left: calc(50% + 320px);
-    top: 70px;
+    top: 64px;
     transform: rotate(5deg);
     z-index: 5;
 }
 
 /* Expand hit area for middle cards to bridge gaps */
 .card-darkblue::after,
+.card-lightblue::after,
 .card-orange::after,
 .card-maroon::after {
     content: "";
@@ -103,8 +113,7 @@
     right: -35px;
 }
 
-/* Light card divider overrides */
-.card-pink .card-divider-svg,
+/* Light card divider overrides (cards with dark text) */
 .card-orange .card-divider-svg,
 .card-darkblue .card-divider-svg {
     color: rgba(0, 0, 0, 0.8);
@@ -137,6 +146,8 @@
 }
 
 /* ─── Mobile Stacked Card Deck Layout ───────────────────────────────────── */
+/* NOTE: !important is required on shared rules below because responsive.css
+   (loaded after this file in app/globals.css) declares the same selectors. */
 @media (max-width: 768px) {
     .cards-wrapper {
         position: relative !important;
@@ -144,7 +155,6 @@
         max-width: 100% !important;
         height: 500px !important;
         margin: 50px auto !important;
-        overflow: visible !important;
     }
 
     .card {
@@ -155,168 +165,86 @@
         left: 50% !important;
         top: 40px !important;
         transform: translateX(-50%) !important;
-        transform-origin: center center !important;
-        border-radius: 16px !important;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transform-origin: center center;
+        border-radius: 1rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        /* transform must NOT be CSS-transitioned: the swipe deck drives it per-frame via GSAP */
+        transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Stack all cards with slight offsets and rotations */
+    /* Stack all cards with slight offsets and rotations (matches JS mobileRotations/cardHeights) */
     .card-green {
-        left: 50% !important;
-        top: 40px !important;
-        transform: translateX(-50%) rotate(-3deg) !important;
-        z-index: 1 !important;
+        left: 50%;
+        top: 40px;
+        transform: translateX(-50%) rotate(-3deg);
+        z-index: 1;
     }
 
     .card-darkblue {
-        left: 50% !important;
-        top: 50px !important;
-        transform: translateX(-50%) rotate(2deg) !important;
-        z-index: 2 !important;
+        left: 50%;
+        top: 48px;
+        transform: translateX(-50%) rotate(2deg);
+        z-index: 2;
+    }
+
+    .card-lightblue {
+        left: 50%;
+        top: 56px;
+        transform: translateX(-50%) rotate(-2deg);
+        z-index: 3;
     }
 
     .card-orange {
-        left: 50% !important;
-        top: 60px !important;
-        transform: translateX(-50%) rotate(-2deg) !important;
-        z-index: 3 !important;
+        left: 50%;
+        top: 64px;
+        transform: translateX(-50%) rotate(3deg);
+        z-index: 4;
     }
 
     .card-maroon {
-        left: 50% !important;
-        top: 70px !important;
-        transform: translateX(-50%) rotate(3deg) !important;
-        z-index: 4 !important;
-    }
-
-    .card-pink {
-        left: 50% !important;
-        top: 80px !important;
-        transform: translateX(-50%) rotate(-3deg) !important;
-        z-index: 5 !important;
+        left: 50%;
+        top: 72px;
+        transform: translateX(-50%) rotate(-3deg);
+        z-index: 5;
     }
 
     .card-title {
-        font-size: 1.6rem !important;
-        margin-top: 20px !important;
+        font-size: 1.6rem;
+        margin-top: 20px;
     }
 
     .card-list li {
-        font-size: 0.95rem !important;
-        gap: 8px !important;
+        font-size: 0.95rem;
+        gap: 8px;
     }
 
     .card-divider-svg {
-        margin-top: 10px !important;
-    }
-
-    /* Hide stickers on mobile for cleaner look */
-    .card-sticker {
-        display: none !important;
+        margin-top: 8px;
     }
 
     /* Remove the ::after expand hit area */
     .card-darkblue::after,
+    .card-lightblue::after,
     .card-orange::after,
     .card-maroon::after {
-        display: none !important;
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
-    .cards-wrapper {
-        height: 450px !important;
-        margin: 40px auto !important;
-    }
-
     .card {
         width: 90vw !important;
         max-width: 320px !important;
-        height: 380px !important;
-    }
-
-    .card-title {
-        font-size: 1.4rem !important;
     }
 
     .card-list li {
-        font-size: 0.85rem !important;
-        line-height: 1.4 !important;
+        line-height: 1.4;
     }
 }
 
-/* ─── Card Sticker Variables ─────────────────────────────────────────────── */
-:root {
-    --sticker-camera-w: 160px;
-    --sticker-phone-w: 120px;
-    --sticker-smiley-w: 120px;
-    --sticker-hand-w: 120px;
-    --sticker-heart-w: 140px;
-
-    --sticker-camera-top: -45px;
-    --sticker-camera-left: 120px;
-
-    --sticker-phone-top: -45px;
-    --sticker-phone-left: 155px;
-
-    --sticker-smiley-top: -50px;
-
-    --sticker-hand-top: -40px;
-
-    --sticker-heart-top: -50px;
-    --sticker-heart-right: 15px;
-}
-
-/* ─── Card Stickers ──────────────────────────────────────────────────────── */
-.card-sticker {
-    position: absolute;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.card-sticker svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.card-sticker.sticker-camera {
-    width: var(--sticker-camera-w);
-    height: auto;
-    top: var(--sticker-camera-top);
-    left: var(--sticker-camera-left);
-    transform: rotate(3deg);
-}
-
-.card-sticker.sticker-phone {
-    width: var(--sticker-phone-w);
-    height: auto;
-    top: var(--sticker-phone-top);
-    left: var(--sticker-phone-left);
-    transform: rotate(1deg);
-}
-
-.card-sticker.sticker-smiley {
-    width: var(--sticker-smiley-w);
-    height: auto;
-    top: var(--sticker-smiley-top);
-    left: 70%;
-    transform: translateX(-50%) rotate(4deg);
-}
-
-.card-sticker.sticker-hand {
-    width: var(--sticker-hand-w);
-    height: auto;
-    top: var(--sticker-hand-top);
-    left: 70%;
-    transform: translateX(-50%) rotate(8deg);
-}
-
-.card-sticker.sticker-heart {
-    width: var(--sticker-heart-w);
-    height: auto;
-    top: var(--sticker-heart-top);
-    right: var(--sticker-heart-right);
-    transform: rotate(1deg);
+/* Reduced motion: JS skips fan-out/deck animations entirely; damp CSS transitions */
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        transition: none;
+    }
 }

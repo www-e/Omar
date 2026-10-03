@@ -25,7 +25,7 @@ export default function Home() {
                 <VimeoHero />
             </header>
             <HorizontalWords />
-            <main>
+            <main id="main-content" tabIndex={-1}>
                 <div className="content-section motion-cards-wrapper">
                     <MotionCards />
                 </div>

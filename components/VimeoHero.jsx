@@ -13,10 +13,14 @@ export default function VimeoHero() {
     const [isPlaying, setIsPlaying] = useState(true);
     const [isMuted, setIsMuted] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
 
-    // Native video loads immediately enough that we don't need a heavy ready listener.
-    // We already handle `setIsLoaded(true)` directly on the <video onLoadedData={...}> element.
+    // Guard against the hero media element not supporting playback
+    // (currently the hero renders static <img> posters, which have no
+    // play/pause/mute API — calling it unguarded throws a TypeError).
+    const isMediaControllable = () => {
+        const el = iframeRef.current;
+        return !!el && typeof el.play === 'function' && typeof el.pause === 'function';
+    };
 
     /* ────────────────────────────────────────────────────
        ④ Hover mute bubble — same GSAP elastic spring as CursorBubble
@@ -27,6 +31,10 @@ export default function VimeoHero() {
         const title = titleRef.current;
         const controls = controlsRef.current;
         if (!bubble || !hero) return;
+
+        // Reduced motion: skip the cursor-following elastic spring entirely.
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (reduceMotion.matches) return;
 
         const xTo = gsap.quickTo(bubble, 'x', { duration: 0.5, ease: 'power3' });
         const yTo = gsap.quickTo(bubble, 'y', { duration: 0.5, ease: 'power3' });
@@ -95,21 +103,29 @@ export default function VimeoHero() {
         };
     }, []);
 
+    /* ── Fullscreen state stays in sync when the user exits with ESC ── */
+    useEffect(() => {
+        const onFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+    }, []);
+
     /* ── Controls ── */
     const togglePlay = (e) => {
         if (e) e.stopPropagation();
-        if (!iframeRef.current) return;
+        if (!isMediaControllable()) return;
+        const el = iframeRef.current;
         if (isPlaying) {
-            iframeRef.current.pause();
+            el.pause();
         } else {
-            iframeRef.current.play();
+            el.play();
         }
         setIsPlaying(p => !p);
     };
 
     const toggleMute = (e) => {
         if (e) e.stopPropagation();
-        if (!iframeRef.current) return;
+        if (!isMediaControllable()) return;
         iframeRef.current.muted = !isMuted;
         setIsMuted(m => !m);
     };
@@ -117,7 +133,7 @@ export default function VimeoHero() {
     const toggleFullscreen = (e) => {
         if (e) e.stopPropagation();
         if (!document.fullscreenElement) {
-            playerRef.current?.requestFullscreen();
+            playerRef.current?.requestFullscreen?.().catch(() => { /* user denied */ });
             setIsFullscreen(true);
         } else {
             document.exitFullscreen();
@@ -174,7 +190,9 @@ export default function VimeoHero() {
                         src="/assets/omar/studio1.png"
                         alt="Omar Ashraf - Full Stack Engineer"
                         className="vimeo-hero__iframe"
-                        style={{ objectFit: 'contain', backgroundColor: '#111', width: '100%', height: '100%' }}
+                        loading="eager"
+                        // LCP surface: hint the browser to prioritize this fetch
+                        fetchPriority="high"
                     />
                 </picture>
 
@@ -237,8 +255,8 @@ export default function VimeoHero() {
 
                 {/* CV Download Button */}
                 <div className="vimeo-hero__cv">
-                    <a href="/omar-cv.pdf" target="_blank" rel="noopener noreferrer" className="vimeo-hero__cv-btn" download>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <a href="/omar-cv.pdf" className="vimeo-hero__cv-btn" download>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <polyline points="7 10 12 15 17 10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
@@ -250,7 +268,7 @@ export default function VimeoHero() {
                 {/* ① Controls — bottom LEFT: pause/play + fullscreen */}
                 <div className="vimeo-hero__controls" ref={controlsRef} onClick={(e) => e.stopPropagation()}>
                     {/* Play / Pause */}
-                    <button className="vimeo-hero__btn" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
+                    <button className="vimeo-hero__btn" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'} aria-pressed={isPlaying}>
                         {isPlaying ? (
                             <svg viewBox="0 0 24 24" fill="none">
                                 <path d="M5.5 5.125H8.5C8.70711 5.125 8.875 5.29289 8.875 5.5V18.5C8.875 18.7071 8.70711 18.875 8.5 18.875H5.5C5.29289 18.875 5.125 18.7071 5.125 18.5V5.5C5.125 5.29289 5.29289 5.125 5.5 5.125Z" stroke="currentColor" strokeWidth="1.25" strokeMiterlimit="10" />
@@ -264,7 +282,7 @@ export default function VimeoHero() {
                     </button>
 
                     {/* Fullscreen */}
-                    <button className="vimeo-hero__btn" onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}>
+                    <button className="vimeo-hero__btn" onClick={toggleFullscreen} aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'} aria-pressed={isFullscreen}>
                         {!isFullscreen ? (
                             <svg viewBox="0 0 20 20" fill="none">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M2.5 3.95833C2.5 3.15292 3.15292 2.5 3.95833 2.5H6.875C7.22017 2.5 7.5 2.77983 7.5 3.125C7.5 3.47017 7.22017 3.75 6.875 3.75H3.95833C3.84327 3.75 3.75 3.84327 3.75 3.95833V6.875C3.75 7.22017 3.47017 7.5 3.125 7.5C2.77983 7.5 2.5 7.22017 2.5 6.875V3.95833ZM12.5 3.125C12.5 2.77983 12.7798 2.5 13.125 2.5H16.0417C16.8471 2.5 17.5 3.15292 17.5 3.95833V6.875C17.5 7.22017 17.2202 7.5 16.875 7.5C16.5298 7.5 16.25 7.22017 16.25 6.875V3.95833C16.25 3.84327 16.1567 3.75 16.0417 3.75H13.125C12.7798 3.75 12.5 3.47017 12.5 3.125ZM3.125 12.5C3.47017 12.5 3.75 12.7798 3.75 13.125V16.0417C3.75 16.1567 3.84327 16.25 3.95833 16.25H6.875C7.22017 16.25 7.5 16.5298 7.5 16.875C7.5 17.2202 7.22017 17.5 6.875 17.5H3.95833C3.15292 17.5 2.5 16.8471 2.5 16.0417V13.125C2.5 12.7798 2.77983 12.5 3.125 12.5ZM16.875 12.5C17.2202 12.5 17.5 12.7798 17.5 13.125V16.0417C17.5 16.8471 16.8471 17.5 16.0417 17.5H13.125C12.7798 17.5 12.5 17.2202 12.5 16.875C12.5 16.5298 12.7798 16.25 13.125 16.25H16.0417C16.1567 16.25 16.25 16.1567 16.25 16.0417V13.125C16.25 12.7798 16.5298 12.5 16.875 12.5Z" fill="currentColor" />

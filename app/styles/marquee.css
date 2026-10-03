@@ -21,7 +21,7 @@
 
 .marquee-text-container {
     position: relative;
-    z-index: 5;
+    z-index: 20;
     text-align: left;
 }
 
@@ -51,7 +51,7 @@
     width: 100px;
     height: auto;
     color: var(--color-black);
-    z-index: 6;
+    z-index: 40;
     transform: scaleX(0);
     opacity: 0;
     transform-origin: left;
@@ -65,21 +65,21 @@
     transform: translate(-50%, -50%);
     width: 420px;
     height: 500px;
-    z-index: 1;
+    z-index: 0;
 }
 
 .marquee-blob {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
 }
 
 .marquee-svg-container {
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 2;
+    z-index: 10;
 }
 
 .marquee-svg-item {
@@ -93,7 +93,7 @@
     height: auto;
     transform: translateX(-50%) scale(0) rotate(-20deg);
     opacity: 0;
-    z-index: 2;
+    z-index: 20;
 }
 
 .marquee-svg-item:nth-child(2) {
@@ -103,7 +103,7 @@
     height: auto;
     color: var(--color-dark);
     transform: rotate(190deg) scaleX(-1);
-    z-index: 1;
+    z-index: 10;
 }
 
 .marquee-svg-item:nth-child(2) path {
@@ -115,7 +115,7 @@
 .marquee-right {
     flex: 0 0 auto;
     display: flex;
-    gap: 5px;
+    gap: 4px;
     height: 850px;
     position: relative;
     overflow: hidden;
@@ -136,7 +136,7 @@
     left: 0;
     right: 0;
     height: 100px;
-    z-index: 2;
+    z-index: 10;
     pointer-events: none;
 }
 
@@ -153,7 +153,7 @@
 .marquee-track {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
@@ -186,38 +186,43 @@
     }
 }
 
+/* ─── Reduced Motion — stop the loop and reveal intro-animated elements ──── */
+@media (prefers-reduced-motion: reduce) {
+    .marquee-column:nth-child(1) .marquee-track,
+    .marquee-column:nth-child(2) .marquee-track {
+        animation: none;
+    }
+
+    .marquee-underline {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+
+    .marquee-svg-item:nth-child(1) {
+        transform: translateX(-50%) scale(1) rotate(-10deg);
+        opacity: 1;
+    }
+
+    .marquee-svg-item:nth-child(2) path {
+        stroke-dashoffset: 0;
+    }
+}
+
 /* ─── Marquee Items ──────────────────────────────────────────────────────── */
 .marquee-item {
     width: 90%;
     height: 240px;
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/* Legacy theme attributes (kept for compatibility) */
-.marquee-item[data-logo-theme="a"] {
-    background-color: #a52a5f;
-}
-
-.marquee-item[data-logo-theme="b"] {
-    background-color: var(--color-darkblue);
-}
-
-.marquee-item[data-logo-theme="c"] {
-    background-color: #ff6b4a;
-}
-
-.marquee-item[data-logo-theme="d"] {
-    background-color: var(--color-green);
 }
 
 .marquee-logo {
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 26px;
+    padding: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -226,20 +231,18 @@
 /* White plate so every logo stays legible on any tile color */
 .marquee-logo__before {
     position: absolute;
-    top: 14px;
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    width: auto;
-    height: auto;
-    background: #fff;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    background: var(--color-white);
     border-radius: 8px;
     z-index: 0;
 }
 
 .marquee-logo .cover-image {
     position: relative;
-    z-index: 1;
+    z-index: 10;
     max-height: 100%;
     width: auto;
     max-width: 100%;

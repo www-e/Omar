@@ -1,52 +1,16 @@
 /* ─── Experience Page Styles ─────────────────────────────────────────────────── */
 
-/* Back Button */
-.experience-back-button {
-    position: fixed;
-    top: 30px;
-    left: 30px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    background: var(--color-white);
-    color: var(--color-dark);
-    text-decoration: none;
-    border-radius: 30px;
-    font-family: 'Epilogue', sans-serif;
-    font-weight: 600;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 12 12, pointer;
-}
-
-.experience-back-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    background: var(--color-dark);
-    color: var(--color-white);
-}
-
-.experience-back-button svg {
-    transition: transform 0.3s ease;
-}
-
-.experience-back-button:hover svg {
-    transform: translateX(-3px);
-}
-
 /* Hero Section */
 .experience-hero {
     min-height: 60vh;
+    min-height: 60dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 100px 20px 60px;
-    background: linear-gradient(135deg, var(--bg-color) 0%, #fff 100%);
+    background: linear-gradient(135deg, var(--bg-color) 0%, var(--color-white) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -80,7 +44,7 @@
     50% { transform: translate(30px, -30px) scale(1.05); }
 }
 
-.hero-title {
+.experience-hero .hero-title {
     font-family: 'Epilogue', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 800;
@@ -93,7 +57,7 @@
     z-index: 1;
 }
 
-.hero-subtitle {
+.experience-hero .hero-subtitle {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(1rem, 2vw, 1.3rem);
     font-weight: 400;
@@ -118,6 +82,12 @@
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+}
+
+.timeline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* Vertical Line */
@@ -273,12 +243,14 @@
 
 .type-fulltime {
     background: rgba(75, 105, 240, 0.1);
-    color: var(--color-darkblue);
+    /* Darkened shade of --color-darkblue: #4b69f0 on this tint is 4.04:1 (fails AA for 12.8px text); #3a52c9 = 5.72:1 */
+    color: #3a52c9;
 }
 
 .type-freelance {
     background: rgba(245, 105, 60, 0.1);
-    color: var(--color-orange);
+    /* Darkened shade of --color-orange: #f5693c on this tint is 2.71:1 (fails AA); #b34a26 = 4.81:1 */
+    color: #b34a26;
 }
 
 /* Company & Role */
@@ -342,7 +314,7 @@
     gap: 8px;
 }
 
-.tech-tag {
+.timeline-tech .tech-tag {
     font-family: 'DM Sans', sans-serif;
     font-size: 0.85rem;
     color: var(--color-dark);
@@ -353,7 +325,7 @@
     transition: all 0.2s ease;
 }
 
-.tech-tag:hover {
+.timeline-tech .tech-tag:hover {
     background: var(--color-dark);
     color: var(--color-white);
     border-color: var(--color-dark);
@@ -363,7 +335,7 @@
 /* Education Section */
 .education-section {
     padding: 100px 20px;
-    background: linear-gradient(135deg, #fff 0%, var(--bg-color) 100%);
+    background: linear-gradient(135deg, var(--color-white) 0%, var(--bg-color) 100%);
     position: relative;
 }
 
@@ -474,7 +446,7 @@
     .education-card {
         flex-direction: column;
         text-align: center;
-        padding: 40px 30px;
+        padding: 40px 32px;
     }
 
     .education-icon {
@@ -483,29 +455,23 @@
 }
 
 @media (max-width: 640px) {
-    .experience-back-button {
-        top: 15px;
-        left: 15px;
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
     .experience-hero {
         padding: 120px 20px 50px;
         min-height: 50vh;
+        min-height: 50dvh;
     }
 
-    .hero-title {
+    .experience-hero .hero-title {
         font-size: 2.5rem;
         letter-spacing: -2px;
     }
 
-    .hero-subtitle {
+    .experience-hero .hero-subtitle {
         font-size: 1rem;
     }
 
     .experience-timeline-section {
-        padding: 60px 15px;
+        padding: 60px 16px;
     }
 
     .timeline-item {
@@ -513,7 +479,11 @@
     }
 
     .timeline-content {
-        padding: 30px 25px;
+        padding: 32px 24px;
+    }
+
+    .timeline-achievements li {
+        font-size: 1rem; /* ≥16px body text on mobile */
     }
 
     .timeline-company {
@@ -525,7 +495,7 @@
     }
 
     .education-section {
-        padding: 60px 15px;
+        padding: 60px 16px;
     }
 
     .education-title {
@@ -534,7 +504,7 @@
     }
 
     .education-card {
-        padding: 30px 20px;
+        padding: 32px 24px;
     }
 
     .education-degree {
@@ -547,22 +517,41 @@
 }
 
 @media (max-width: 480px) {
-    .experience-back-button span {
-        display: none;
-    }
-
-    .experience-back-button {
-        padding: 10px;
-        border-radius: 50%;
-    }
-
     .timeline-content-header {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .tech-tag {
+    .timeline-tech .tech-tag {
         font-size: 0.8rem;
-        padding: 5px 10px;
+        padding: 5px 12px;
+    }
+}
+
+/* ─── Reduced Motion ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .experience-hero::before,
+    .experience-hero::after,
+    .timeline-dot-inner {
+        animation: none;
+    }
+
+    /* Reveal content that JS/scroll animations would otherwise fade in */
+    .experience-hero .hero-title,
+    .experience-hero .hero-subtitle {
+        opacity: 1 !important; /* inline styles are set by JS; !important is intentional */
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .timeline-dot {
+        transform: translateX(-50%) scale(1);
+        transition: none;
+    }
+
+    .timeline-content {
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 }

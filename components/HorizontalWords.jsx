@@ -16,6 +16,11 @@ const HorizontalWords = () => {
     const sectionRef = useRef(null);
 
     useIsomorphicLayoutEffect(() => {
+        // Respect reduced-motion: skip timeline/pin creation entirely;
+        // horizontal-words.css renders a static, fully visible fallback.
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
         const ctx = gsap.context(() => {
             const container = sectionRef.current;
             const textRef = container.querySelector('.horizontal-words__relative');
@@ -143,71 +148,71 @@ const HorizontalWords = () => {
             <div className="horizontal-words__relative">
                 <div className="horizontal-words__sticker-svg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 386 127" fill="none" className="horizontal-words__arrow-svg"><path d="M2 123C9 35.9999 84.5 17 124 25.9999C217.764 47.3635 207 115 177.5 123C105.777 142.45 110.737 1.99991 232.5 2C310.5 2.00006 366.5 79 376 118L356.5 105.5" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" ></path><path d="M2 123C9 35.9999 84.5 17 124 25.9999C217.764 47.3635 207 115 177.5 123C105.777 142.45 110.737 1.99991 232.5 2C310.5 2.00006 366.5 79 376 118L384 97" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" ></path></svg>
-                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-thumps-up.svg" className="horizontal-words__sticker-watch" alt="thumbs up sticker" />
-                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-cursor.svg" className="horizontal-words__sticker-cursor" alt="cursor sticker" />
-                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-phone.svg" className="horizontal-words__sticker-phone" alt="phone sticker" />
+                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-thumps-up.svg" className="horizontal-words__sticker-watch" alt="" aria-hidden="true" />
+                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-cursor.svg" className="horizontal-words__sticker-cursor" alt="" aria-hidden="true" />
+                    <img src="/assets/HorizontalWords SVG/horizontal-words-sticker-phone.svg" className="horizontal-words__sticker-phone" alt="" aria-hidden="true" />
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 140 127" fill="none" className="horizontal-words__arrow-end-svg"><path d="M2.03125 2.42188C100.469 2.42188 130.156 52.4219 118.437 125.078L99.6875 107.891" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" ></path><path d="M2.03125 2.42188C100.469 2.42188 130.156 52.4219 118.438 125.078L137.969 110.234" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" ></path></svg>
 
                     <h2 className="display horizontal-words__h2" aria-label="Next.js React Python TypeScript PostgreSQL Script">
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>N</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>e</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>x</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>.</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>j</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>s</div>
+                        <div className="letter" aria-hidden="true">N</div>
+                        <div className="letter" aria-hidden="true">e</div>
+                        <div className="letter" aria-hidden="true">x</div>
+                        <div className="letter" aria-hidden="true">t</div>
+                        <div className="letter" aria-hidden="true">.</div>
+                        <div className="letter" aria-hidden="true">j</div>
+                        <div className="letter" aria-hidden="true">s</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>•</div>
+                        <div className="letter" aria-hidden="true">•</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>R</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>e</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>a</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>c</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
+                        <div className="letter" aria-hidden="true">R</div>
+                        <div className="letter" aria-hidden="true">e</div>
+                        <div className="letter" aria-hidden="true">a</div>
+                        <div className="letter" aria-hidden="true">c</div>
+                        <div className="letter" aria-hidden="true">t</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>•</div>
+                        <div className="letter" aria-hidden="true">•</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>P</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>y</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>h</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>o</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>n</div>
+                        <div className="letter" aria-hidden="true">P</div>
+                        <div className="letter" aria-hidden="true">y</div>
+                        <div className="letter" aria-hidden="true">t</div>
+                        <div className="letter" aria-hidden="true">h</div>
+                        <div className="letter" aria-hidden="true">o</div>
+                        <div className="letter" aria-hidden="true">n</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>•</div>
+                        <div className="letter" aria-hidden="true">•</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>T</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>y</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>p</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>e</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>S</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>c</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>r</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>i</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>p</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
+                        <div className="letter" aria-hidden="true">T</div>
+                        <div className="letter" aria-hidden="true">y</div>
+                        <div className="letter" aria-hidden="true">p</div>
+                        <div className="letter" aria-hidden="true">e</div>
+                        <div className="letter" aria-hidden="true">S</div>
+                        <div className="letter" aria-hidden="true">c</div>
+                        <div className="letter" aria-hidden="true">r</div>
+                        <div className="letter" aria-hidden="true">i</div>
+                        <div className="letter" aria-hidden="true">p</div>
+                        <div className="letter" aria-hidden="true">t</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>•</div>
+                        <div className="letter" aria-hidden="true">•</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>P</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>o</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>s</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>g</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>r</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>e</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>S</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>Q</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>L</div>
+                        <div className="letter" aria-hidden="true">P</div>
+                        <div className="letter" aria-hidden="true">o</div>
+                        <div className="letter" aria-hidden="true">s</div>
+                        <div className="letter" aria-hidden="true">t</div>
+                        <div className="letter" aria-hidden="true">g</div>
+                        <div className="letter" aria-hidden="true">r</div>
+                        <div className="letter" aria-hidden="true">e</div>
+                        <div className="letter" aria-hidden="true">S</div>
+                        <div className="letter" aria-hidden="true">Q</div>
+                        <div className="letter" aria-hidden="true">L</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>•</div>
+                        <div className="letter" aria-hidden="true">•</div>
                         {" "}
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>S</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>c</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>r</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>i</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>p</div>
-                        <div className="letter" aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>t</div>
+                        <div className="letter" aria-hidden="true">S</div>
+                        <div className="letter" aria-hidden="true">c</div>
+                        <div className="letter" aria-hidden="true">r</div>
+                        <div className="letter" aria-hidden="true">i</div>
+                        <div className="letter" aria-hidden="true">p</div>
+                        <div className="letter" aria-hidden="true">t</div>
                     </h2>
                 </div>
             </div>

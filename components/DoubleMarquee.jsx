@@ -52,7 +52,8 @@ function buildMarqueeItems(isMobile) {
         const shuffledBrands = shuffleNoAdjacentSrc(brands);
         const assignedColors = assignColorsNoAdjacent(shuffledBrands.length, colors);
         const items = shuffledBrands.map((brand, i) => ({ brand, color: assignedColors[i] }));
-        tracks[t] = isMobile ? items : [...items, ...items]; // duplicate for seamless loop
+        // Duplicate for seamless loop — copies are hidden from assistive tech so each brand is announced once per visual group
+        tracks[t] = isMobile ? items : [...items, ...items.map((it) => ({ ...it, isDuplicate: true }))];
     }
     return tracks;
 }
@@ -67,6 +68,9 @@ export default function DoubleMarquee() {
         const mobile = window.matchMedia('(max-width: 768px)').matches;
         setIsMobile(mobile);
         setTracks(buildMarqueeItems(mobile));
+
+        // Respect prefers-reduced-motion: skip GSAP entirely; marquee.css reveals final static styles
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         // Arrow path animation
         gsap.set('.marquee-left .marquee-svg-item:nth-child(2) path', { strokeDashoffset: 1000 });
@@ -85,7 +89,8 @@ export default function DoubleMarquee() {
             .to('.marquee-left .marquee-svg-item:nth-child(2) path', { strokeDashoffset: 0, duration: 1.5, ease: 'power2.out' }, '-=0.3');
 
         return () => {
-            ScrollTrigger.getAll().forEach(t => { if (t.vars.trigger === '.Double-marquee') t.kill(); });
+            marqueeTl.scrollTrigger?.kill();
+            marqueeTl.kill();
         };
     }, []);
 
@@ -121,7 +126,7 @@ export default function DoubleMarquee() {
                     <div key={colIndex} className="marquee-column">
                         <div className="marquee-track">
                             {trackItems.map((item, i) => (
-                                <div key={i} className="marquee-item" data-brand={item.brand.name} style={{ backgroundColor: item.color }}>
+                                <div key={i} className="marquee-item" data-brand={item.brand.name} style={{ backgroundColor: item.color }} aria-hidden={item.isDuplicate || undefined}>
                                     <div className="marquee-logo">
                                         <div className="marquee-logo__before"></div>
                                         <img src={item.brand.src} loading="lazy" alt={item.brand.name} className="cover-image" />

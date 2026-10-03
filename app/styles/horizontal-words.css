@@ -5,6 +5,7 @@
     width: 100%;
     /* Keep section nicely sized so it takes up full viewport */
     height: 100vh;
+    height: 100dvh;
     background-color: var(--bg-color);
     overflow: hidden;
     /* Removed flex to control absolute positioning manually */
@@ -109,6 +110,7 @@
 
 .horizontal-words__h2 {
     font-size: 9vw;
+    font-size: clamp(3rem, 9vw, 9rem);
     line-height: 1;
     font-weight: 1000;
     margin: 0;
@@ -118,10 +120,17 @@
     white-space: nowrap;
 }
 
+/* Individual sticker letters animated by GSAP */
+.horizontal-words__h2 .letter {
+    position: relative;
+    display: inline-block;
+}
+
 /* Mobile-specific styles */
 @media (max-width: 768px) {
     .horizontal-words-section {
         height: 100vh;
+        height: 100dvh;
     }
 
     .horizontal-words__relative {
@@ -172,6 +181,7 @@
 
     .horizontal-words__h2 {
         font-size: 11vw;
+        font-size: clamp(2.5rem, 11vw, 6rem);
         letter-spacing: -2px;
     }
 }
@@ -207,5 +217,36 @@
 
     .horizontal-words__h2 {
         font-size: 12vw;
+        font-size: clamp(2.25rem, 12vw, 4rem);
+    }
+}
+
+/* Reduced motion: GSAP skips the timeline (JS matchMedia guard);
+   render the band statically so all text is visible without scrolling. */
+@media (prefers-reduced-motion: reduce) {
+    .horizontal-words-section {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding-block: 80px;
+    }
+
+    .horizontal-words__relative {
+        position: static;
+        transform: none;
+        white-space: normal;
+        padding-inline: 24px;
+    }
+
+    .horizontal-words__h2 {
+        white-space: normal;
+    }
+
+    .horizontal-words__bottom-text {
+        position: static;
+        transform: none;
+        margin-inline: auto;
+        margin-top: 40px;
+        width: min(40em, 90vw);
     }
 }

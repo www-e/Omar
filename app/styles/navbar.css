@@ -12,6 +12,18 @@
     height: 55px;
 }
 
+.logo-work-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+    color: inherit;
+    text-decoration: none;
+}
+
 .nav-bar__work-blob-svg {
     position: absolute;
     top: 0;
@@ -55,18 +67,36 @@
     color: var(--color-dark);
 }
 
-.logo-omar {
-    display: block;
-    width: 150px;
-    height: auto;
+/* ─── Focus-visible rings (darkblue #4b69f0 vs cream #f0ebe6 = 3.87:1, ≥3:1 UI) ─── */
+.nav-link:focus-visible,
+.logo-work-link:focus-visible,
+.logo-whatsapp:focus-visible,
+.nav-work-btn:focus-visible,
+.nav-wa-link:focus-visible,
+.mobile-hamburger:focus-visible,
+.mobile-drawer-close:focus-visible,
+.mobile-nav-link:focus-visible,
+.mobile-nav-accordion-header:focus-visible,
+.mobile-nav-sublink:focus-visible,
+.mobile-nav-view-all:focus-visible,
+.mobile-whatsapp-cta:focus-visible,
+.social-link:focus-visible {
+    outline: 3px solid var(--color-darkblue);
+    outline-offset: 2px;
+    border-radius: 8px;
 }
 
 .logo-omar {
     display: block;
+    width: 150px;
     font-size: 2.5rem;
     font-weight: 900;
     letter-spacing: -0.02em;
     font-family: var(--font-display, 'Epilogue', sans-serif);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     transition: transform 0.3s ease;
 }
 
@@ -103,7 +133,7 @@
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 50px;
-    padding: 12px 28px;
+    padding: 2px 28px;
     display: flex;
     gap: 32px;
     align-items: center;
@@ -120,6 +150,10 @@
     text-decoration: none;
     letter-spacing: -0.3px;
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px; /* 44px touch target without changing visual type size */
+    padding: 0 4px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 12 12, pointer;
 }
@@ -143,6 +177,16 @@
 
 .nav-link:hover::after {
     width: 100%;
+}
+
+/* Current-page indicator: persistent underline (shape cue, not color alone) */
+.nav-link.nav-state-active::after,
+.nav-link[aria-current="page"]::after {
+    width: 100%;
+}
+
+.nav-link.nav-state-active {
+    font-weight: 800;
 }
 
 /* Responsive adjustments for mobile */
@@ -223,7 +267,8 @@
     flex-direction: column;
 }
 
-.nav-hover-trigger:hover .nav-popout {
+.nav-hover-trigger:hover .nav-popout,
+.nav-hover-trigger:focus-within .nav-popout {
     pointer-events: auto;
 }
 
@@ -258,8 +303,9 @@
 }
 
 /* Force text dark when hovering, since popout bg is light */
-.nav-left:hover .logo-work-text {
-    color: var(--color-dark) !important;
+.nav-left:hover .logo-work-text,
+.nav-left:focus-within .logo-work-text {
+    color: var(--color-dark);
 }
 
 /* The work items layout */
@@ -366,6 +412,9 @@
     z-index: 105;
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-width: 44px; /* 44px touch target; icon stays 32px visually */
+    min-height: 44px;
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -423,7 +472,8 @@
     transition: stroke-dashoffset 0.5s ease-out;
 }
 
-.nav-hover-trigger:hover .nav-wa-link-svg path {
+.nav-hover-trigger:hover .nav-wa-link-svg path,
+.nav-hover-trigger:focus-within .nav-wa-link-svg path {
     stroke-dashoffset: 0;
     transition-delay: 0.15s;
 }
@@ -511,6 +561,12 @@
     -webkit-overflow-scrolling: touch;
 }
 
+/* Dialog container may receive programmatic focus — don't paint a full-panel ring */
+.mobile-drawer:focus,
+.mobile-drawer:focus-visible {
+    outline: none;
+}
+
 .mobile-drawer-close {
     position: absolute;
     top: 20px;
@@ -554,6 +610,14 @@
     border-radius: 12px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: -0.5px;
+}
+
+/* Current-page cue in the drawer: underline (shape), not color alone */
+.mobile-nav-link[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+    font-weight: 800;
 }
 
 .mobile-nav-link:hover {
@@ -681,7 +745,8 @@
     gap: 12px;
     padding: 18px 24px;
     background: #25D366;
-    color: white;
+    /* White on WhatsApp green is 1.98:1 — fails WCAG AA. Black on #25D366 = 9.14:1. */
+    color: var(--color-black);
     text-decoration: none;
     border-radius: 12px;
     font-family: 'Epilogue', sans-serif;
