@@ -594,7 +594,12 @@ export default function Navbar() {
                             <div className="nav-popout-inner">
                                 <div className="nav-work-item">
                                     <div className="nav-work-item__img-wrap">
-                                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" loading="eager" alt="Navaia Agentic" className="nav-work-item__img" />
+                                        {/* thumbs/ are 160px WebP derivatives of the full-size
+                                            /assets/projects/*.jpg the project cards use. This
+                                            wrap renders at 75x75, and the drawer is in the
+                                            Navbar on every route, so pointing at the 300-700 KB
+                                            originals here downloaded ~1 MB per page view. */}
+                                        <img src="/assets/projects/thumbs/navaia-agentic.webp" loading="eager" alt="Navaia Agentic" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-maroon">AI/ML</span>
@@ -603,7 +608,7 @@ export default function Navbar() {
                                 </div>
                                 <div className="nav-work-item">
                                     <div className="nav-work-item__img-wrap">
-                                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" loading="eager" alt="Graphic Tablet Store" className="nav-work-item__img" />
+                                        <img src="/assets/projects/thumbs/graphictablet-store.webp" loading="eager" alt="Graphic Tablet Store" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-pink">E-commerce</span>
@@ -612,7 +617,7 @@ export default function Navbar() {
                                 </div>
                                 <div className="nav-work-item">
                                     <div className="nav-work-item__img-wrap">
-                                        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80" loading="eager" alt="Sportology Academy" className="nav-work-item__img" />
+                                        <img src="/assets/projects/thumbs/sportology-academy.webp" loading="eager" alt="Sportology Academy" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-blue">Education</span>

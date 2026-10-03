@@ -196,11 +196,11 @@ export default function Footer() {
                 <div className="footer-column">
                     <span className="footer-badge">location</span>
                     <address>
-                        Banha, Egypt<br />
+                        Benha, Egypt<br />
                         Available Remote: KSA, Hungary, Egypt, Indonesia
                     </address>
                     <a
-                        href="https://www.google.com/maps/search/?api=1&query=Banha%2C+Al-Qalyubia%2C+Egypt"
+                        href="https://www.google.com/maps/search/?api=1&query=Benha%2C+Al-Qalyubia%2C+Egypt"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="footer-map-link"
