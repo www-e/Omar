@@ -275,3 +275,62 @@ CLEANUP
   - The sportologyplus server on :3000 (WINPID 44024) was left untouched.
   - Nothing committed, nothing pushed, no deploy.
 ================================================================================
+
+================================================================================
+DEPLOYED — 2026-10-28
+================================================================================
+Omar authorized the release ("push to production").
+
+COMMITS (3, dependency-clean split, pushed to origin/main):
+  506f0fd  feat(projects): rebuild the projects tab from the full GitHub
+           inventory          lib/data.js, components/Navbar.jsx,
+           app/projects/page.jsx, app/styles/projects.css,
+           app/styles/lottie.css, components/LottieCharacter.jsx,
+           public/assets/lottie/, 5 project covers, package files
+  19bad5c  feat(landing): elevate the landing page with motion, a real
+           showreel and a live loader
+           layout/page/about/experience, globals.css, 14 style sheets,
+           10 components, omar webp variants, public/assets/showreel/
+  d79c44e  docs(landing): add the elevation report and run sheet
+
+  push: a31bc99..d79c44e  main -> main
+  Vercel: Production deployment id 7393112488, sha d79c44e, status success
+  (34s from push to success). Live origin https://www.omarashraf.online
+  now serves d79c44e (was a31bc99).
+
+LIVE VERIFICATION (production build, https://www.omarashraf.online)
+  Console: 0 errors. 73/73 network requests 200 or 304 — no 404s.
+  Glass blur (the fix): computed backdropFilter = blur(8px) on
+    .vimeo-hero__btn, .magnetic-cta__btn--ghost, .showreel__chip,
+    .showreel__chip-btn. (CSS.supports('-webkit-backdrop-filter') is FALSE
+    in Chrome 156 — the prefixed-only form was the cause of the dead glass.)
+  Character loader: fetched /assets/lottie/doug.json, doug-poster.png,
+    sparkle.json, sparkle-poster.png from production; wrote the
+    om:loader-seen session flag and removed data-loader from <html>.
+  Showreel: observer mounted the video on scroll — readyState 4,
+    1920x1080, duration 15.2s, paused=false, currentTime advancing,
+    chip timer at 00:02, button relabelled to "Pause showreel".
+  Count-ups: 1,120 and 17 reached target, sr-only twins match.
+  Scroll progress: scaleX 0.2292 at y=3000, 1 at the document end.
+  How I Work: track translated to -574px, active step "Ship", progress 1.
+  Magnetic CTA: matrix(1.04, 0, 0, 1.04, 1.6412, -0.633) — scale + pull.
+  3D tilt: matrix3d with rotateY 2.96deg, rotateX -1.81deg.
+  Route transition: body.is-transitioning on, scribble dashoffset
+    20032 -> 90 -> -20009, stroke width 8% -> 31% -> 0%, URL /projects at
+    115ms, class removed at ~973ms, confetti mounted.
+  Projects filters: All 17, AI/ML 5, Education 3, Real Estate 1, back to All
+    17. Status region reads "Showing 17 of 17 projects - 27 of 27
+    repositories" (role=status, aria-live=polite). Counts sum correctly.
+  Nav work drawer: hover opens (scale 0 -> 1, overlay on, 3 items with
+    thumbnails + "View all projects"); Escape closes it.
+
+NOTES / NOT FIXED (documented, not blocking)
+  - The two variable TTFs (Epilogue, DMSans) still ship as .ttf — ~208KB of
+    the ~929KB page. WOFF2 conversion is blocked: fontTools 4.58.0 is
+    installed but the brotli module is not, so the WOFF1+zlib fallback
+    would not save meaningful bytes.
+  - Chrome flags "lazy-loaded images should have explicit dimensions"
+    (52 instances). Layout shift measured 0 on the production build, so
+    this is a hint about the markup, not visible CLS.
+  - Next.js preloads three route CSS chunks that are not used within a few
+    seconds (console warnings, no functional impact).
