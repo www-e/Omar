@@ -1,4 +1,6 @@
 import { Cairo } from 'next/font/google';
+import ScrollProgress from '@/components/ScrollProgress';
+import TransitionScribble from '@/components/TransitionScribble';
 import './globals.css';
 
 const cairo = Cairo({
@@ -56,9 +58,24 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={cairo.variable}>
+                {/* Runs before the first paint: if this browser session has not
+                    seen the splash yet, flag it so the loader covers the page
+                    from the very first frame (no flash of unstyled content).
+                    The PageLoader component clears the flag when it finishes. */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html:
+                            'try{if(!sessionStorage.getItem("om:loader-seen")){document.documentElement.setAttribute("data-loader","show")}}catch(e){document.documentElement.setAttribute("data-loader","show")}'
+                    }}
+                />
                 <a href="#main-content" className="skip-link">
                     Skip to content
                 </a>
+                {/* Both overlays live in the layout, not in a page: a per-page
+                    overlay unmounts the moment the navigation it triggers
+                    swaps the route, killing the animation mid-flight. */}
+                <ScrollProgress />
+                <TransitionScribble />
                 {children}
             </body>
         </html>

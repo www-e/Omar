@@ -1,0 +1,223 @@
+/* ─── Page Loader ───────────────────────────────────────────────────────────── */
+/* The first-load splash. It is hidden by default and revealed by the inline
+   script in app/layout.jsx (data-loader="show" on <html>) so it covers the
+   page from the very first painted frame — no flash of unstyled content, and
+   no splash at all for a visitor whose session has already seen one. */
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+}
+
+html[data-loader='show'] .page-loader {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Exit: the overlay fades while the content drifts away. pointer-events are
+   dropped so the page is clickable the moment the splash starts to fade. */
+html[data-loader='show'] .page-loader.is--exiting {
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+}
+
+.page-loader__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.page-loader__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+}
+
+html[data-loader='show'] .page-loader.is--exiting .page-loader__inner {
+    transform: translateY(-16px) scale(0.96);
+    opacity: 0;
+}
+
+/* ── Stage: character, speech bubble, sparkle ── */
+.page-loader__stage {
+    position: relative;
+    width: 240px;
+    height: 236px;
+}
+
+.page-loader__character {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 132px;
+    transform: translateX(-50%);
+}
+
+.page-loader__sparkle {
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    width: 82px;
+    animation: page-loader-float 2.8s ease-in-out infinite;
+}
+
+@keyframes page-loader-float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-9px) rotate(7deg);
+    }
+}
+
+.page-loader__bubble {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    padding: 10px 16px;
+    background-color: var(--color-white);
+    color: var(--text-primary);
+    border-radius: 16px 16px 16px 4px;
+    box-shadow: 0 12px 28px rgba(26, 26, 26, 0.12);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.page-loader__bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 26px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--color-white);
+    transform: rotate(45deg);
+}
+
+/* ── Wordmark ── */
+.page-loader__brand {
+    margin: 4px 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 5vw, 2.1rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-loader__tagline {
+    margin: -8px 0 0;
+    max-width: 280px;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* ── Progress hairline — indeterminate until the page is ready ── */
+.page-loader__bar {
+    width: min(260px, 62vw);
+    height: 3px;
+    margin-top: 6px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(26, 26, 26, 0.12);
+    overflow: hidden;
+}
+
+.page-loader__bar-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--brand-gradient);
+    transform-origin: left center;
+    transform: scaleX(0.3);
+    animation: page-loader-sweep 1.25s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes page-loader-sweep {
+    0% {
+        transform: translateX(-70%) scaleX(0.3);
+    }
+    50% {
+        transform: translateX(10%) scaleX(0.55);
+    }
+    100% {
+        transform: translateX(70%) scaleX(0.3);
+    }
+}
+
+html[data-loader='show'] .page-loader.is--exiting .page-loader__bar-fill {
+    animation: none;
+    transform: scaleX(1);
+    transition: transform 0.35s ease;
+}
+
+/* ── Small screens ── */
+@media (max-width: 480px) {
+    .page-loader__stage {
+        width: 210px;
+        height: 208px;
+    }
+
+    .page-loader__character {
+        width: 112px;
+    }
+
+    .page-loader__sparkle {
+        width: 66px;
+    }
+
+    .page-loader__bubble {
+        padding: 8px 13px;
+        font-size: 0.82rem;
+    }
+}
+
+/* ── Reduced motion: no animation anywhere; the poster frame stands in ── */
+@media (prefers-reduced-motion: reduce) {
+    .page-loader,
+    .page-loader__inner {
+        transition: none;
+    }
+
+    .page-loader__sparkle {
+        animation: none;
+    }
+
+    .page-loader__bar-fill {
+        animation: none;
+        transform: scaleX(1);
+    }
+}

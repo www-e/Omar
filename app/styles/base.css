@@ -25,6 +25,10 @@
     --color-maroon: #a0325a;
     --color-pink: #f0befa;
     --bg-color: #f0ebe6;
+
+    /* Brand gradient — the wordmark treatment shared by the nav logo and the
+       loading splash, so the two never drift apart. */
+    --brand-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --color-white: #ffffff;
     --color-black: #000000;
     --color-dark: #1a1a1a;
@@ -112,7 +116,9 @@ a:not([class]) {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10000;
+    /* Above the loading splash (z-index 10001) so it stays focus-reachable
+       while the splash is up. */
+    z-index: 10002;
     transform: translateY(-130%);
     padding: 12px 20px;
     background-color: var(--color-dark);

@@ -10,6 +10,19 @@
     cursor: url("/assets/Cursor SVG/cursor-text.svg") 12 12, auto;
 }
 
+/* Screen-reader-only helper for the keyboard instructions of the card deck. */
+.cards-wrapper .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* ─── Base Card ──────────────────────────────────────────────────────────── */
 .card {
     width: 320px;
@@ -35,6 +48,22 @@
 
 .card:active {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Keyboard Focus ──────────────────────────────────────────────────────── */
+/* base.css already outlines every [tabindex]:focus-visible element; the card
+   repeats it with the token so the ring also shows on the coloured surfaces,
+   and adds the same lift the hover state gets. */
+.card:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Reduced motion: the GSAP fan-out is skipped there, so the focused card gets
+   the static hover-equivalent emphasis instead of a movement. */
+.card--focused {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .card-title {
@@ -146,8 +175,10 @@
 }
 
 /* ─── Mobile Stacked Card Deck Layout ───────────────────────────────────── */
-/* NOTE: !important is required on shared rules below because responsive.css
-   (loaded after this file in app/globals.css) declares the same selectors. */
+/* NOTE: !important is required on the shared size rules below because
+   responsive.css (loaded after this file in app/globals.css) declares the same
+   selectors. The position rules must NOT be important: the deck is driven by
+   GSAP inline styles, which an author !important rule would outrank. */
 @media (max-width: 768px) {
     .cards-wrapper {
         position: relative !important;
@@ -158,33 +189,43 @@
     }
 
     .card {
-        position: absolute !important;
+        position: absolute;
+        /* The size keeps its !important because responsive.css (loaded after
+           this file) declares the same selectors and would otherwise shrink the
+           deck to 320px / 400px. */
         width: 85vw !important;
         max-width: 340px !important;
         height: 420px !important;
-        left: 50% !important;
-        top: 40px !important;
-        transform: translateX(-50%) !important;
+        /* left / top / transform are deliberately NOT declared here: the swipe
+           deck writes them as inline styles on every frame of the drag, and an
+           author !important rule outranks an inline style - it would freeze the
+           deck at one position and only the opacity would animate. The
+           per-colour rules below are the pre-JS fallback. */
         transform-origin: center center;
         border-radius: 1rem;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         /* transform must NOT be CSS-transitioned: the swipe deck drives it per-frame via GSAP */
         transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Keep the vertical page scroll but hand horizontal gestures to the
+           deck's drag handler - without it the browser scrolls instead. */
+        touch-action: pan-y;
     }
 
-    /* Stack all cards with slight offsets and rotations (matches JS mobileRotations/cardHeights) */
+    /* Stack all cards with slight offsets and rotations (matches JS mobileRotations/cardHeights).
+       The z-index descends with the index so the FIRST card lies on top of the
+       pile: it is the card the user drags, so it has to be the visible one. */
     .card-green {
         left: 50%;
         top: 40px;
         transform: translateX(-50%) rotate(-3deg);
-        z-index: 1;
+        z-index: 5;
     }
 
     .card-darkblue {
         left: 50%;
         top: 48px;
         transform: translateX(-50%) rotate(2deg);
-        z-index: 2;
+        z-index: 4;
     }
 
     .card-lightblue {
@@ -198,14 +239,14 @@
         left: 50%;
         top: 64px;
         transform: translateX(-50%) rotate(3deg);
-        z-index: 4;
+        z-index: 2;
     }
 
     .card-maroon {
         left: 50%;
         top: 72px;
         transform: translateX(-50%) rotate(-3deg);
-        z-index: 5;
+        z-index: 1;
     }
 
     .card-title {

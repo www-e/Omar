@@ -61,6 +61,15 @@ function buildMarqueeItems(isMobile) {
 export default function DoubleMarquee() {
     const [tracks, setTracks] = useState([[], []]);
     const [isMobile, setIsMobile] = useState(false);
+    // Motion state of the two infinite CSS loops.
+    // 'auto'    — the tracks follow the pointer: hovering the section, or moving
+    //              the keyboard focus into it, pauses them.
+    // 'paused'  — the visitor pressed pause, the tracks stay still.
+    // 'running' — the visitor pressed play, the tracks keep moving.
+    // The two explicit states are written to .marquee-right as classes and
+    // outrank the hover rule in marquee.css, so a click always has a visible
+    // effect even while the pointer rests on the section.
+    const [pauseMode, setPauseMode] = useState('auto');
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -94,8 +103,44 @@ export default function DoubleMarquee() {
         };
     }, []);
 
+    // Pause / play toggle. The control drives the infinite CSS loops only —
+    // the GSAP intro timeline is a one-shot scroll reveal and has to keep
+    // playing even after the visitor stops the marquee.
+    const togglePause = () => {
+        setPauseMode((current) => (current === 'paused' ? 'running' : 'paused'));
+    };
+
+    const isPaused = pauseMode === 'paused';
+
+    // The state classes are read by marquee.css to set animation-play-state on
+    // both logo tracks.
+    const marqueeRightClass = `marquee-right${pauseMode === 'paused' ? ' is-paused' : ''}${pauseMode === 'running' ? ' is-running' : ''}`;
+
     return (
         <>
+            {/* Pause / play control. It is absolutely positioned against the
+                section (see .Double-marquee in marquee.css), so it lands in the
+                empty gutter above the logo columns and never covers a logo. */}
+            <button
+                type="button"
+                className="marquee-pause-btn"
+                onClick={togglePause}
+                aria-pressed={isPaused}
+                aria-label={isPaused ? 'Play partner logos' : 'Pause partner logos'}
+                title={isPaused ? 'Play partner logos' : 'Pause partner logos'}
+            >
+                {isPaused ? (
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M6 12V5.20128C6 4.37664 6.89256 3.86113 7.60685 4.27322L19.3914 11.072C20.1061 11.4843 20.1061 12.5158 19.3914 12.9281L7.60685 19.7269C6.89256 20.139 6 19.6234 6 18.7988V12Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" />
+                    </svg>
+                ) : (
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M5.5 5.125H8.5C8.70711 5.125 8.875 5.29289 8.875 5.5V18.5C8.875 18.7071 8.70711 18.875 8.5 18.875H5.5C5.29289 18.875 5.125 18.7071 5.125 18.5V5.5C5.125 5.29289 5.29289 5.125 5.5 5.125Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" />
+                        <path d="M15.5 5.125H18.5C18.7071 5.125 18.875 5.29289 18.875 5.5V18.5C18.875 18.7071 18.70711 18.875 18.5 18.875H15.5C15.2929 18.875 15.125 18.7071 15.125 18.5V5.5C15.125 5.29289 15.2929 5.125 15.5 5.125Z" stroke="currentColor" strokeWidth="1.5" strokeMiterlimit="10" />
+                    </svg>
+                )}
+            </button>
+
             {/* Left: Text + Blob */}
             <div className="marquee-left">
                 <div className="marquee-text-container">
@@ -121,7 +166,7 @@ export default function DoubleMarquee() {
             </div>
 
             {/* Right: Two scrolling columns */}
-            <div className="marquee-right">
+            <div className={marqueeRightClass}>
                 {tracks.map((trackItems, colIndex) => (
                     <div key={colIndex} className="marquee-column">
                         <div className="marquee-track">

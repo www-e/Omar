@@ -1,0 +1,120 @@
+/* ─── Magnetic CTA ───────────────────────────────────────────────────────────── */
+/* A call to action that is pulled towards the cursor.
+   The outer .magnetic-cta span is the shell GSAP translates and scales; the
+   inner .magnetic-cta__btn is the real <a>/<button> and owns every visual
+   style. Keeping the two apart means the GSAP transform and the CSS
+   hover/focus transform never overwrite each other. */
+
+.magnetic-cta {
+    display: inline-block;
+    will-change: transform;
+}
+
+.magnetic-cta__btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+/* The label is the moving part: the icon, the text and any extra children
+   travel together, and the whole group is counter-moved by GSAP. */
+.magnetic-cta__label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.magnetic-cta__btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ── Ghost — glassy white on a dark surface, the treatment the hero's
+      "Download CV" button already uses. ─────────────────────────────────────── */
+.magnetic-cta__btn--ghost {
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    /* Standard property only — the build's CSS minifier folds a
+       `backdrop-filter` + `-webkit-backdrop-filter` pair down to the
+       prefixed form, which modern Chrome/Safari no longer support. */
+    backdrop-filter: blur(8px);
+}
+
+.magnetic-cta__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Solid — the brand gradient fill on the site's hard shadow. ─────────────── */
+.magnetic-cta__btn--solid {
+    border: 1.5px solid transparent;
+    background: var(--brand-gradient);
+    color: var(--color-white);
+    box-shadow: var(--shadow-brutal);
+}
+
+/* The button lifts off its hard shadow instead of scaling — the pointer pull
+   and the scale are GSAP's job on the shell. */
+.magnetic-cta__btn--solid:hover {
+    transform: translate(-2px, -2px);
+}
+
+/* ── Keyboard focus gets the same scale the pointer gets, plus the site ring. */
+.magnetic-cta__btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    transform: scale(1.04);
+}
+
+.magnetic-cta__btn--solid:focus-visible {
+    transform: translate(-2px, -2px) scale(1.04);
+}
+
+.magnetic-cta__btn:active {
+    transform: scale(0.97);
+}
+
+.magnetic-cta__btn--solid:active {
+    transform: translate(0, 0) scale(0.97);
+}
+
+/* ─── Reduced motion ───────────────────────────────────────────────────────── */
+/* The magnetic pull is already gated on prefers-reduced-motion in JS; this
+   block removes the CSS half of the movement so a keyboard user still gets the
+   focus ring but no sliding or scaling. */
+@media (prefers-reduced-motion: reduce) {
+    .magnetic-cta,
+    .magnetic-cta__btn {
+        transition: none;
+    }
+
+    .magnetic-cta__btn:hover,
+    .magnetic-cta__btn:focus-visible,
+    .magnetic-cta__btn:active,
+    .magnetic-cta__btn--solid:hover,
+    .magnetic-cta__btn--solid:focus-visible,
+    .magnetic-cta__btn--solid:active {
+        transform: none;
+    }
+}

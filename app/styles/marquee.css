@@ -7,6 +7,10 @@
     align-items: center;
     gap: 60px;
     min-height: 100vh;
+    /* The section is the containing block of the pause control, which lets the
+       button sit in the empty gutter above the logo columns without taking
+       part in the flex layout. */
+    position: relative;
 }
 
 /* ─── Left Panel ─────────────────────────────────────────────────────────── */
@@ -186,11 +190,92 @@
     }
 }
 
+/* ─── Pause / Play control (WCAG 2.2.2) ───────────────────────────────────── */
+/* Both tracks run infinite CSS loops that last far longer than five seconds,
+   so they need a mechanism to stop. The button is the explicit control, the
+   hover and focus rules are the passive one. */
+.marquee-pause-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    /* WCAG 2.5.5 target size — the control never drops below 44x44 pixels */
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: 2px solid var(--color-dark);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    box-shadow: var(--shadow-brutal);
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.marquee-pause-btn:hover {
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 var(--color-dark);
+}
+
+.marquee-pause-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0 var(--color-dark);
+}
+
+.marquee-pause-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.marquee-pause-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Hovering the section, or moving the keyboard focus into it, pauses the
+   tracks so the logos can be read without the motion. */
+.Double-marquee:hover .marquee-track,
+.Double-marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+}
+
+/* The state chosen with the button outranks the hover rule (higher
+   specificity), otherwise pressing "play" while the pointer rests on the
+   section would look like it did nothing. */
+.Double-marquee .marquee-right.is-paused .marquee-track {
+    animation-play-state: paused;
+}
+
+.Double-marquee .marquee-right.is-running .marquee-track {
+    animation-play-state: running;
+}
+
 /* ─── Reduced Motion — stop the loop and reveal intro-animated elements ──── */
 @media (prefers-reduced-motion: reduce) {
-    .marquee-column:nth-child(1) .marquee-track,
-    .marquee-column:nth-child(2) .marquee-track {
+    /* The .Double-marquee prefix gives this rule the same specificity as the
+       is-running state further up, and it comes later in the file, so no choice
+       the visitor makes can restart the loop here. */
+    .Double-marquee .marquee-column:nth-child(1) .marquee-track,
+    .Double-marquee .marquee-column:nth-child(2) .marquee-track {
         animation: none;
+        animation-play-state: paused;
+    }
+
+    /* Nothing moves under reduced motion, so the control would only be a
+       button that promises an effect it cannot have. */
+    .marquee-pause-btn {
+        display: none;
     }
 
     .marquee-underline {
@@ -205,6 +290,16 @@
 
     .marquee-svg-item:nth-child(2) path {
         stroke-dashoffset: 0;
+    }
+}
+
+/* ─── Small screens ───────────────────────────────────────────────────────── */
+/* Below 768px responsive.css turns the tracks into a scrollable grid and
+   removes the animation, so there is no motion left to pause and the control
+   is hidden instead of pretending otherwise. */
+@media (max-width: 768px) {
+    .marquee-pause-btn {
+        display: none;
     }
 }
 

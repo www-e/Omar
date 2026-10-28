@@ -5,7 +5,6 @@ import '../styles/experience.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
-import TransitionScribble from '@/components/TransitionScribble';
 import CursorBubble from '@/components/CursorBubble';
 import SvgSymbols from '@/components/SvgSymbols';
 
@@ -210,7 +209,6 @@ export default function ExperiencePage() {
           <SvgSymbols />
           <SmoothScroll />
           <CursorBubble />
-          <TransitionScribble />
           <Navbar />
 
           <main id="main-content" tabIndex={-1}>

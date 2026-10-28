@@ -43,12 +43,60 @@
 }
 
 /* ─── Transition States ──────────────────────────────────────────────────── */
-body.is-transitioning {
-    pointer-events: none !important;
-}
-
+/* The scribble overlay is pointer-events:none, so the page never needs a
+   global pointer lock — locking <body> is what used to make the first ~5s
+   of the landing page unclickable. The class now only hides the cursor
+   bubble for the duration of the flourish. */
 body.is-transitioning .cursor-bubble {
     opacity: 0 !important;
     transform: scale(0) !important;
     display: none !important;
+}
+
+/* ─── Transition Logo ────────────────────────────────────────────────────── */
+/* The wordmark that pops in the middle of the scribble. It is a clone of the
+   navbar logo, so it inherits the brand gradient, but the gradient text needs
+   an explicit colour to read against the scribble. */
+.transition-logo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.1s;
+}
+
+/* ─── Transition Confetti ────────────────────────────────────────────────── */
+/* One-shot confetti burst at the handover moment of a route transition. */
+.transition-confetti {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: min(58vmin, 520px);
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+
+.transition-confetti.is-active {
+    opacity: 1;
+}
+
+.transition-confetti__lottie {
+    width: 100%;
+    height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .transition-confetti {
+        display: none;
+    }
 }

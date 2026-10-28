@@ -1,4 +1,9 @@
 /* ─── Showreel Section ───────────────────────────────────────────────────── */
+/* The reel is a full-bleed plate: video -> scrim -> overlay copy -> chip.
+   The copy sits on top of the montage, so every rule below assumes the video
+   (not the section background) is the worst-case backdrop and the scrim is
+   what guarantees the contrast — the reel is never assumed to be dark. */
+
 .showreel-section {
     position: relative;
     width: 100%;
@@ -6,14 +11,200 @@
     min-height: 100dvh;
     background-color: var(--color-black-deep);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    isolation: isolate;
 }
 
+/* ── Media plate ─────────────────────────────────────────────────────────── */
+.showreel__frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    /* The poster is the preload plate AND the fallback: if the mp4 is missing
+       or the browser refuses to autoplay it, the section still shows the reel
+       instead of an empty black box. */
+    background-color: var(--color-black-soft);
+    background-image: url('/assets/showreel/reel-poster.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.showreel__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The poster stays underneath until the reel has painted a frame. */
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.showreel__video.is-ready {
+    opacity: 1;
+}
+
+/* The autoplay was refused (or the file is broken): hold on the poster plate. */
+.showreel-section.is-static .showreel__video {
+    opacity: 0;
+}
+
+/* ── Scrim ───────────────────────────────────────────────────────────────── */
+.showreel__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* Two ramps: a deep pool under the headline plus a floor-to-ceiling
+       gradient, so no frame of the montage can wash the copy out. */
+    background:
+        radial-gradient(110% 95% at 20% 85%,
+            rgba(0, 0, 0, 0.75) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            rgba(0, 0, 0, 0) 70%),
+        linear-gradient(to top,
+            rgba(0, 0, 0, 0.92) 0%,
+            rgba(0, 0, 0, 0.86) 32%,
+            rgba(0, 0, 0, 0.72) 62%,
+            rgba(0, 0, 0, 0.4) 82%,
+            rgba(0, 0, 0, 0.22) 100%);
+}
+
+/* ── Reel chip ───────────────────────────────────────────────────────────── */
+.showreel__chip {
+    position: absolute;
+    /* Bottom-right: the navbar is fixed over the top of the viewport, so a
+       chip pinned to the top of the section would sit under it. */
+    bottom: clamp(1.5rem, 2.4vw, 2rem);
+    right: clamp(1.5rem, 2.4vw, 2rem);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 6px 6px 14px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    /* Only the standard property. The build's CSS minifier folds a
+       `backdrop-filter` + `-webkit-backdrop-filter` pair down to the
+       prefixed form, which modern Chrome/Safari no longer support — the
+       glass silently died. The minifier adds the prefix itself when the
+       browser targets need it. */
+    backdrop-filter: blur(8px);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.showreel__chip-label {
+    opacity: 0.72;
+}
+
+.showreel__chip-time {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+}
+
+.showreel__chip-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    cursor: url("/assets/Cursor SVG/cursor-pointer.svg") 2 0, pointer;
+    /* Same glass as the hero button, so the control reads as part of the
+       site furniture rather than a browser widget sitting on the montage.
+       Standard property only — see the note above. */
+    backdrop-filter: blur(8px);
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.2s ease;
+}
+
+.showreel__chip-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.08);
+}
+
+/* A white ring, not the brand-blue one: the chip floats over video, where the
+   token colour would not clear 3:1 against a bright frame. */
+.showreel__chip-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-white);
+    outline-offset: var(--focus-ring-offset);
+}
+
+.showreel__chip-btn:active {
+    transform: scale(0.96);
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.showreel__chip-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Overlay copy ────────────────────────────────────────────────────────── */
 .showreel__content {
-    text-align: center;
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    max-width: 1440px;
+    /* Anchored to the bottom-left so the montage keeps the upper frame. */
+    padding: 0 0 clamp(2.5rem, 6vh, 5rem) clamp(1.5rem, 5vw, 5rem);
+    text-align: left;
+}
+
+.showreel__kicker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.showreel__accent {
+    width: clamp(60px, 6vw, 88px);
+    height: clamp(60px, 6vw, 88px);
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--color-white);
+    /* Decoration only: it must never swallow a click meant for the page. */
+    pointer-events: none;
+}
+
+.showreel__accent .lottie-character,
+.showreel__accent .lottie-character__inner {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.showreel__eyebrow {
+    font-family: var(--font-body);
+    font-size: clamp(0.68rem, 0.55rem + 0.35vw, 0.82rem);
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    /* 0.72 alpha over the scrimmed plate keeps the kicker well above 4.5:1. */
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 .showreel__title {
@@ -24,6 +215,9 @@
     color: var(--color-white);
     margin-bottom: 1rem;
     line-height: 1.1;
+    /* Halo: separates the display face from the montage behind it, so the
+       headline survives a bright frame landing behind a glyph. */
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 .showreel__subtitle {
@@ -31,15 +225,16 @@
     font-size: 1.2rem;
     font-weight: 400;
     /* Was rgba(255,255,255,0.4) = 3.77:1 on #0a0a0a (fails 4.5:1 for body text).
-       0.55 alpha composites to #919191 = 6.26:1. */
-    color: rgba(255, 255, 255, 0.55);
+       0.66 alpha composites to ~#a7a7a7, which still clears 4.5:1 on top of
+       the scrimmed plate (worst case: a white frame under the 0.72 ramp). */
+    color: rgba(255, 255, 255, 0.66);
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
 }
 
 .showreel__sticker {
-    margin-top: 3rem;
     animation: wiggle 2s ease-in-out infinite;
 }
 
@@ -49,8 +244,66 @@
     object-fit: contain;
 }
 
+/* ── Mobile / tablet ─────────────────────────────────────────────────────── */
+/* Under 768px the copy leaves the plate entirely: the reel becomes a card and
+   the text sits under it on the section background, so the montage's subject
+   is never hidden behind the headline. */
+@media (max-width: 768px) {
+    .showreel__frame {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .showreel__content {
+        position: static;
+        width: 100%;
+        max-width: 34rem;
+        padding: 0;
+        text-align: center;
+    }
+
+    .showreel__kicker {
+        justify-content: center;
+    }
+
+    .showreel__title {
+        letter-spacing: -1.5px;
+    }
+
+    .showreel__subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 1.5px;
+        margin-bottom: 2rem;
+    }
+
+    .showreel__sticker img {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+/* No autoplay, no wiggle: the poster holds the frame and the chip stays the
+   only thing that can start the reel — by hand. */
 @media (prefers-reduced-motion: reduce) {
+    .showreel__video {
+        transition: none;
+    }
+
     .showreel__sticker {
         animation: none;
+    }
+
+    .showreel__chip-btn {
+        transition: none;
+    }
+
+    .showreel__chip-btn:hover,
+    .showreel__chip-btn:active {
+        transform: none;
     }
 }

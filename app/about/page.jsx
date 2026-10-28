@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
-import TransitionScribble from '@/components/TransitionScribble';
 import CursorBubble from '@/components/CursorBubble';
 import SvgSymbols from '@/components/SvgSymbols';
 import '../styles/about.css';
@@ -36,7 +35,6 @@ export default function AboutPage() {
       <SvgSymbols />
       <SmoothScroll />
       <CursorBubble />
-      <TransitionScribble />
       <Navbar />
 
       <main className="about-page" id="main-content" tabIndex={-1}>

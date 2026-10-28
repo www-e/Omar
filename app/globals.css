@@ -13,6 +13,12 @@
 /* MotionCard section (heading + cards + text)  */
 @import './styles/showreel.css';
 /* Showreel section placeholder                 */
+@import './styles/how-i-work.css';
+/* Scroll-scrubbed process strip                 */
+@import './styles/magnetic-cta.css';
+/* Cursor-pulled call to action                  */
+@import './styles/scroll-progress.css';
+/* Scroll position bar (site-wide)               */
 @import './styles/cards.css';
 /* Service cards, stickers                  */
 @import './styles/marquee.css';
@@ -23,5 +29,9 @@
 /* Vimeo hero video player + headline       */
 @import './styles/cursor.css';
 /* Custom cursor bubble + scribble overlay  */
+@import './styles/lottie.css';
+/* Shared Lottie character (projects mascot + loader) */
+@import './styles/page-loader.css';
+/* First-load splash screen                   */
 @import './styles/responsive.css';
 /* All media queries (tablet + mobile)      */

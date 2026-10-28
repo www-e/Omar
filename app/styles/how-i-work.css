@@ -1,0 +1,196 @@
+/* ─── How I Work — scroll-scrubbed process strip ──────────────────────────── */
+/* Structure: a clipped viewport holds a track that is wider than the screen.
+   GSAP translates the track horizontally while the section is pinned. Mobile
+   (≤768px) and prefers-reduced-motion keep the vertical list declared here —
+   no pin, no scrub, no horizontal scroll. */
+.how-i-work {
+    position: relative;
+    width: 100%;
+    padding: 90px 0 80px;
+    overflow: hidden;
+    background-color: var(--bg-color);
+}
+
+.how-i-work__header {
+    max-width: 760px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.how-i-work__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: var(--text-primary);
+    cursor: url("/assets/Cursor SVG/cursor-text.svg") 12 12, auto;
+}
+
+.how-i-work__title-accent {
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-dark);
+}
+
+.how-i-work__intro {
+    margin-top: 18px;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+/* Progress rail — decorative, and only shown while the strip is scrubbed. */
+.how-i-work__progress {
+    display: none;
+    height: 4px;
+    max-width: 420px;
+    margin: 32px auto 0;
+    border-radius: var(--radius-pill);
+    background-color: rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.how-i-work__progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-green);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+/* Viewport clips the track so the horizontal travel stays hidden. */
+.how-i-work__viewport {
+    width: 100%;
+    overflow: hidden;
+}
+
+.how-i-work__track {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: auto;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+    list-style: none;
+}
+
+.how-i-work__step {
+    --step-color: var(--color-green);
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    padding: 32px 28px 30px;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-dark);
+    border-top: 6px solid var(--step-color);
+    border-radius: var(--radius-lg);
+}
+
+.how-i-work__step--green {
+    --step-color: var(--color-green);
+}
+
+.how-i-work__step--darkblue {
+    --step-color: var(--color-darkblue);
+}
+
+.how-i-work__step--maroon {
+    --step-color: var(--color-maroon);
+}
+
+.how-i-work__step--orange {
+    --step-color: var(--color-orange);
+}
+
+.how-i-work__number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    color: var(--text-muted);
+}
+
+.how-i-work__step-title {
+    margin: 14px 0 12px;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--text-primary);
+}
+
+.how-i-work__step-text {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+/* ─── Desktop: horizontal strip, pinned and scrubbed ───────────────────────── */
+/* The `no-preference` clause keeps the strip horizontal only when the JS
+   scrub exists — under reduced motion the vertical list above stays in force. */
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+    .how-i-work {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 90px 0 70px;
+    }
+
+    .how-i-work__header {
+        max-width: 900px;
+        margin-bottom: 40px;
+        padding: 0 60px;
+    }
+
+    .how-i-work__title {
+        font-size: 4.6rem;
+        letter-spacing: -3px;
+    }
+
+    .how-i-work__intro {
+        font-size: 1.15rem;
+    }
+
+    .how-i-work__progress {
+        display: block;
+        margin-top: 34px;
+    }
+
+    .how-i-work__track {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 32px;
+        width: max-content;
+        max-width: none;
+        margin: 0 auto;
+        padding: 6px 60px 40px;
+    }
+
+    .how-i-work__step {
+        width: clamp(320px, 34vw, 560px);
+        min-height: 300px;
+        padding: 38px 32px 34px;
+    }
+
+    .how-i-work__step-title {
+        font-size: 2.3rem;
+    }
+
+    /* The step the scrub is currently on. Transform + shadow only, so the
+       switch never shifts the layout. */
+    .how-i-work__step.is-active {
+        box-shadow: var(--shadow-brutal);
+    }
+}

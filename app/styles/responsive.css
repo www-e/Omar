@@ -193,11 +193,6 @@
         inset: -8px;
     }
 
-    .vimeo-mute-bubble__blob {
-        width: 120px;
-        height: 120px;
-    }
-
     /* ── Showreel Section ───────────── */
     #showreel-section {
         padding: 60px 20px;
@@ -457,11 +452,6 @@
         height: 28px;
     }
 
-    .vimeo-mute-bubble__blob {
-        width: 100px;
-        height: 100px;
-    }
-
     /* ── Motion Cards ───────────────── */
     .motion-card-section {
         padding: 50px 14px 30px;
@@ -674,9 +664,9 @@
 
 /* ─── Reduced Motion: neutralise the CSS animations the sections run ─────── */
 /* Class names verified in marquee.css (.marquee-track / marqueeUp /
-   marqueeDown), showreel.css (.showreel__sticker wiggle) and vimeo-hero.css
-   (.home-header__title-line-path underline draw). GSAP-driven motion needs a
-   JS matchMedia guard inside the components — noted in the audit report. */
+   marqueeDown) and showreel.css (.showreel__sticker wiggle). GSAP-driven
+   motion needs a JS matchMedia guard inside the components — noted in the
+   audit report. */
 @media (prefers-reduced-motion: reduce) {
     .marquee-column:nth-child(1) .marquee-track,
     .marquee-column:nth-child(2) .marquee-track {
@@ -685,11 +675,6 @@
 
     .showreel__sticker {
         animation: none;
-    }
-
-    .home-header__title-line-path {
-        animation: none;
-        stroke-dashoffset: 0;
     }
 }
 

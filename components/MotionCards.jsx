@@ -4,8 +4,13 @@ import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PROJECTS_DATA } from "@/lib/data";
 
 gsap.registerPlugin(InertiaPlugin, ScrollTrigger);
+
+const featuredCards = PROJECTS_DATA.filter((project) => project.featured && project.image).slice(0, 4);
+const totalHours = PROJECTS_DATA.reduce((sum, project) => sum + (project.hours || 0), 0);
+const MAX_TILT = 6;
 
 export default function MotionCards() {
     const sectionRef = useRef(null);
@@ -15,6 +20,8 @@ export default function MotionCards() {
 
         const cleanups = [];
         const tweens = [];
+        const tiltTweens = [];
+        const scrollTriggers = [];
 
         const attach = (el, type, handler, options) => {
             el.addEventListener(type, handler, options);
@@ -70,6 +77,86 @@ export default function MotionCards() {
                 .querySelectorAll(".motion-card__floating-label")
                 .forEach((label) => addInertia(label, 25, 2));
 
+            // 3D tilt on hover — applied to the inner image so it never fights the
+            // card's own InertiaPlugin fling (which owns the outer card transform).
+            if (window.matchMedia("(pointer: fine)").matches) {
+                sectionRef.current
+                    .querySelectorAll(".motion-card__card")
+                    .forEach((card) => {
+                        const image = card.querySelector(".motion-card__card-image");
+                        if (!image) return;
+
+                        // Self-perspective avoids touching the parent layout.
+                        gsap.set(image, { transformPerspective: 800 });
+
+                        const rotateXTo = gsap.quickTo(image, "rotationX", { duration: 0.6, ease: "power3.out" });
+                        const rotateYTo = gsap.quickTo(image, "rotationY", { duration: 0.6, ease: "power3.out" });
+                        tiltTweens.push(rotateXTo.tween, rotateYTo.tween);
+
+                        let rect = null;
+
+                        const applyTilt = (e) => {
+                            if (!rect) rect = card.getBoundingClientRect();
+                            const relX = Math.max(-1, Math.min(1, ((e.clientX - rect.left) / rect.width - 0.5) * 2));
+                            const relY = Math.max(-1, Math.min(1, ((e.clientY - rect.top) / rect.height - 0.5) * 2));
+                            rotateYTo(relX * MAX_TILT);
+                            rotateXTo(-relY * MAX_TILT);
+                        };
+
+                        const onEnter = (e) => {
+                            rect = card.getBoundingClientRect();
+                            applyTilt(e);
+                        };
+
+                        const onLeave = () => {
+                            rect = null;
+                            rotateXTo(0);
+                            rotateYTo(0);
+                        };
+
+                        attach(card, "pointerenter", onEnter);
+                        attach(card, "pointermove", applyTilt);
+                        attach(card, "pointerleave", onLeave);
+                    });
+            }
+
+            // Count-up stats — the numbers animate from 0 once the stat line scrolls
+            // into view. Under prefers-reduced-motion the whole effect is skipped by
+            // the guard above, so the rendered final value stays put (no animation).
+            const formatCount = (value) => Math.round(value).toLocaleString("en-US");
+            const subtitle = sectionRef.current.querySelector(".motion-card__subtitle");
+
+            if (subtitle) {
+                const statValues = Array.from(subtitle.querySelectorAll(".motion-card__stat-value"));
+                const statTargets = statValues.map((el) => Number(el.dataset.countTo));
+
+                statValues.forEach((el) => {
+                    el.textContent = formatCount(0);
+                });
+
+                scrollTriggers.push(ScrollTrigger.create({
+                    trigger: subtitle,
+                    start: "top 85%",
+                    once: true,
+                    onEnter: () => {
+                        statValues.forEach((el, index) => {
+                            const counter = { value: 0 };
+                            tweens.push(gsap.to(counter, {
+                                value: statTargets[index],
+                                duration: 1.6,
+                                ease: "power3.out",
+                                onUpdate: () => {
+                                    el.textContent = formatCount(counter.value);
+                                },
+                                onComplete: () => {
+                                    el.textContent = formatCount(statTargets[index]);
+                                },
+                            }));
+                        });
+                    },
+                }));
+            }
+
             // Entry Animations: Sticker Pop & Underline Draw
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -95,6 +182,8 @@ export default function MotionCards() {
 
         return () => {
             tweens.forEach((t) => t.kill());
+            tiltTweens.forEach((t) => t.kill());
+            scrollTriggers.forEach((st) => st.kill());
             ctx.revert();
             cleanups.forEach((detach) => detach());
         };
@@ -112,7 +201,12 @@ export default function MotionCards() {
                     built for impact.
                 </h2>
                 <p className="motion-card__subtitle">
-                    2040+ hours • 15+ production apps
+                    <span className="motion-card__sr-only">{totalHours.toLocaleString("en-US")}</span>
+                    <span className="motion-card__stat-value" data-count-to={totalHours} aria-hidden="true">{totalHours.toLocaleString("en-US")}</span>
+                    + client hours •{" "}
+                    <span className="motion-card__sr-only">{PROJECTS_DATA.length}</span>
+                    <span className="motion-card__stat-value" data-count-to={PROJECTS_DATA.length} aria-hidden="true">{PROJECTS_DATA.length}</span>{" "}
+                    selected projects
                     {/* SVG sticker placeholder — top-right area */}
                     <span className="motion-card__sticker motion-card__sticker--top" aria-hidden="true">
                         <img
@@ -139,59 +233,29 @@ export default function MotionCards() {
                 </div>
 
 
-                {/* 4 Photo Cards - Featured Projects */}
+                {/* 4 Photo Cards - pulled from the same project data as /projects */}
                 <div className="motion-card__cards">
-                    <a className="motion-card__card motion-card__card--1" href="https://agentic.navaia.sa/dashboard" target="_blank" rel="noopener noreferrer">
-                        <div className="motion-card__card-image">
-                            <img
-                                src="/assets/projects/navaia-agentic.jpg"
-                                loading="lazy"
-                                width={1000}
-                                height={1000}
-                                alt="Navaia Agentic AI Platform"
-                                className="cover-image"
-                            />
-                        </div>
-                    </a>
-
-                    <a className="motion-card__card motion-card__card--2" href="https://www.graphictablet.store/" target="_blank" rel="noopener noreferrer">
-                        <div className="motion-card__card-image">
-                            <img
-                                src="/assets/projects/graphictablet-store.jpg"
-                                loading="lazy"
-                                width={1000}
-                                height={1000}
-                                alt="Graphic Tablet Store E-commerce"
-                                className="cover-image"
-                            />
-                        </div>
-                    </a>
-
-                    <a className="motion-card__card motion-card__card--3" href="https://sportologyacademy.vercel.app/" target="_blank" rel="noopener noreferrer">
-                        <div className="motion-card__card-image">
-                            <img
-                                src="/assets/projects/sportology-academy.jpg"
-                                loading="lazy"
-                                width={1000}
-                                height={1000}
-                                alt="Sportology Academy Education Platform"
-                                className="cover-image"
-                            />
-                        </div>
-                    </a>
-
-                    <a className="motion-card__card motion-card__card--4" href="https://qaportal1.vercel.app/" target="_blank" rel="noopener noreferrer">
-                        <div className="motion-card__card-image">
-                            <img
-                                src="/assets/projects/tawaqlna.jpg"
-                                loading="lazy"
-                                width={1000}
-                                height={1000}
-                                alt="Tawaqlna QA Portal"
-                                className="cover-image"
-                            />
-                        </div>
-                    </a>
+                    {featuredCards.map((project, index) => (
+                        <a
+                            key={project.id}
+                            className={`motion-card__card motion-card__card--${index + 1}`}
+                            href={project.live || `https://github.com/www-e/${project.repo}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.name} — ${project.category}`}
+                        >
+                            <div className="motion-card__card-image">
+                                <img
+                                    src={project.image}
+                                    loading="lazy"
+                                    width={1000}
+                                    height={1000}
+                                    alt={`${project.name} — ${project.category} project cover`}
+                                    className="cover-image"
+                                />
+                            </div>
+                        </a>
+                    ))}
                 </div>
 
                 {/* Floating labels — positioned freely over the cards area */}

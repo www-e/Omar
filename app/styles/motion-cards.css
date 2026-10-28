@@ -39,6 +39,19 @@
     top: -30px;
 }
 
+/* Screen-reader-only copy of the animated stat numbers */
+.motion-card__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* SVG sticker placeholder (top-right of subtitle) */
 .motion-card__sticker {
     position: absolute;
@@ -115,7 +128,6 @@
     width: 22vw;
     height: 14vw;
     border-radius: 0.5rem;
-    overflow: clip;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
     flex-shrink: 0;
     color: inherit;
@@ -200,7 +212,7 @@
 }
 
 .motion-card__floating-labels .motion-card__floating-label {
-    pointer-events: auto;
+    pointer-events: none;
 }
 
 .motion-card__floating-label {
@@ -211,6 +223,7 @@
     z-index: 10;
     transform: translate(-50%, -50%);
     white-space: nowrap;
+    pointer-events: none;
 }
 
 .motion-card__floating-text {
@@ -336,7 +349,7 @@
     }
 
     .motion-card__floating-labels .motion-card__floating-label {
-        pointer-events: auto;
+        pointer-events: none;
     }
 
     .motion-card__floating-text {

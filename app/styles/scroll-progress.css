@@ -1,0 +1,82 @@
+/* ─── Scroll Progress ─────────────────────────────────────────────────────────
+   A 3px reading-position bar pinned to the very top of the viewport.
+
+   The ratio (0 → 1) is written by components/ScrollProgress.jsx into the
+   `--scroll-progress` custom property on .scroll-progress; the fill is a pure
+   transform, so scrolling the page never triggers layout.
+
+   Track treatment: a low-alpha hairline in the page's own ink colour
+   (--color-dark). It reads as a hairline over the cream page and drops out
+   entirely over the dark hero/footer, which is deliberate — a single flat
+   colour cannot be visible on a cream background AND on a near-black one, so
+   the brand-gradient fill (3.6:1 on --bg-color, 5.2:1 on --color-black-soft)
+   carries the affordance on the dark surfaces while the hairline only adds
+   the "how much is left" cue on the light ones.
+   ─────────────────────────────────────────────────────────────────────────── */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    /* Above the navbar (1000) and its mobile menu layers (1001–1004), below
+       the custom cursor (9999/10000) and the first-load splash (10001). */
+    z-index: 10005;
+    /* Purely decorative overlay: it must never swallow a click or start a
+       drag-selection on the content underneath. */
+    pointer-events: none;
+    user-select: none;
+    background: rgba(26, 26, 26, 0.08);
+}
+
+.scroll-progress__fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* scaleX from the left edge: 0 = empty, 1 = the full viewport width. */
+    transform-origin: left center;
+    transform: scaleX(var(--scroll-progress, 0));
+    background: var(--brand-gradient);
+    will-change: transform;
+}
+
+/* Glowing head on the leading edge of the fill. It hangs off the track rather
+   than off the fill because the fill is scaled, and a child of a scaled
+   element is scaled with it — the head would collapse into an ellipse (and
+   dividing by a zero progress produced an infinite matrix). 100vw is the
+   track's width here because the site hides the scrollbar globally
+   (app/styles/base.css), so the viewport width and the bar's width match. */
+.scroll-progress::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    margin-left: -7px;
+    transform: translateX(calc(var(--scroll-progress, 0) * 100vw));
+    /* Fade the head in over the first sixth of the page, so it never floats
+       on its own at the very top where the fill is still empty. */
+    opacity: min(1, calc(var(--scroll-progress, 0) * 6));
+    background: radial-gradient(circle at center,
+            rgba(255, 255, 255, 0.85) 0%,
+            rgba(160, 140, 240, 0.5) 30%,
+            rgba(102, 126, 234, 0) 70%);
+    pointer-events: none;
+}
+
+/* Reduced motion: the bar is an orientation aid, not decoration, so it keeps
+   working — it simply stops animating. There is no transition to remove: the
+   smoothness of the fill comes from Lenis easing the scroll itself, and Lenis
+   is not installed at all under reduced motion, so the fill just tracks the
+   browser's native scroll position. The rule below only makes that explicit
+   and keeps the bar safe if a transition is ever added. */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress,
+    .scroll-progress__fill,
+    .scroll-progress::after {
+        transition: none;
+        animation: none;
+    }
+}

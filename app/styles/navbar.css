@@ -93,7 +93,7 @@
     font-weight: 900;
     letter-spacing: -0.02em;
     font-family: var(--font-display, 'Epilogue', sans-serif);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
