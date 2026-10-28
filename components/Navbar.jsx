@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { WIGGLE_CONFIG, SOCIAL_ICONS } from '@/lib/data';
+import { WIGGLE_CONFIG, SOCIAL_ICONS, PROJECTS_DATA } from '@/lib/data';
 import SocialIcon from '@/components/SocialIcons';
 
 function initWiggle(element, intensity) {
@@ -27,13 +27,26 @@ function initWiggle(element, intensity) {
     };
 }
 
+// The work drawer points at the same destinations as the project cards on
+// /projects — PROJECTS_DATA owns those URLs so the drawer cannot drift from
+// them. Projects without a live URL fall back to the projects index.
+const projectHref = (name) => {
+    const project = PROJECTS_DATA.find((item) => item.name === name);
+    return project?.live || '/projects';
+};
+
 export default function Navbar() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobileProjectsOpen, setIsMobileProjectsOpen] = useState(false);
+    const [isWorkDrawerOpen, setIsWorkDrawerOpen] = useState(false);
     const mobileDrawerRef = useRef(null);
     const mobileBackdropRef = useRef(null);
     const hamburgerRef = useRef(null);
+    const workTriggerRef = useRef(null);
+    const workDrawerOpenRef = useRef(false);
+    const workOpenGuardRef = useRef(false);
+    const closeWorkDrawerRef = useRef(null);
     const didOpenRef = useRef(false);
 
     const isActivePath = (href) =>
@@ -62,6 +75,25 @@ export default function Navbar() {
         document.addEventListener('keydown', handleEscape);
         return () => document.removeEventListener('keydown', handleEscape);
     }, [isMobileMenuOpen]);
+
+    useEffect(() => {
+        // Escape closes the desktop work drawer and hands focus back to the
+        // trigger that opened it.
+        if (!isWorkDrawerOpen) return;
+
+        const handleWorkEscape = (e) => {
+            if (e.key !== 'Escape') return;
+            closeWorkDrawerRef.current?.();
+            // The trigger lives inside .nav-left, so focusing it re-fires the
+            // focusin handler — the guard makes that one reopen a no-op.
+            workOpenGuardRef.current = true;
+            window.setTimeout(() => { workOpenGuardRef.current = false; }, 0);
+            workTriggerRef.current?.focus();
+        };
+
+        document.addEventListener('keydown', handleWorkEscape);
+        return () => document.removeEventListener('keydown', handleWorkEscape);
+    }, [isWorkDrawerOpen]);
 
     useEffect(() => {
         // Mobile drawer animations
@@ -243,6 +275,18 @@ export default function Navbar() {
             gsap.set(workBlob, { transformOrigin: 'center center' });
 
             const onEnterLeft = () => {
+                // Escape parks focus back on the trigger and focusing it would
+                // re-fire this handler, so that one reopen is skipped.
+                if (workOpenGuardRef.current) {
+                    workOpenGuardRef.current = false;
+                    return;
+                }
+                // Already open — moving focus between drawer links must not
+                // replay the intro animation.
+                if (workDrawerOpenRef.current) return;
+                workDrawerOpenRef.current = true;
+                setIsWorkDrawerOpen(true);
+
                 gsap.killTweensOf(workBox);
                 gsap.killTweensOf(workItems);
                 gsap.killTweensOf(workBlob);
@@ -262,6 +306,10 @@ export default function Navbar() {
             };
 
             const onLeaveLeft = () => {
+                if (!workDrawerOpenRef.current) return;
+                workDrawerOpenRef.current = false;
+                setIsWorkDrawerOpen(false);
+
                 gsap.killTweensOf(workBox);
                 gsap.killTweensOf(workItems);
                 gsap.killTweensOf(workBlob);
@@ -282,8 +330,17 @@ export default function Navbar() {
                 });
             };
 
+            const onMouseLeaveLeft = () => {
+                // Keep the drawer up while the keyboard focus is inside it —
+                // hiding it would drop the focused link on the floor.
+                if (navLeft.contains(document.activeElement)) return;
+                onLeaveLeft();
+            };
+
+            closeWorkDrawerRef.current = onLeaveLeft;
+
             navLeft.addEventListener('mouseenter', onEnterLeft);
-            navLeft.addEventListener('mouseleave', onLeaveLeft);
+            navLeft.addEventListener('mouseleave', onMouseLeaveLeft);
             navLeft.addEventListener('focusin', onEnterLeft);
             const onFocusOutLeft = (e) => {
                 if (!navLeft.contains(e.relatedTarget)) onLeaveLeft();
@@ -291,7 +348,7 @@ export default function Navbar() {
             navLeft.addEventListener('focusout', onFocusOutLeft);
             cleanups.push(() => {
                 navLeft.removeEventListener('mouseenter', onEnterLeft);
-                navLeft.removeEventListener('mouseleave', onLeaveLeft);
+                navLeft.removeEventListener('mouseleave', onMouseLeaveLeft);
                 navLeft.removeEventListener('focusin', onEnterLeft);
                 navLeft.removeEventListener('focusout', onFocusOutLeft);
             });
@@ -583,7 +640,7 @@ export default function Navbar() {
                 <div className="nav-left" style={{ cursor: "url('/assets/Cursor SVG/cursor-pointer.svg') 12 12, pointer" }}>
                     <div className="nav-hover-trigger">
                         <div className="logo-work-container">
-                            <Link href="/projects" className="logo-work-link" aria-label="Projects">
+                            <Link href="/projects" ref={workTriggerRef} className="logo-work-link" aria-label="Projects">
                                 <img src="/assets/Navbar SVG/nav-work-blob.svg" width="60" height="55" className="nav-bar__work-blob-svg" alt="" aria-hidden="true" />
                                 <span className="logo-work-text">projects</span>
                             </Link>
@@ -592,47 +649,73 @@ export default function Navbar() {
                         {/* Pop-out Box for Left Side */}
                         <div className="nav-popout nav-work-box">
                             <div className="nav-popout-inner">
-                                <div className="nav-work-item">
+                                <a
+                                    className="nav-work-item"
+                                    href={projectHref('Navaia Agentic')}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Navaia Agentic"
+                                >
                                     <div className="nav-work-item__img-wrap">
                                         {/* thumbs/ are 160px WebP derivatives of the full-size
                                             /assets/projects/*.jpg the project cards use. This
                                             wrap renders at 75x75, and the drawer is in the
                                             Navbar on every route, so pointing at the 300-700 KB
                                             originals here downloaded ~1 MB per page view. */}
-                                        <img src="/assets/projects/thumbs/navaia-agentic.webp" loading="eager" alt="Navaia Agentic" className="nav-work-item__img" />
+                                        <img src="/assets/projects/thumbs/navaia-agentic.webp" loading="lazy" decoding="async" width="160" height="83" alt="Navaia Agentic" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-maroon">AI/ML</span>
                                         <h4 className="nav-work-title">Navaia Agentic</h4>
                                     </div>
-                                </div>
-                                <div className="nav-work-item">
+                                </a>
+                                <a
+                                    className="nav-work-item"
+                                    href={projectHref('Graphic Tablet Store')}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Graphic Tablet Store"
+                                >
                                     <div className="nav-work-item__img-wrap">
-                                        <img src="/assets/projects/thumbs/graphictablet-store.webp" loading="eager" alt="Graphic Tablet Store" className="nav-work-item__img" />
+                                        <img src="/assets/projects/thumbs/graphictablet-store.webp" loading="lazy" decoding="async" width="160" height="84" alt="Graphic Tablet Store" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-pink">E-commerce</span>
                                         <h4 className="nav-work-title">Graphic Tablet Store</h4>
                                     </div>
-                                </div>
-                                <div className="nav-work-item">
+                                </a>
+                                <a
+                                    className="nav-work-item"
+                                    href={projectHref('Sportology Academy')}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="Sportology Academy"
+                                >
                                     <div className="nav-work-item__img-wrap">
-                                        <img src="/assets/projects/thumbs/sportology-academy.webp" loading="eager" alt="Sportology Academy" className="nav-work-item__img" />
+                                        <img src="/assets/projects/thumbs/sportology-academy.webp" loading="lazy" decoding="async" width="160" height="84" alt="Sportology Academy" className="nav-work-item__img" />
                                     </div>
                                     <div className="nav-work-item__text">
                                         <span className="nav-work-badge badge-blue">Education</span>
                                         <h4 className="nav-work-title">Sportology Academy</h4>
                                     </div>
-                                </div>
+                                </a>
                                 <Link href="/projects" className="nav-work-btn"><span className="nav-work-btn__text">View all projects</span></Link>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="nav-center" style={{ cursor: "url('/assets/Cursor SVG/cursor-pointer.svg') 12 12, pointer" }}>
-                    <div className="logo-omar">
+                    {/* The wordmark is the site logo: it has to be a real link
+                        home. It used to be a plain <div>, which is why the
+                        transition flourish attached to it went nowhere. */}
+                    <Link
+                        href="/"
+                        className="logo-omar"
+                        aria-label="Omar Ashraf — back to home"
+                        aria-current={isActivePath('/') ? 'page' : undefined}
+                    >
                         OMAR
-                    </div>
+                    </Link>
                 </div>
                 <div className="nav-right" style={{ cursor: "url('/assets/Cursor SVG/cursor-pointer.svg') 12 12, pointer" }}>
                     <div className="nav-hover-trigger">

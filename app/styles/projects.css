@@ -75,57 +75,17 @@
     padding-left: 4px;
 }
 
-.hero-decoration {
+/* ─── Hero Character (Lottie) ──────────────────────────────────────────────────── */
+/* "Doug" by Anwar Hossain — free to use under the Lottie Simple License. */
+.hero-character {
     position: absolute;
     top: 50%;
-    right: 5%;
+    right: 4%;
     transform: translateY(-50%);
-    width: 300px;
-    height: 300px;
-    pointer-events: none;
+    width: clamp(150px, 20vw, 260px);
     z-index: 1;
-}
-
-.decoration-circle {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.15;
-}
-
-.decoration-circle-1 {
-    width: 300px;
-    height: 300px;
-    background: var(--color-green);
-    top: 0;
-    right: 0;
-    animation: float 6s ease-in-out infinite;
-}
-
-.decoration-circle-2 {
-    width: 200px;
-    height: 200px;
-    background: var(--color-orange);
-    top: 50px;
-    right: 50px;
-    animation: float 8s ease-in-out infinite reverse;
-}
-
-.decoration-circle-3 {
-    width: 150px;
-    height: 150px;
-    background: var(--color-pink);
-    top: 100px;
-    right: 100px;
-    animation: float 10s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-20px) scale(1.05);
-    }
+    pointer-events: none;
+    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.14));
 }
 
 /* ─── Filter Section ──────────────────────────────────────────────────────────── */
@@ -140,28 +100,34 @@
     gap: 12px;
     margin-bottom: 20px;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .filter-tab {
     position: relative;
-    padding: 12px 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
     background: var(--color-white);
     border: 2px solid var(--color-dark);
-    border-radius: 50px;
+    border-radius: var(--radius-pill);
+    box-shadow: 3px 3px 0 var(--color-dark);
     font-family: 'Epilogue', sans-serif;
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--color-dark);
+    color: var(--text-primary);
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     text-transform: capitalize;
     min-height: 44px;
 }
 
+/* The sliding fill sits under the label — both the label and the count badge
+   carry position/z-index so the active tab never hides its own text. */
 .filter-tab::before {
     content: '';
     position: absolute;
@@ -178,32 +144,72 @@
 
 .filter-tab:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.filter-tab.active {
-    background: var(--color-dark);
+    box-shadow: 5px 5px 0 var(--color-dark);
     color: var(--color-white);
-    border-color: var(--color-dark);
 }
 
-.filter-tab.active::before {
+.filter-tab:hover::before {
     transform: scaleX(1);
     transform-origin: left;
 }
 
-.filter-tab span {
+.filter-tab.is-active {
+    background: var(--color-dark);
+    color: var(--color-white);
+    border-color: var(--color-dark);
+    box-shadow: 3px 3px 0 var(--color-pink);
+}
+
+.filter-tab.is-active::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.filter-tab.is-active:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 var(--color-pink);
+}
+
+.filter-tab__label {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+/* Count badge — 14.7:1 on white, 12.4:1 on the pink active fill */
+.filter-tab__count {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.filter-tab.is-active .filter-tab__count {
+    background: var(--color-pink);
+    color: var(--color-dark);
 }
 
 .filter-count {
     text-align: center;
     font-size: 0.95rem;
-    color: var(--color-dark);
-    opacity: 0.7;
+    color: var(--text-muted);
     font-weight: 500;
     margin-top: 16px;
+}
+
+.filter-count strong {
+    color: var(--text-primary);
+    font-weight: 800;
 }
 
 /* ─── Projects Section ─────────────────────────────────────────────────────────── */
@@ -469,8 +475,7 @@
 
 .no-projects p {
     font-size: 1.1rem;
-    color: var(--color-dark);
-    opacity: 0.7;
+    color: var(--text-muted);
 }
 
 /* ─── Responsive Design ────────────────────────────────────────────────────────── */
@@ -480,25 +485,9 @@
         gap: 24px;
     }
 
-    .hero-decoration {
-        width: 200px;
-        height: 200px;
+    .hero-character {
+        width: clamp(130px, 20vw, 200px);
         right: 2%;
-    }
-
-    .decoration-circle-1 {
-        width: 200px;
-        height: 200px;
-    }
-
-    .decoration-circle-2 {
-        width: 140px;
-        height: 140px;
-    }
-
-    .decoration-circle-3 {
-        width: 100px;
-        height: 100px;
     }
 }
 
@@ -521,8 +510,13 @@
         margin-top: 20px;
     }
 
-    .hero-decoration {
-        display: none;
+    /* The character drops into the flow on small screens instead of hiding —
+       it still sits under the headline and never collides with the text. */
+    .hero-character {
+        position: static;
+        transform: none;
+        width: 132px;
+        margin: 30px auto 0;
     }
 
     .filter-container {
@@ -581,13 +575,8 @@
 }
 
 /* ─── Animation Enhancements ────────────────────────────────────────────────────── */
-/* Pre-reveal state only when JS-driven GSAP will run AND motion is allowed,
-   so reduced-motion / no-JS users still see the cards. */
-@media (prefers-reduced-motion: no-preference) {
-    .project-card {
-        opacity: 0;
-    }
-}
+/* Cards are visible by default. GSAP only animates them in when it runs, so a
+   failed/blocked script can never leave the whole grid invisible. */
 
 /* ─── Print Styles ─────────────────────────────────────────────────────────────── */
 @media print {
@@ -617,10 +606,6 @@
         transition: none;
     }
 
-    .decoration-circle {
-        animation: none;
-    }
-
     .featured-badge {
         animation: none;
     }
@@ -635,4 +620,327 @@
 
 .filter-tab:focus:not(:focus-visible) {
     outline: none;
+}
+
+/* ─── Repo-backed card links ───────────────────────────────────────────────────── */
+.status-live {
+    color: var(--color-green);
+}
+
+.status-open-source {
+    color: #2f4bc4;
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-links .project-link {
+    flex: 1 1 150px;
+    width: auto;
+}
+
+.project-link--ghost {
+    background: transparent;
+    color: var(--color-dark);
+    border: 2px solid var(--color-dark);
+}
+
+.project-link--ghost:hover,
+.project-link--ghost:focus-visible {
+    background: var(--color-dark);
+    color: var(--color-white);
+}
+
+/* Fallback cover for projects whose screenshot is not ready yet */
+.project-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--project-color, var(--color-darkblue)) 0%, var(--color-dark) 100%);
+    color: var(--color-white);
+    text-align: center;
+    padding: 20px;
+}
+
+.placeholder-mark {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.placeholder-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+/* ─── GitHub archive ───────────────────────────────────────────────────────────── */
+.repo-archive {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+
+.repo-archive__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding-top: 36px;
+    border-top: 3px solid var(--color-dark);
+}
+
+.repo-archive__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.repo-archive__lead {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 62ch;
+}
+
+.repo-archive__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 2px solid var(--color-dark);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    text-decoration: none;
+    background: var(--color-white);
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repo-archive__cta:hover,
+.repo-archive__cta:focus-visible {
+    background: var(--color-dark);
+    color: var(--color-white);
+    transform: translateY(-2px);
+}
+
+.repo-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.repo-item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 20px;
+    background: var(--color-white);
+    border: 2px solid var(--color-dark);
+    border-radius: 14px;
+    box-shadow: 0 3px 0 var(--color-dark);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repo-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 var(--color-dark);
+}
+
+.repo-item:focus-visible {
+    outline: 3px solid var(--color-darkblue);
+    outline-offset: 3px;
+}
+
+.repo-item__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.repo-item__name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-dark);
+}
+
+.repo-item__lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8a827b;
+}
+
+.lang-typescript { background: #3178c6; }
+.lang-javascript { background: #b59c00; }
+.lang-python { background: #3572a5; }
+.lang-html { background: #d0451b; }
+.lang-dart { background: #0a8f8a; }
+
+.repo-item__desc {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.repo-item__foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.repo-item__live {
+    color: var(--color-green);
+}
+
+.repo-item__live::before {
+    content: '●';
+    margin-right: 4px;
+    font-size: 0.6rem;
+}
+
+/* ─── Private client work ──────────────────────────────────────────────────────── */
+.private-work {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    padding: 40px clamp(20px, 4vw, 48px) 32px;
+    background: var(--color-dark);
+    border-radius: 24px;
+    color: var(--color-white);
+}
+
+.private-work__header {
+    margin-bottom: 20px;
+}
+
+.private-work__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-white);
+    margin-bottom: 8px;
+}
+
+.private-work__lead {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text-muted-on-dark);
+    max-width: 62ch;
+}
+
+.private-work__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 40px;
+}
+
+.private-work__item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.private-work__name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.private-work__scope {
+    font-size: 0.9rem;
+    color: var(--text-muted-on-dark);
+}
+
+.private-work__stack {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted-on-dark);
+}
+
+@media (max-width: 768px) {
+    .repo-archive {
+        padding: 0 16px;
+        margin-bottom: 50px;
+    }
+
+    .repo-archive__header {
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .repo-list {
+        grid-template-columns: 1fr;
+    }
+
+    .repo-item__top {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .private-work {
+        margin: 0 16px 50px;
+        padding: 28px 20px 20px;
+        border-radius: 18px;
+    }
+
+    .private-work__list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-links .project-link {
+        flex: 1 1 100%;
+    }
 }
