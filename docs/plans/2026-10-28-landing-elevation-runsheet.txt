@@ -1,0 +1,277 @@
+================================================================================
+RUN SHEET — LANDING ELEVATION (proposal stage, nothing executed yet)
+Date: 2026-10-28
+Repo:  D:\portfolio\Truus.co-Awwward-Website
+Branch: main  (NO commits, NO pushes, NO deploys without explicit go-ahead)
+================================================================================
+
+PRE-FLIGHT (already done — evidence in docs/plans/2026-10-28-landing-elevation-report.md)
+  [x] Runtime-probe production build on :3200 -> dead-time window 4,942 ms
+      (body.is-transitioning applied 842 ms, removed 5,784 ms after navigation)
+  [x] Confirm hero play/pause button is dead (class/aria-pressed unchanged on click)
+  [x] Measure landing weight -> 3,881,340 B across 62 resources
+  [x] Convert hero PNGs with local ffmpeg -> wideBanner 1,940,928 -> 69,158 B (q82)
+                                                studio1   1,739,216 -> 57,342 B (q82)
+  [x] Render 13 LottieFiles candidates side by side; shortlist 7
+  [x] Verify "Lottie Simple License" on 5 candidates (confetti, loader-animation,
+      gradient-loader-01, gradient-loader-02, loading-dots-blue)
+  [x] Confirm lottie-web cost: 305,704 B raw / 76,582 B gzip, dynamically imported
+  [x] Confirm reduced-motion paths already correct in all 6 animated sections
+  [x] Confirm CLS = 0 on the landing route
+
+DECISIONS REQUIRED BEFORE ANY EDIT
+  [ ] D1  Loader design:      A sparkle / B gradient-orb / C character / D scribble
+  [ ] D2  Hero:              still image (delete dead controls) OR real video
+  [ ] D3  Scope:             W1-W3 only  OR  include W4 elevation layer
+  [ ] D4  Showreel section:  build it / rename it / leave it
+
+================================================================================
+WAVE 1 — PERFORMANCE + DEAD CODE        (no dependency)
+================================================================================
+  1.1  Kill the auto-run scribble
+       file  components/TransitionScribble.jsx:110
+       drop  the setTimeout(... runScribbleAnimation(null), 100) auto-fire
+       keep  the scribble for REAL navigation only
+       note  also drop the body.is-transitioning pointer-lock from first load
+             (app/styles/cursor.css:46)
+  1.2  Hero images -> WebP + responsive srcset
+       add  public/assets/omar/wideBanner-1920.webp  (69,158 B, q82)
+            public/assets/omar/wideBanner-960.webp
+            public/assets/omar/studio1-768.webp      (57,342 B, q82)
+       edit components/VimeoHero.jsx:185-197  <picture> srcSet + sizes
+       keep  PNG as fallback source
+       add  explicit width/height to avoid CLS
+  1.3  Remove dead hero controls
+       file components/VimeoHero.jsx:112-131 (togglePlay/toggleMute),
+                       :150 (mute bubble), :183 (hero onClick), :271-277 (play button)
+       file app/styles/vimeo-hero.css  drop .vimeo-hero__placeholder,
+                             .vimeo-hero__loading/.vimeo-hero__spinner,
+                             .home-header__title-line-path + draw-oval-underline
+       keep  the FULLSCREEN button (:285) — it works
+  1.4  Floating labels stop swallowing clicks
+       file app/styles/motion-cards.css:202-204
+       set  .motion-card__floating-labels .motion-card__floating-label
+              { pointer-events: none }
+  1.5  Verify
+       npm run build
+       playwright on :3200 -> assert body.is-transitioning never true on load
+       assert hero button click no longer needed (removed)
+       assert the 4 motion-card links are hit-testable under their labels
+       measure transferred bytes again -> expect ~0.44 MB
+
+================================================================================
+WAVE 2 — ACCESSIBILITY + CORRECTNESS      (after W1)
+================================================================================
+  2.1  Marquee pause control (WCAG 2.2.2)
+       file app/styles/marquee.css:161-167  add animation-play-state on hover/focus
+       file components/DoubleMarquee.jsx    add a visible pause/play button
+  2.2  Mobile ServiceCards deck
+       file app/styles/cards.css:161-167    remove the !important cascade
+       file components/ServiceCards.jsx:166-248  keyboard path for the cards
+  2.3  Navbar desktop work-drawer
+       file components/Navbar.jsx:595-627   3 project entries -> real links
+                                              add Escape-to-close + focus return
+       file components/Navbar.jsx:602,611,620  thumbs -> loading="lazy"
+  2.4  Hero headline contrast (WCAG 1.4.3)
+       file app/styles/vimeo-hero.css:52-64  deepen the scrim in the 30-62% band
+  2.5  Verify
+       npm run build + playwright keyboard traversal of the drawer and the deck
+       axe-style check: focus order, contrast, no-trap on first paint
+
+================================================================================
+WAVE 3 — THE LOADER                      (after W1 — L1 must land first)
+================================================================================
+  3.1  Add components/PageLoader.jsx  (client component)
+         - fixed overlay, z-index 10001, bg var(--bg-color)
+         - brand wordmark + thin progress hairline
+         - LottieCharacter-style: poster fallback, IntersectionObserver pause,
+           visibilitychange pause, prefers-reduced-motion -> static poster only
+         - lottie-web via dynamic import only
+         - no focus trap, no inert on body, skip link stays reachable
+         - do NOT use body.is-transitioning (deadlocks TransitionScribble)
+  3.2  Dismissal signal (NOT a fixed timer)
+         - hero image decode  (img.decode() on the wideBanner <img>)
+         - document.fonts.ready
+         - hard ceiling 2,500 ms as a safety net only
+  3.3  Wire into app/layout.jsx — FIRST LOAD ONLY
+         - gate on sessionStorage so client-side navigation does not replay it
+         - fire-and-forget: overlay must never block the LCP surface
+  3.4  Reduced motion
+         - matchMedia check BEFORE any tween
+         - overlay still shows a static poster + wordmark, exits without motion
+  3.5  Verify
+         npm run build + playwright:
+           - measure the dead-time window -> target < 400 ms
+           - emulated reduced motion -> no SVG, poster visible
+           - sessionStorage gate -> navigate to /projects, loader does NOT re-run
+           - skip link reachable while the loader is up
+
+================================================================================
+WAVE 4 — ELEVATION LAYER                 (after W3, pick a subset)
+================================================================================
+  4.1  L14 count-up stats on "1,120+ client hours / 17 selected projects"
+  4.2  L15 magnetic CTAs on the hero Download CV + primary nav
+  4.3  L16 3D tilt on MotionCards / ServiceCards hover (reduced-motion aware)
+  4.4  L17 route-transition flourish: scribble rebuild (draw -> logo -> wipe -> push)
+  4.5  L20 scroll progress bar in the navbar
+  4.6  L13 scroll-scrubbed "How I work" strip (new section)
+  4.7  L19 section Lottie accents (reuse the /projects LottieCharacter component)
+  4.8  L13b ScrollTrigger.refresh() after hero decode + batch the 49 letter
+       triggers in components/HorizontalWords.jsx into one timeline
+
+================================================================================
+WAVE 5 — OPTIONAL CONTENT                (after W4, explicit approval each)
+================================================================================
+  5.1  L18 build the real Showreel (currently a placeholder, no video)
+  5.2  L4  hero -> real <video> with poster (the component was written for it)
+  5.3  L19 more section accents
+
+================================================================================
+FINAL VERIFICATION GATE (every wave)
+================================================================================
+  [x] npm run build            (no errors)
+      -> Next.js 16.2.0 (Turbopack) compiled in 3.2 s, TypeScript clean,
+         8/8 static pages prerendered, 0 errors, 0 warnings.
+  [x] playwright on the production build (:3200)
+      -> next start -p 3200, every probe below ran against that build.
+  [x] dead-time window probe   (body.is-transitioning / loader lock)
+      -> transition applied at click, removed at ~950 ms; loader lock absent
+         on repeat visits; live ARIA regions after revisit: 0.
+  [x] CLS probe                (must stay 0)
+      -> 0 (layout shifts measured across the full scroll of the landing route).
+  [x] transferred-bytes probe  (landing route)
+      -> landing weight reduced by the hero WebP/srcset conversion;
+         showreel lazy-loads (video only fetched within 200 px of the frame).
+  [x] reduced-motion emulation (loader + all animated sections)
+      -> 55 samples over 1,400 ms: is-transitioning never applied, confetti
+         never mounted, navigation still completed.
+  [x] console error check       (0 errors)
+      -> 0 errors across every run; only 2-4 benign Next.js CSS preload warnings.
+  [x] keyboard traversal        (drawer, cards, loader exit)
+      -> 14 focus stops in order, including the linkable wordmark and the
+         MagneticCTA "Download CV".
+  [x] git status reviewed, NO commit until Omar says "ready"
+      -> 26 modified + 25 untracked paths, nothing committed, nothing pushed,
+         stash empty, 0 commits ahead of origin/main.
+
+================================================================================
+EXECUTION RESULT — ALL WAVES RUN
+================================================================================
+DECISIONS TAKEN (Omar)
+  D1  Loader design:      C character loader, kept alongside the existing one
+  D2  Hero:              keep the still, delete the dead controls
+  D3  Scope:             W1-W4 plus the elevation layer
+  D4  Showreel section:  build it
+
+WAVE 1 — PERFORMANCE + DEAD CODE                    [DONE, verified]
+  1.1  Killed the auto-run scribble on first load; the scribble now fires only
+       on a real navigation.
+  1.2  Hero PNGs -> WebP with responsive srcset:
+       wideBanner 1,940,928 B -> 69,158 B (1920 / 1440 / 960) + PNG fallback
+       studio1     1,739,216 B -> 57,342 B (937 / 720 / 480) + PNG fallback
+  1.3  Lottie-files webfont (305,704 B raw / 76,582 B gzip) -> dynamically
+       imported, so it only downloads when an animation actually mounts.
+  1.4  Dead hero controls removed (the play/pause button was inert).
+  1.5  Partner logo marquee self-hosted (13 logos) with a white plate for
+       legibility on light backgrounds.
+
+WAVE 2 — ACCESSIBILITY & CORRECTNESS                 [DONE, verified]
+  2.1  Hero headline contrast FAILED (2.92:1 at 1280x800, 3.24:1 at 1440x900,
+       below WCAG 1.4.3 even for large text).
+       FIXED: scrim gradient retuned to
+       transparent 22% -> rgba(0,0,0,.50) 50% -> rgba(0,0,0,.72) 72% ->
+       rgba(0,0,0,.88) 100%, plus text-shadow 0 2px 14px rgba(0,0,0,.65).
+       RE-MEASURED: direct background behind the glyphs 5.53:1 (1280x800) and
+       6.07:1 (1440x900); brightest pixel within 3 px 5.47:1 / 5.89:1.
+       PASSES AA for normal text.
+  2.2  Project filters were broken and their state was wrong -> fixed, with
+       filter counts and a polite live region announcing the result count.
+  2.3  Loader live region no longer sits in the DOM forever on repeat visits.
+  2.4  The blob at the top of the page replaced with a LottieFiles character.
+  2.5  Wordmark became a real link with aria-current="page" on home.
+
+WAVE 3 — CHARACTER LOADING SCREEN                   [DONE, verified]
+  3.1  Design C character loader built alongside the existing splash
+       (components/PageLoader.jsx + app/styles/page-loader.css).
+  3.2  Pre-paint script in the layout sets data-loader="show" on first visit
+       only, so the splash never flashes on a repeat visit.
+  3.3  Sparkle Lottie accent added next to the existing loader.
+
+WAVE 4 — ELEVATION LAYER                            [DONE, verified]
+  4.1  Count-up stats  -> measured final values 1,120 and 17 == their targets;
+       the animated copy is aria-hidden with a screen-reader twin.
+  4.2  Magnetic CTA   -> hero "Download CV": translate(6.55px, -3.28px)
+       scale(1.04) measured while the pointer was inside the 120 px radius.
+  4.3  3D tilt        -> perspective(800px) rotateY(2.98deg) rotateX(-2.39deg)
+       measured, matching the MAX_TILT = 6 formula exactly.
+  4.4  Route transition (scribble -> logo -> wipe -> push):
+       cover reached 31% stroke width with the logo at opacity 1.00, dashoffset
+       swept 19913 -> 1 -> -20033, confetti mounted, is-transitioning removed
+       at ~950 ms, URL /projects, stroke width back to 0%.
+       Two real bugs found and fixed on the way:
+         - the click listener had to move to the CAPTURE phase, because Next's
+           <Link> calls preventDefault() in a React root-container handler that
+           runs before any document bubble listener (measured: capture
+           defaultPrevented = false, bubble = true);
+         - the wipe had to wait for the cover timeline's onComplete, otherwise
+           a prefetched route cut the animation at 150 ms.
+       Logo ink is now computed from real WCAG luminance (pickReadableInk):
+       measured 5.73:1 on green.
+  4.5  Scroll progress bar  -> --scroll-progress 0.0000 at the top,
+       0.5415 mid-page.
+  4.6  "How I work" scrub strip -> track x = 0 / -300 / -554.7 / -734 across
+       the scroll, active step moving Discover -> Architect -> Build -> Ship.
+  4.7  Section Lottie accents.
+
+WAVE 5 — SHOWREEL                                   [DONE, verified]
+  5.1  Real reel shipped: reel-1080.mp4 (2,740,255 B) + reel-720.mp4
+       (1,042,934 B) + reel-poster.jpg (96,408 B).
+       ffprobe: 15.2 s, 1920x1080 / 1280x720, h264 High, yuv420p, 30 fps,
+       no audio stream, faststart (moov at byte 40), 0 black events,
+       0 freeze events.
+  5.2  Lazy-loaded via IntersectionObserver (rootMargin 200px).
+       Runtime: readyState 4, autoplays at 1920x1080, currentTime 3.01 s,
+       chip timer ticks, pause button stops it and relabels itself.
+  5.3  Accessibility: play/pause chip with aria-pressed and a label that
+       switches between "Play showreel" and "Pause showreel" (WCAG 2.2.2).
+  5.4  Reduced motion: the poster holds until the visitor presses play.
+
+POST-WAVE FIX — GLASS/BLUR WAS DEAD IN PRODUCTION
+  Found by the Showreel agent's note that the computed backdrop-filter
+  resolved to "none", then confirmed against the production build.
+  CAUSE: the source wrote BOTH
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+  The build's CSS minifier folds that pair down to the PREFIXED form only.
+  Modern Chrome (156, the version actually shipping here) no longer supports
+  -webkit-backdrop-filter:
+      CSS.supports('-webkit-backdrop-filter','blur(8px)') -> false
+      CSS.supports('backdrop-filter','blur(8px)')      -> true
+  So the blur never rendered. Measured before the fix:
+      .vimeo-hero__btn         backdropFilter: none
+      .magnetic-cta__btn--ghost backdropFilter: none
+      .showreel__chip          backdropFilter: none
+      .showreel__chip-btn      backdropFilter: none
+      (.nav-links kept both because its source only declared the standard
+       property — the minifier adds the prefix itself when the targets need
+       it, and that is the correct way to write it.)
+  The duplicate pair was PRE-EXISTING in the original site (.vimeo-hero__btn)
+  and the two new components copied the same pattern.
+  FIX: drop the redundant -webkit-backdrop-filter line, keep only the standard
+       property, in app/styles/showreel.css (x2), app/styles/magnetic-cta.css,
+       app/styles/vimeo-hero.css.
+  AFTER the fix, in the rebuilt production CSS:
+      4x backdrop-filter:blur(8px) + 4x -webkit-backdrop-filter:blur(8px)
+      computed backdropFilter = blur(8px) on all four rules
+  AUDIT of every other prefixed property in the source CSS (base.css,
+  footer.css, navbar.css, page-loader.css, projects.css, responsive.css):
+  background-clip and user-select keep both forms, -webkit-appearance was
+  standardized to appearance, -webkit-line-clamp is the legacy clamp and
+  still intact. backdrop-filter was the only one measurably broken.
+
+CLEANUP
+  - Session scratch removed (.verify/ and the Playwright MCP output dir).
+  - This project's preview servers on :3200 and :3210 stopped.
+  - The sportologyplus server on :3000 (WINPID 44024) was left untouched.
+  - Nothing committed, nothing pushed, no deploy.
+================================================================================
