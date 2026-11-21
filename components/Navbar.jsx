@@ -595,6 +595,7 @@ export default function Navbar() {
                     </div>
 
                     <Link href="/experience" className={`mobile-nav-link ${isActivePath('/experience') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/experience') ? 'page' : undefined} onClick={closeMobileMenu}>Experience</Link>
+                    <Link href="/ahmed" className={`mobile-nav-link ${isActivePath('/ahmed') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/ahmed') ? 'page' : undefined} onClick={closeMobileMenu}>Ahmed Track</Link>
 
                     <div className="mobile-nav-divider"></div>
 
@@ -634,6 +635,9 @@ export default function Navbar() {
                 <Link href="/about" className={`nav-link ${isActivePath('/about') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/about') ? 'page' : undefined}>About</Link>
                 <Link href="/projects" className={`nav-link ${isActivePath('/projects') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/projects') ? 'page' : undefined}>Projects</Link>
                 <Link href="/experience" className={`nav-link ${isActivePath('/experience') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/experience') ? 'page' : undefined}>Experience</Link>
+                {/* /ahmed — the generated study-plan hub (see app/ahmed/page.jsx). Not a marketing page:
+                    it is noindexed in app/ahmed/layout.jsx and reachable by direct link for Ahmed. */}
+                <Link href="/ahmed" className={`nav-link ${isActivePath('/ahmed') ? 'nav-state-active' : ''}`} aria-current={isActivePath('/ahmed') ? 'page' : undefined}>Ahmed Track</Link>
             </div>
 
             <nav className="navbar">
