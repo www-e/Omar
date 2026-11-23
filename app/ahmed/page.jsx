@@ -25,37 +25,54 @@ const HUB_TABS = ['start', 'roadmap', 'library', 'documents', 'sources', 'verify
 export default function AhmedPage() {
     const frame = useRef(null);
     const [ready, setReady] = useState(false);
+    // The iframe starts on the plain URL so a no-JS visitor still gets the hub. When the incoming link
+    // carries a tab, this state re-points src and the `key` below forces a fresh iframe element whose
+    // document boots with the hash already in its URL.
+    const [hubSrc, setHubSrc] = useState(HUB_SRC);
 
     // The hub renders instantly, but telling that apart from a slow first paint is impossible from the
     // outside, so the veil clears on the iframe's load event and a timer covers a blocked/404 file.
     useEffect(() => {
         const bail = setTimeout(() => setReady(true), 3000);
-        const el = frame.current;
+        const tab = () => {
+            const raw = (window.location.hash || '').replace('#', '');
+            return HUB_TABS.includes(raw) ? raw : null;
+        };
 
-        // The parent's hash is pushed *into* the iframe document rather than folded into its src: the hub
-        // reads its own location.hash to pick a tab, and re-pointing src would re-download the ~2 MB
-        // Arabic payload just to change a tab. Firing on load too covers a hash set before the file was
-        // ready, and hashchange covers someone clicking an in-page deep link while already here.
+        // Decided at mount, and it has to be the *load URL*: the hub picks its tab from its OWN
+        // location.hash while booting, so writing the hash into a child that is still booting just gets
+        // overwritten by the boot — which is how arriving at /ahmed#sources could leave tab 02 on screen.
+        const initial = tab();
+        if (initial) setHubSrc(HUB_SRC + '#' + initial);
+
+        return () => clearTimeout(bail);
+    }, []);
+
+    // Once the document is up, later hash changes still have to reach it. Writing the child's hash is a
+    // same-document navigation — no second 2 MB download — and covers someone moving to /ahmed#library
+    // while already on the page.
+    useEffect(() => {
+        const el = frame.current;
         const passHashDown = () => {
-            const tab = (window.location.hash || '').replace('#', '');
-            if (!HUB_TABS.includes(tab) || !el || !el.contentWindow) return;
+            const raw = (window.location.hash || '').replace('#', '');
+            if (!HUB_TABS.includes(raw) || !el || !el.contentWindow) return;
             try {
-                el.contentWindow.location.hash = '#' + tab;
+                el.contentWindow.location.hash = '#' + raw;
             } catch {
-                /* cross-origin or not yet attached: the hub simply opens on its start tab */
+                /* detached or blocked: the hub keeps whatever tab it is on */
             }
         };
 
         el && el.addEventListener('load', passHashDown);
         window.addEventListener('hashchange', passHashDown);
-        passHashDown();
+        window.addEventListener('popstate', passHashDown);
 
         return () => {
-            clearTimeout(bail);
             el && el.removeEventListener('load', passHashDown);
             window.removeEventListener('hashchange', passHashDown);
+            window.removeEventListener('popstate', passHashDown);
         };
-    }, []);
+    }, [hubSrc]);
 
     return (
         <>
@@ -100,9 +117,10 @@ export default function AhmedPage() {
                     </div>
 
                     <iframe
+                        key={hubSrc}
                         ref={frame}
                         className="ahmed-frame"
-                        src={HUB_SRC}
+                        src={hubSrc}
                         title="خطة أحمد: 26 أسبوعًا للأتمتة الصناعية و IIoT / Ahmed's 26-week automation and IIoT plan"
                         onLoad={() => setReady(true)}
                         allow="fullscreen"
