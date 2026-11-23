@@ -48,17 +48,17 @@ export default function AhmedPage() {
                         <b>126</b> مصدرًا للتعلّم، منها <b>120</b> بالعربية (<b>95%</b>)، و<b>62</b> أداة ومحاكي —
                         المكتبة كلها <b>194</b> صفاً فيها <b>7</b> صفوف معزولة لا تُفتح. و<b>26</b> أسبوعًا بخطة
                         ساعة بساعة، و<b>سجلّ أدلة</b> لكل رابط. وفيه كمان تبويب جديد اسمه <b>«التحقّق»</b>: كل
-                        مهارة في الخطة متقارنة بـ<b>37</b> إعلان وظيفة حقيقي — <b>19</b> إعلانًا بيسمّيها والخطة
-                        بتدرّسها فعلًا، و<b>33</b> إعلانًا بطلبها والخطة لسه ناقصاها، و<b>169</b> صفاً من
-                        <b>194</b> عليه علامة تحقّق. افتح «المكتبة» أو «الأسابيع» وابدأ التأشير — كل
-                        علامة تختارها تُحفظ في هذا المتصفح وحده، ولا تُرسل إلى أي مكان.
+                        مهارة في الخطة متقارنة بـ<b>39</b> إعلان وظيفة فتحناه وقرأناه فعلاً — <b>19</b>
+                        إعلانًا بيسمّيها والخطة بتدرّسها فعلًا، و<b>33</b> إعلانًا بطلبها والخطة لسه ناقصاها،
+                        و<b>169</b> صفاً من <b>194</b> عليه علامة تحقّق. افتح «المكتبة» أو «الأسابيع» وابدأ
+                        التأشير — كل علامة تختارها تُحفظ في هذا المتصفح وحده، ولا تُرسل إلى أي مكان.
                     </p>
                     <p className="ahmed-sub">
                         Read it in Arabic, tick as you go, and the evidence ledger shows how each link was
                         checked. A sixth tab, <b>التحقّق / Verify</b>, tests every skill in the plan against
-                        <b>37</b> real job ads: <b>19</b> the ads name that the plan already teaches, <b>33</b>
-                        the ads ask for that the plan does not cover yet. Progress is stored in this browser
-                        only — nothing is sent anywhere.
+                        <b>39</b> job ads we opened and read: <b>19</b> the ads name that the plan already
+                        teaches, <b>33</b> the ads ask for that the plan does not cover yet. Progress is
+                        stored in this browser only — nothing is sent anywhere.
                     </p>
                 </header>
 
