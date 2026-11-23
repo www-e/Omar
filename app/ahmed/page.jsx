@@ -17,6 +17,11 @@ import SvgSymbols from '@/components/SvgSymbols';
 
 const HUB_SRC = '/ahmed/index.html';
 
+// The six tabs the hub understands, straight out of its own [data-tab] buttons (build-hub.js emits them).
+// A URL like /ahmed#verify is what the start-page banner and any shared link use, and it has to land on
+// that tab rather than on "01 ابدأ هنا".
+const HUB_TABS = ['start', 'roadmap', 'library', 'documents', 'sources', 'verify'];
+
 export default function AhmedPage() {
     const frame = useRef(null);
     const [ready, setReady] = useState(false);
@@ -25,7 +30,31 @@ export default function AhmedPage() {
     // outside, so the veil clears on the iframe's load event and a timer covers a blocked/404 file.
     useEffect(() => {
         const bail = setTimeout(() => setReady(true), 3000);
-        return () => clearTimeout(bail);
+        const el = frame.current;
+
+        // The parent's hash is pushed *into* the iframe document rather than folded into its src: the hub
+        // reads its own location.hash to pick a tab, and re-pointing src would re-download the ~2 MB
+        // Arabic payload just to change a tab. Firing on load too covers a hash set before the file was
+        // ready, and hashchange covers someone clicking an in-page deep link while already here.
+        const passHashDown = () => {
+            const tab = (window.location.hash || '').replace('#', '');
+            if (!HUB_TABS.includes(tab) || !el || !el.contentWindow) return;
+            try {
+                el.contentWindow.location.hash = '#' + tab;
+            } catch {
+                /* cross-origin or not yet attached: the hub simply opens on its start tab */
+            }
+        };
+
+        el && el.addEventListener('load', passHashDown);
+        window.addEventListener('hashchange', passHashDown);
+        passHashDown();
+
+        return () => {
+            clearTimeout(bail);
+            el && el.removeEventListener('load', passHashDown);
+            window.removeEventListener('hashchange', passHashDown);
+        };
     }, []);
 
     return (
