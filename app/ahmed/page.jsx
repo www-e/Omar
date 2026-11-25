@@ -18,8 +18,9 @@ import SvgSymbols from '@/components/SvgSymbols';
 const HUB_SRC = '/ahmed/index.html';
 
 // The six tabs the hub understands, straight out of its own [data-tab] buttons (build-hub.js emits them).
-// A URL like /ahmed#verify is what the start-page banner and any shared link use, and it has to land on
-// that tab rather than on "01 ابدأ هنا".
+// A URL like /ahmed#verify is what the start-page banner and any shared link use. Since wave 4 the hub's own
+// landing tab is `verify` (01 · Market verdict / حكم السوق), so an address with no hash lands on the verdict and
+// a hash still has to be honoured rather than folded away.
 const HUB_TABS = ['start', 'roadmap', 'library', 'documents', 'sources', 'verify'];
 
 export default function AhmedPage() {
@@ -93,18 +94,26 @@ export default function AhmedPage() {
                     <p className="ahmed-sub" dir="rtl" lang="ar">
                         <b>126</b> مصدرًا للتعلّم، منها <b>120</b> بالعربية (<b>95%</b>)، و<b>62</b> أداة ومحاكي —
                         المكتبة كلها <b>194</b> صفاً فيها <b>7</b> صفوف معزولة لا تُفتح. و<b>26</b> أسبوعًا بخطة
-                        ساعة بساعة، و<b>سجلّ أدلة</b> لكل رابط. وفيه كمان تبويب جديد اسمه <b>«التحقّق»</b>: كل
-                        مهارة في الخطة متقارنة بـ<b>39</b> إعلان وظيفة فتحناه وقرأناه فعلاً — <b>19</b>
-                        إعلانًا بيسمّيها والخطة بتدرّسها فعلًا، و<b>33</b> إعلانًا بطلبها والخطة لسه ناقصاها،
-                        و<b>169</b> صفاً من <b>194</b> عليه علامة تحقّق. افتح «المكتبة» أو «الأسابيع» وابدأ
-                        التأشير — كل علامة تختارها تُحفظ في هذا المتصفح وحده، ولا تُرسل إلى أي مكان.
+                        ساعة بساعة، و<b>سجلّ أدلة</b> لكل رابط. والخطة بتفتح على تبويب <b>«حكم السوق»</b>: كل
+                        مهارة متقارنة بـ<b>39</b> إعلان وظيفة فتحناه وقرأناه فعلاً — <b>19</b> إعلانًا بيسمّيها
+                        والخطة بتدرّسها فعلًا، و<b>33</b> إعلانًا بطلبها والخطة لسه ناقصاها، و<b>169</b> صفاً من
+                        <b>194</b> عليه علامة تحقّق. والحكم ده غيّر التقويم نفسه: <b>41</b> ساعة اتنقلت جواه
+                        من غير ما يتغيّر الإجمالي — <b>572</b> ساعة في <b>26</b> أسبوعًا — واتفكت <b>4</b> بلوكات
+                        أسابيع جديدة في اللي بيطلبه أصحاب الشغل: لوحات التبديل والحماية، أجهزة الاختبار والاختبارات
+                        الميدانية، أوتوكاد الكهربائي، وتصميم الشمسي على PVsyst. افتح «المكتبة» أو «الأسابيع»
+                        وابدأ التأشير — كل علامة تختارها تُحفظ في هذا المتصفح وحده، ولا تُرسل إلى أي مكان.
                     </p>
                     <p className="ahmed-sub">
                         Read it in Arabic, tick as you go, and the evidence ledger shows how each link was
-                        checked. A sixth tab, <b>التحقّق / Verify</b>, tests every skill in the plan against
-                        <b>39</b> job ads we opened and read: <b>19</b> the ads name that the plan already
-                        teaches, <b>33</b> the ads ask for that the plan does not cover yet. Progress is
-                        stored in this browser only — nothing is sent anywhere.
+                        checked. The plan opens on the <b>Market verdict / حكم السوق</b> tab, which tests every
+                        skill against <b>39</b> job ads we opened and read: <b>19</b> the ads name that the plan
+                        already teaches, <b>33</b> the ads ask for that the plan does not cover yet, and
+                        <b>169</b> of <b>194</b> library rows carrying a verification badge. The verdict then
+                        changed the calendar: <b>41</b> hours moved inside the same budget, so the totals are
+                        still <b>572</b> hours over <b>26</b> weeks, and four new week blocks were added for what
+                        the ads actually ask for — switchgear and protection, test instruments and site testing,
+                        AutoCAD Electrical, and solar PV design on PVsyst. Progress is stored in this browser
+                        only — nothing is sent anywhere.
                     </p>
                 </header>
 
